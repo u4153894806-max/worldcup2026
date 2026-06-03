@@ -261,7 +261,7 @@
 //  D O N N É E S
 // ════════════════════════════════════════════════════════
 const TEAMS = {
-  ALG: { name:"Algérie", flag:"🇩🇿", host:false, players:[
+  ALG: { name:"Algérie", flag:"__ALG__", host:false, players:[
     {name:"Melvin Mastil", pos:"GK", club:"FC Stade Nyonnais", starter:true, goals:0, matches:0},
     {name:"Aissa Mandi", pos:"DEF", club:"Lille OSC", starter:true, goals:0, matches:0},
     {name:"Achraf Abada", pos:"DEF", club:"USM Alger", starter:true, goals:0, matches:0},
@@ -289,7 +289,7 @@ const TEAMS = {
     {name:"Fares Ghedjemis", pos:"ATT", club:"Frosinone", starter:false, goals:0, matches:0},
     {name:"Samir Chergui", pos:"DEF", club:"Paris FC", starter:false, goals:0, matches:0},
   ]},
-  ARG: { name:"Argentine", flag:"🇦🇷", host:false, players:[
+  ARG: { name:"Argentine", flag:"__ARG__", host:false, players:[
     {name:"Juan Musso", pos:"GK", club:"Atlético De Madrid", starter:true, goals:0, matches:0},
     {name:"Leonardo Balerdi", pos:"DEF", club:"Olympique Marseille", starter:true, goals:0, matches:0},
     {name:"Nicolas Tagliafico", pos:"DEF", club:"Olympique Lyonnais", starter:true, goals:0, matches:0},
@@ -317,7 +317,7 @@ const TEAMS = {
     {name:"Facundo Medina", pos:"DEF", club:"Olympique Marseille", starter:false, goals:0, matches:0},
     {name:"Nahuel Molina", pos:"DEF", club:"Atlético De Madrid", starter:false, goals:0, matches:0},
   ]},
-  AUS: { name:"Australie", flag:"🇦🇺", host:false, players:[
+  AUS: { name:"Australie", flag:"__AUS__", host:false, players:[
     {name:"Mathew Ryan", pos:"GK", club:"Levante UD", starter:true, goals:0, matches:0},
     {name:"Milos Degenek", pos:"DEF", club:"APOEL FC", starter:true, goals:0, matches:0},
     {name:"Alessandro Circati", pos:"DEF", club:"Parma", starter:true, goals:0, matches:0},
@@ -345,7 +345,7 @@ const TEAMS = {
     {name:"Lucas Herrington", pos:"DEF", club:"Colorado Rapids", starter:false, goals:0, matches:0},
     {name:"Tete Yengi", pos:"ATT", club:"FC Machida Zelvia", starter:false, goals:0, matches:0},
   ]},
-  AUT: { name:"Autriche", flag:"🇦🇹", host:false, players:[
+  AUT: { name:"Autriche", flag:"__AUT__", host:false, players:[
     {name:"Alexander Schlager", pos:"GK", club:"FC Red Bull Salzburg", starter:true, goals:0, matches:0},
     {name:"David Affengruber", pos:"DEF", club:"Elche CF", starter:true, goals:0, matches:0},
     {name:"Kevin Danso", pos:"DEF", club:"Tottenham Hotspur FC", starter:true, goals:0, matches:0},
@@ -373,7 +373,7 @@ const TEAMS = {
     {name:"Michael Svoboda", pos:"DEF", club:"Venezia FC", starter:false, goals:0, matches:0},
     {name:"Alessandro Schoepf", pos:"MIL", club:"Wolfsberger AC", starter:false, goals:0, matches:0},
   ]},
-  BEL: { name:"Belgique", flag:"🇧🇪", host:false, players:[
+  BEL: { name:"Belgique", flag:"__BEL__", host:false, players:[
     {name:"Thibaut Courtois", pos:"GK", club:"Real Madrid C. F.", starter:true, goals:0, matches:0},
     {name:"Zeno Debast", pos:"DEF", club:"Sporting CP", starter:true, goals:0, matches:0},
     {name:"Arthur Theate", pos:"DEF", club:"Eintracht Frankfurt", starter:true, goals:0, matches:0},
@@ -401,7 +401,7 @@ const TEAMS = {
     {name:"Nathan Ngoy", pos:"DEF", club:"Lille OSC", starter:false, goals:0, matches:0},
     {name:"Matias Fernandez-Pardo", pos:"ATT", club:"Lille OSC", starter:false, goals:0, matches:0},
   ]},
-  BIH: { name:"Bosnie-Herzégovine", flag:"🇧🇦", host:false, players:[
+  BIH: { name:"Bosnie-Herzégovine", flag:"__BIH__", host:false, players:[
     {name:"Nikola Vasilj", pos:"GK", club:"FC St. Pauli", starter:true, goals:0, matches:0},
     {name:"Nihad Mujakic", pos:"DEF", club:"Gaziantep FK", starter:true, goals:0, matches:0},
     {name:"Dennis Hadzikadunic", pos:"DEF", club:"UC Sampdoria", starter:true, goals:0, matches:0},
@@ -429,7 +429,7 @@ const TEAMS = {
     {name:"Jovo Lukic", pos:"ATT", club:"Universitatea Cluj", starter:false, goals:0, matches:0},
     {name:"Ermin Mahmic", pos:"MIL", club:"FC Slovan Liberec", starter:false, goals:0, matches:0},
   ]},
-  BRA: { name:"Brésil", flag:"🇧🇷", host:false, players:[
+  BRA: { name:"Brésil", flag:"__BRA__", host:false, players:[
     {name:"Alisson", pos:"GK", club:"Liverpool FC", starter:true, goals:0, matches:0},
     {name:"Wesley", pos:"DEF", club:"AS Roma", starter:true, goals:0, matches:0},
     {name:"Gabriel Magalhaes", pos:"DEF", club:"Arsenal FC", starter:true, goals:0, matches:0},
@@ -457,7 +457,7 @@ const TEAMS = {
     {name:"Igor Thiago", pos:"ATT", club:"Brentford FC", starter:false, goals:0, matches:0},
     {name:"Rayan", pos:"ATT", club:"AFC Bournemouth", starter:false, goals:0, matches:0},
   ]},
-  CAN: { name:"Canada", flag:"🇨🇦", host:true, players:[
+  CAN: { name:"Canada", flag:"__CAN__", host:true, players:[
     {name:"Dayne St. Clair", pos:"GK", club:"Inter Miami CF", starter:true, goals:0, matches:0},
     {name:"Alistair Johnston", pos:"DEF", club:"Celtic FC", starter:true, goals:0, matches:0},
     {name:"Al e Jones", pos:"DEF", club:"Middlesbrough FC", starter:true, goals:0, matches:0},
@@ -485,7 +485,7 @@ const TEAMS = {
     {name:"Nathan Saliba", pos:"MIL", club:"RSC Anderlecht", starter:false, goals:0, matches:0},
     {name:"Marcelo Flores", pos:"MIL", club:"Tigres UANL", starter:false, goals:0, matches:0},
   ]},
-  CIV: { name:"Côte d'Ivoire", flag:"🇨🇮", host:false, players:[
+  CIV: { name:"Côte d'Ivoire", flag:"__CIV__", host:false, players:[
     {name:"Yahia Fofana", pos:"GK", club:"Çaykur Rizespor", starter:true, goals:0, matches:0},
     {name:"Ousmane Diomande", pos:"DEF", club:"Sporting CP", starter:true, goals:0, matches:0},
     {name:"Ghislain Konan", pos:"DEF", club:"Gil Vicente FC", starter:true, goals:0, matches:0},
@@ -513,7 +513,7 @@ const TEAMS = {
     {name:"Parfait Guiagon", pos:"MIL", club:"Sporting Charleroi", starter:false, goals:0, matches:0},
     {name:"Christ Inao Oulai", pos:"MIL", club:"Trabzonspor", starter:false, goals:0, matches:0},
   ]},
-  COD: { name:"RD Congo", flag:"🇨🇩", host:false, players:[
+  COD: { name:"RD Congo", flag:"__COD__", host:false, players:[
     {name:"Lionel Mpasi", pos:"GK", club:"Le Havre AC", starter:true, goals:0, matches:0},
     {name:"Aaron Wan-Bissaka", pos:"DEF", club:"West Ham United FC", starter:true, goals:0, matches:0},
     {name:"Steve Kapuadi", pos:"DEF", club:"Widzew Łódź", starter:true, goals:0, matches:0},
@@ -541,7 +541,7 @@ const TEAMS = {
     {name:"Edo Kayembe", pos:"MIL", club:"Watford FC", starter:false, goals:0, matches:0},
     {name:"Arthur Masuaku", pos:"DEF", club:"RC Lens", starter:false, goals:0, matches:0},
   ]},
-  COL: { name:"Colombie", flag:"🇨🇴", host:false, players:[
+  COL: { name:"Colombie", flag:"__COL__", host:false, players:[
     {name:"David Ospina", pos:"GK", club:"Atlético Nacional", starter:true, goals:0, matches:0},
     {name:"Daniel Munoz", pos:"DEF", club:"Crystal Palace FC", starter:true, goals:0, matches:0},
     {name:"Jhon Lucumi", pos:"DEF", club:"Bologna FC", starter:true, goals:0, matches:0},
@@ -569,7 +569,7 @@ const TEAMS = {
     {name:"Luis Suarez", pos:"ATT", club:"Sporting CP", starter:false, goals:0, matches:0},
     {name:"Andres Gomez", pos:"ATT", club:"CR Vasco Da Gama", starter:false, goals:0, matches:0},
   ]},
-  CPV: { name:"Cap-Vert", flag:"🇨🇻", host:false, players:[
+  CPV: { name:"Cap-Vert", flag:"__CPV__", host:false, players:[
     {name:"Vozinha", pos:"GK", club:"GD Chaves", starter:true, goals:0, matches:0},
     {name:"Stopira", pos:"DEF", club:"SCU Torreense", starter:true, goals:0, matches:0},
     {name:"Diney Borges", pos:"DEF", club:"Al Bataeh Club", starter:true, goals:0, matches:0},
@@ -597,7 +597,7 @@ const TEAMS = {
     {name:"Kelvin Pires", pos:"DEF", club:"SJK", starter:false, goals:0, matches:0},
     {name:"Helio Varela", pos:"MIL", club:"Maccabi Tel-Aviv FC", starter:false, goals:0, matches:0},
   ]},
-  CRO: { name:"Croatie", flag:"🇭🇷", host:false, players:[
+  CRO: { name:"Croatie", flag:"__CRO__", host:false, players:[
     {name:"Dominik Livakovic", pos:"GK", club:"GNK Dinamo Zagreb", starter:true, goals:0, matches:0},
     {name:"Josip Stanisic", pos:"DEF", club:"FC Bayern München", starter:true, goals:0, matches:0},
     {name:"Marin Pongracic", pos:"DEF", club:"ACF Fiorentina", starter:true, goals:0, matches:0},
@@ -625,7 +625,7 @@ const TEAMS = {
     {name:"Martin Erlic", pos:"DEF", club:"FC Midtjylland", starter:false, goals:0, matches:0},
     {name:"Petar Musa", pos:"ATT", club:"FC Dallas", starter:false, goals:0, matches:0},
   ]},
-  CUW: { name:"Curaçao", flag:"🇨🇼", host:false, players:[
+  CUW: { name:"Curaçao", flag:"__CUW__", host:false, players:[
     {name:"Eloy Room", pos:"GK", club:"Miami FC", starter:true, goals:0, matches:0},
     {name:"Shurandy Sambo", pos:"DEF", club:"Sparta Rotterdam", starter:true, goals:0, matches:0},
     {name:"Jurien Gaari", pos:"DEF", club:"Abha Club", starter:true, goals:0, matches:0},
@@ -653,7 +653,7 @@ const TEAMS = {
     {name:"Tyrick Bodak", pos:"GK", club:"SC Telstar", starter:false, goals:0, matches:0},
     {name:"Trevor Doornbusch", pos:"GK", club:"VVV Venlo", starter:false, goals:0, matches:0},
   ]},
-  CZE: { name:"Tchéquie", flag:"🇨🇿", host:false, players:[
+  CZE: { name:"Tchéquie", flag:"__CZE__", host:false, players:[
     {name:"Matej Kovar", pos:"GK", club:"", starter:true, goals:0, matches:0},
     {name:"David Zima", pos:"DEF", club:"", starter:true, goals:0, matches:0},
     {name:"Tomas Holes", pos:"DEF", club:"", starter:true, goals:0, matches:0},
@@ -681,7 +681,7 @@ const TEAMS = {
     {name:"Hugo Sochurek", pos:"MIL", club:"", starter:false, goals:0, matches:0},
     {name:"Denis Visinsky", pos:"ATT", club:"", starter:false, goals:0, matches:0},
   ]},
-  ECU: { name:"Équateur", flag:"🇪🇨", host:false, players:[
+  ECU: { name:"Équateur", flag:"__ECU__", host:false, players:[
     {name:"Hernan Galindez", pos:"GK", club:"CA Huracán", starter:true, goals:0, matches:0},
     {name:"Felix Torres", pos:"DEF", club:"SC Internacional", starter:true, goals:0, matches:0},
     {name:"Piero Hincapie", pos:"DEF", club:"Arsenal FC", starter:true, goals:0, matches:0},
@@ -709,7 +709,7 @@ const TEAMS = {
     {name:"Jackson Porozo", pos:"DEF", club:"Club Tijuana", starter:false, goals:0, matches:0},
     {name:"Yaimar Medina", pos:"DEF", club:"KRC Genk", starter:false, goals:0, matches:0},
   ]},
-  EGY: { name:"Égypte", flag:"🇪🇬", host:false, players:[
+  EGY: { name:"Égypte", flag:"__EGY__", host:false, players:[
     {name:"Mohamed Elshenawy", pos:"GK", club:"Al Ahly FC", starter:true, goals:0, matches:0},
     {name:"Yasser Ibrahim", pos:"DEF", club:"Al Ahly FC", starter:true, goals:0, matches:0},
     {name:"Mohamed Hany", pos:"DEF", club:"Al Ahly FC", starter:true, goals:0, matches:0},
@@ -737,7 +737,7 @@ const TEAMS = {
     {name:"Zizo", pos:"ATT", club:"Al Ahly FC", starter:false, goals:0, matches:0},
     {name:"Mohamed Alaa", pos:"GK", club:"El Gouna FC", starter:false, goals:0, matches:0},
   ]},
-  ENG: { name:"Angleterre", flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿", host:false, players:[
+  ENG: { name:"Angleterre", flag:"__ENG__", host:false, players:[
     {name:"Jordan Pickford", pos:"GK", club:"Everton FC", starter:true, goals:0, matches:0},
     {name:"Ezri Konsa", pos:"DEF", club:"Aston Villa FC", starter:true, goals:0, matches:0},
     {name:"Nico Oreilly", pos:"DEF", club:"Manchester City FC", starter:true, goals:0, matches:0},
@@ -765,7 +765,7 @@ const TEAMS = {
     {name:"Djed Spence", pos:"DEF", club:"Tottenham Hotspur FC", starter:false, goals:0, matches:0},
     {name:"Jarell Quansah", pos:"DEF", club:"Bayer Leverkusen", starter:false, goals:0, matches:0},
   ]},
-  ESP: { name:"Espagne", flag:"🇪🇸", host:false, players:[
+  ESP: { name:"Espagne", flag:"__ESP__", host:false, players:[
     {name:"David Raya", pos:"GK", club:"Arsenal FC", starter:true, goals:0, matches:0},
     {name:"Marc Pubill", pos:"DEF", club:"Atlético De Madrid", starter:true, goals:0, matches:0},
     {name:"Alex Grimaldo", pos:"DEF", club:"Bayer Leverkusen", starter:true, goals:0, matches:0},
@@ -793,7 +793,7 @@ const TEAMS = {
     {name:"Victor Munoz", pos:"ATT", club:"CA Osasuna", starter:false, goals:0, matches:0},
     {name:"Borja Iglesias", pos:"ATT", club:"RC Celta Vigo", starter:false, goals:0, matches:0},
   ]},
-  FRA: { name:"France", flag:"🇫🇷", host:false, players:[
+  FRA: { name:"France", flag:"__FRA__", host:false, players:[
     {name:"Brice Samba", pos:"GK", club:"Stade Rennais FC", starter:true, goals:0, matches:0},
     {name:"Malo Gusto", pos:"DEF", club:"Chelsea FC", starter:true, goals:0, matches:0},
     {name:"Lucas Digne", pos:"DEF", club:"Aston Villa FC", starter:true, goals:0, matches:0},
@@ -821,7 +821,7 @@ const TEAMS = {
     {name:"Maghnes Akliouche", pos:"MIL", club:"AS Monaco", starter:false, goals:0, matches:0},
     {name:"Maxence Lacroix", pos:"DEF", club:"Crystal Palace FC", starter:false, goals:0, matches:0},
   ]},
-  GER: { name:"Allemagne", flag:"🇩🇪", host:false, players:[
+  GER: { name:"Allemagne", flag:"__GER__", host:false, players:[
     {name:"Manuel Neuer", pos:"GK", club:"FC Bayern München", starter:true, goals:0, matches:0},
     {name:"Antonio Ruediger", pos:"DEF", club:"Real Madrid C. F.", starter:true, goals:0, matches:0},
     {name:"Waldemar Anton", pos:"DEF", club:"Borussia Dortmund", starter:true, goals:0, matches:0},
@@ -849,7 +849,7 @@ const TEAMS = {
     {name:"Lennart Karl", pos:"MIL", club:"FC Bayern München", starter:false, goals:0, matches:0},
     {name:"Deniz Undav", pos:"ATT", club:"VfB Stuttgart", starter:false, goals:0, matches:0},
   ]},
-  GHA: { name:"Ghana", flag:"🇬🇭", host:false, players:[
+  GHA: { name:"Ghana", flag:"__GHA__", host:false, players:[
     {name:"Lawrence Ati Zigi", pos:"GK", club:"FC St. Gallen", starter:true, goals:0, matches:0},
     {name:"Alidu Seidu", pos:"DEF", club:"Stade Rennais FC", starter:true, goals:0, matches:0},
     {name:"Caleb Yirenkyi", pos:"MIL", club:"FC Nordsjælland", starter:true, goals:0, matches:0},
@@ -877,7 +877,7 @@ const TEAMS = {
     {name:"Prince Adu", pos:"ATT", club:"FC Viktoria Plzeň", starter:false, goals:0, matches:0},
     {name:"Marvin Senaya", pos:"DEF", club:"AJ Auxerre", starter:false, goals:0, matches:0},
   ]},
-  HAI: { name:"Haïti", flag:"🇭🇹", host:false, players:[
+  HAI: { name:"Haïti", flag:"__HAI__", host:false, players:[
     {name:"Johny Placide", pos:"GK", club:"", starter:true, goals:0, matches:0},
     {name:"Carlens Arcus", pos:"DEF", club:"", starter:true, goals:0, matches:0},
     {name:"Keeto Thermoncy", pos:"DEF", club:"", starter:true, goals:0, matches:0},
@@ -905,7 +905,7 @@ const TEAMS = {
     {name:"Dominique Simon", pos:"MIL", club:"", starter:false, goals:0, matches:0},
     {name:"Woodensky Pierre", pos:"MIL", club:"", starter:false, goals:0, matches:0},
   ]},
-  IRN: { name:"Iran", flag:"🇮🇷", host:false, players:[
+  IRN: { name:"Iran", flag:"__IRN__", host:false, players:[
     {name:"Alireza Beiranvand", pos:"GK", club:"Tractor Sazi Tabriz FC", starter:true, goals:0, matches:0},
     {name:"Saleh Hardani", pos:"DEF", club:"Esteghlal Tehran FC", starter:true, goals:0, matches:0},
     {name:"Ehsan Hajisafi", pos:"DEF", club:"Sepahan SC", starter:true, goals:0, matches:0},
@@ -933,7 +933,7 @@ const TEAMS = {
     {name:"Danial Iri", pos:"DEF", club:"Malavan Anzali FC", starter:false, goals:0, matches:0},
     {name:"Amirmohammad Razaghinia", pos:"MIL", club:"Esteghlal Tehran FC", starter:false, goals:0, matches:0},
   ]},
-  IRQ: { name:"Irak", flag:"🇮🇶", host:false, players:[
+  IRQ: { name:"Irak", flag:"__IRQ__", host:false, players:[
     {name:"Fahad Talib", pos:"GK", club:"Al Talaba SC", starter:true, goals:0, matches:0},
     {name:"Rebin Ghareeb", pos:"DEF", club:"Port FC", starter:true, goals:0, matches:0},
     {name:"Hussein Ali", pos:"DEF", club:"Pogoń Szczecin", starter:true, goals:0, matches:0},
@@ -961,7 +961,7 @@ const TEAMS = {
     {name:"Mustafa Saadoon", pos:"DEF", club:"Al Shorta SC", starter:false, goals:0, matches:0},
     {name:"Frans Putros", pos:"DEF", club:"Persib Bandung", starter:false, goals:0, matches:0},
   ]},
-  JOR: { name:"Jordanie", flag:"🇯🇴", host:false, players:[
+  JOR: { name:"Jordanie", flag:"__JOR__", host:false, players:[
     {name:"Yazeed Abulaila", pos:"GK", club:"Al Hussein SC", starter:true, goals:0, matches:0},
     {name:"Mohammad Abuhasheesh", pos:"DEF", club:"Al Karma SC", starter:true, goals:0, matches:0},
     {name:"Abdallah Nasib", pos:"DEF", club:"Al Zawra'a SC", starter:true, goals:0, matches:0},
@@ -989,7 +989,7 @@ const TEAMS = {
     {name:"Mohammad Aldaoud", pos:"MIL", club:"Al Wahdat SC", starter:false, goals:0, matches:0},
     {name:"Anas Badawi", pos:"DEF", club:"Al Faisaly SC", starter:false, goals:0, matches:0},
   ]},
-  JPN: { name:"Japon", flag:"🇯🇵", host:false, players:[
+  JPN: { name:"Japon", flag:"__JPN__", host:false, players:[
     {name:"Zion Suzuki", pos:"GK", club:"Parma", starter:true, goals:0, matches:0},
     {name:"Yukinari Sugawara", pos:"DEF", club:"SV Werder Bremen", starter:true, goals:0, matches:0},
     {name:"Shogo Taniguchi", pos:"DEF", club:"Sint-Truiden VV", starter:true, goals:0, matches:0},
@@ -1017,7 +1017,7 @@ const TEAMS = {
     {name:"Junnosuke Suzuki", pos:"DEF", club:"FC København", starter:false, goals:0, matches:0},
     {name:"Kento Shiogai", pos:"ATT", club:"VfL Wolfsburg", starter:false, goals:0, matches:0},
   ]},
-  KOR: { name:"Corée du Sud", flag:"🇰🇷", host:false, players:[
+  KOR: { name:"Corée du Sud", flag:"__KOR__", host:false, players:[
     {name:"Seunggyu Kim", pos:"GK", club:"", starter:true, goals:0, matches:0},
     {name:"Hanbeom Lee", pos:"DEF", club:"", starter:true, goals:0, matches:0},
     {name:"Gihyuk Lee", pos:"MIL", club:"", starter:true, goals:0, matches:0},
@@ -1045,7 +1045,7 @@ const TEAMS = {
     {name:"Jisung Eom", pos:"MIL", club:"", starter:false, goals:0, matches:0},
     {name:"Donggyeong Lee", pos:"MIL", club:"", starter:false, goals:0, matches:0},
   ]},
-  KSA: { name:"Arabie Saoudite", flag:"🇸🇦", host:false, players:[
+  KSA: { name:"Arabie Saoudite", flag:"__KSA__", host:false, players:[
     {name:"Nawaf Alaqidi", pos:"GK", club:"Al Nassr FC", starter:true, goals:0, matches:0},
     {name:"Ali Majrashi", pos:"DEF", club:"Al Ahli FC", starter:true, goals:0, matches:0},
     {name:"Ali Lajami", pos:"DEF", club:"Al Hilal SC", starter:true, goals:0, matches:0},
@@ -1073,7 +1073,7 @@ const TEAMS = {
     {name:"Jehad Thikri", pos:"DEF", club:"Al Qadsiah FC", starter:false, goals:0, matches:0},
     {name:"Mohammed Abu Alshamat", pos:"DEF", club:"Al Qadsiah FC", starter:false, goals:0, matches:0},
   ]},
-  MAR: { name:"Maroc", flag:"🇲🇦", host:false, players:[
+  MAR: { name:"Maroc", flag:"__MAR__", host:false, players:[
     {name:"Yassine Bounou", pos:"GK", club:"Al Hilal SC", starter:true, goals:0, matches:0},
     {name:"Achraf Hakimi", pos:"DEF", club:"Paris Saint-Germain", starter:true, goals:0, matches:0},
     {name:"Noussair Mazraoui", pos:"DEF", club:"Manchester United FC", starter:true, goals:0, matches:0},
@@ -1101,7 +1101,7 @@ const TEAMS = {
     {name:"Redouane Halhal", pos:"DEF", club:"KV Mechelen", starter:false, goals:0, matches:0},
     {name:"Anass Salah Eddine", pos:"DEF", club:"PSV Eindhoven", starter:false, goals:0, matches:0},
   ]},
-  MEX: { name:"Mexique", flag:"🇲🇽", host:true, players:[
+  MEX: { name:"Mexique", flag:"__MEX__", host:true, players:[
     {name:"Raul Rangel", pos:"GK", club:"CD Guadalajara", starter:true, goals:0, matches:0},
     {name:"Jorge Sanchez", pos:"DEF", club:"PAOK Saloniki", starter:true, goals:0, matches:0},
     {name:"Cesar Montes", pos:"DEF", club:"FC Lokomotiv Moscow", starter:true, goals:0, matches:0},
@@ -1129,7 +1129,7 @@ const TEAMS = {
     {name:"Roberto Alvarado", pos:"ATT", club:"CD Guadalajara", starter:false, goals:0, matches:0},
     {name:"Brian Gutierrez", pos:"MIL", club:"CD Guadalajara", starter:false, goals:0, matches:0},
   ]},
-  NED: { name:"Pays-Bas", flag:"🇳🇱", host:false, players:[
+  NED: { name:"Pays-Bas", flag:"__NED__", host:false, players:[
     {name:"Bart Verbruggen", pos:"GK", club:"Brighton & Hove Albion FC", starter:true, goals:0, matches:0},
     {name:"Jurrien Timber", pos:"DEF", club:"Arsenal FC", starter:true, goals:0, matches:0},
     {name:"Marten De Roon", pos:"MIL", club:"Atalanta Bergamo", starter:true, goals:0, matches:0},
@@ -1157,7 +1157,7 @@ const TEAMS = {
     {name:"Jorrel Hato", pos:"DEF", club:"Chelsea FC", starter:false, goals:0, matches:0},
     {name:"Quinten Timber", pos:"MIL", club:"Olympique Marseille", starter:false, goals:0, matches:0},
   ]},
-  NOR: { name:"Norvège", flag:"🇳🇴", host:false, players:[
+  NOR: { name:"Norvège", flag:"__NOR__", host:false, players:[
     {name:"Orjan Nyland", pos:"GK", club:"Sevilla FC", starter:true, goals:0, matches:0},
     {name:"Morten Thorsby", pos:"MIL", club:"US Cremonese", starter:true, goals:0, matches:0},
     {name:"Kristoffer Ajer", pos:"DEF", club:"Brentford FC", starter:true, goals:0, matches:0},
@@ -1185,7 +1185,7 @@ const TEAMS = {
     {name:"Henrik Falchener", pos:"DEF", club:"Viking Stavanger", starter:false, goals:0, matches:0},
     {name:"Julian Ryerson", pos:"ATT", club:"Borussia Dortmund", starter:false, goals:0, matches:0},
   ]},
-  NZL: { name:"Nouvelle-Zélande", flag:"🇳🇿", host:false, players:[
+  NZL: { name:"Nouvelle-Zélande", flag:"__NZL__", host:false, players:[
     {name:"Max Crocombe", pos:"GK", club:"Millwall FC", starter:true, goals:0, matches:0},
     {name:"Tim Payne", pos:"DEF", club:"Wellington Phoenix FC", starter:true, goals:0, matches:0},
     {name:"Francis De Vries", pos:"DEF", club:"Auckland FC", starter:true, goals:0, matches:0},
@@ -1213,7 +1213,7 @@ const TEAMS = {
     {name:"Lachlan Bayliss", pos:"MIL", club:"Newcastle United Jets FC", starter:false, goals:0, matches:0},
     {name:"Tommy Smith", pos:"DEF", club:"Braintree Town FC", starter:false, goals:0, matches:0},
   ]},
-  PAN: { name:"Panama", flag:"🇵🇦", host:false, players:[
+  PAN: { name:"Panama", flag:"__PAN__", host:false, players:[
     {name:"Luis Mejia", pos:"GK", club:"Club Nacional", starter:true, goals:0, matches:0},
     {name:"Cesar Blackman", pos:"DEF", club:"ŠK Slovan Bratislava", starter:true, goals:0, matches:0},
     {name:"Jose Cordoba", pos:"DEF", club:"Norwich City FC", starter:true, goals:0, matches:0},
@@ -1241,7 +1241,7 @@ const TEAMS = {
     {name:"Roderick Miller", pos:"DEF", club:"Turan Tovuz", starter:false, goals:0, matches:0},
     {name:"Jorge Gutierrez", pos:"DEF", club:"Deportivo La Guaira", starter:false, goals:0, matches:0},
   ]},
-  PAR: { name:"Paraguay", flag:"🇵🇾", host:false, players:[
+  PAR: { name:"Paraguay", flag:"__PAR__", host:false, players:[
     {name:"Gatito Fernandez", pos:"GK", club:"Cerro Porteño", starter:true, goals:0, matches:0},
     {name:"Gustavo Velazquez", pos:"DEF", club:"Cerro Porteño", starter:true, goals:0, matches:0},
     {name:"Omar Alderete", pos:"DEF", club:"Sunderland AFC", starter:true, goals:0, matches:0},
@@ -1269,7 +1269,7 @@ const TEAMS = {
     {name:"Isidro Pitta", pos:"ATT", club:"Red Bull Bragantino", starter:false, goals:0, matches:0},
     {name:"Alexandro Maidana", pos:"DEF", club:"CA Talleres", starter:false, goals:0, matches:0},
   ]},
-  POR: { name:"Portugal", flag:"🇵🇹", host:false, players:[
+  POR: { name:"Portugal", flag:"__POR__", host:false, players:[
     {name:"Diogo Costa", pos:"GK", club:"FC Porto", starter:true, goals:0, matches:0},
     {name:"Nelson Semedo", pos:"DEF", club:"Fenerbahçe SK", starter:true, goals:0, matches:0},
     {name:"Ruben Dias", pos:"DEF", club:"Manchester City FC", starter:true, goals:0, matches:0},
@@ -1297,7 +1297,7 @@ const TEAMS = {
     {name:"Nuno Mendes", pos:"DEF", club:"Paris Saint-Germain", starter:false, goals:0, matches:0},
     {name:"Francisco Conceicao", pos:"ATT", club:"Juventus FC", starter:false, goals:0, matches:0},
   ]},
-  QAT: { name:"Qatar", flag:"🇶🇦", host:false, players:[
+  QAT: { name:"Qatar", flag:"__QAT__", host:false, players:[
     {name:"Mahmoud Abunada", pos:"GK", club:"Al Rayyan SC", starter:true, goals:0, matches:0},
     {name:"Pedro Miguel", pos:"DEF", club:"Al Sadd SC", starter:true, goals:0, matches:0},
     {name:"Lucas Mendes", pos:"DEF", club:"Al Wakrah SC", starter:true, goals:0, matches:0},
@@ -1325,7 +1325,7 @@ const TEAMS = {
     {name:"Alhashmi Alhussein", pos:"DEF", club:"Al Arabi SC", starter:false, goals:0, matches:0},
     {name:"Mohamed Manai", pos:"ATT", club:"Al Shamal SC", starter:false, goals:0, matches:0},
   ]},
-  RSA: { name:"Afrique du Sud", flag:"🇿🇦", host:false, players:[
+  RSA: { name:"Afrique du Sud", flag:"__RSA__", host:false, players:[
     {name:"Ronwen Williams", pos:"GK", club:"Mamelodi Sundowns FC", starter:true, goals:0, matches:0},
     {name:"Thabang Matuludi", pos:"DEF", club:"Polokwane City FC", starter:true, goals:0, matches:0},
     {name:"Khulumani Ndamane", pos:"DEF", club:"Mamelodi Sundowns FC", starter:true, goals:0, matches:0},
@@ -1381,7 +1381,7 @@ const TEAMS = {
     {name:"Findlay Curtis", pos:"ATT", club:"Kilmarnock FC", starter:false, goals:0, matches:0},
     {name:"McKENNA Scott ", pos:"DEF", club:"GNK Dinamo Zagreb", starter:false, goals:0, matches:0},
   ]},
-  SEN: { name:"Sénégal", flag:"🇸🇳", host:false, players:[
+  SEN: { name:"Sénégal", flag:"__SEN__", host:false, players:[
     {name:"Yehvann Diouf", pos:"GK", club:"OGC Nice", starter:true, goals:0, matches:0},
     {name:"Mamadou Sarr", pos:"DEF", club:"Chelsea FC", starter:true, goals:0, matches:0},
     {name:"Kalidou Koulibaly", pos:"DEF", club:"Al Hilal SC", starter:true, goals:0, matches:0},
@@ -1409,7 +1409,7 @@ const TEAMS = {
     {name:"El Hadji Malick Diouf", pos:"DEF", club:"West Ham United FC", starter:false, goals:0, matches:0},
     {name:"Pape Gueye", pos:"MIL", club:"Villarreal CF", starter:false, goals:0, matches:0},
   ]},
-  SUI: { name:"Suisse", flag:"🇨🇭", host:false, players:[
+  SUI: { name:"Suisse", flag:"__SUI__", host:false, players:[
     {name:"Gregor Kobel", pos:"GK", club:"Borussia Dortmund", starter:true, goals:0, matches:0},
     {name:"Miro Muheim", pos:"DEF", club:"Hamburger SV", starter:true, goals:0, matches:0},
     {name:"Silvan Widmer", pos:"DEF", club:"1. FSV Mainz 05", starter:true, goals:0, matches:0},
@@ -1437,7 +1437,7 @@ const TEAMS = {
     {name:"Luca Jaquez", pos:"DEF", club:"VfB Stuttgart", starter:false, goals:0, matches:0},
     {name:"Cedric Itten", pos:"ATT", club:"Fortuna Düsseldorf", starter:false, goals:0, matches:0},
   ]},
-  SWE: { name:"Suède", flag:"🇸🇪", host:false, players:[
+  SWE: { name:"Suède", flag:"__SWE__", host:false, players:[
     {name:"Jacob Widell Zetterstrom", pos:"GK", club:"Derby County FC", starter:true, goals:0, matches:0},
     {name:"Gustaf Lagerbielke", pos:"DEF", club:"SC Braga", starter:true, goals:0, matches:0},
     {name:"Victor Lindelof", pos:"DEF", club:"Aston Villa FC", starter:true, goals:0, matches:0},
@@ -1465,7 +1465,7 @@ const TEAMS = {
     {name:"Gustaf Nilsson", pos:"ATT", club:"Club Brugge", starter:false, goals:0, matches:0},
     {name:"Taha Ali", pos:"ATT", club:"Malmö FF", starter:false, goals:0, matches:0},
   ]},
-  TUN: { name:"Tunisie", flag:"🇹🇳", host:false, players:[
+  TUN: { name:"Tunisie", flag:"__TUN__", host:false, players:[
     {name:"Mouhib Chamakh", pos:"GK", club:"Club Africain", starter:true, goals:0, matches:0},
     {name:"Ali Abdi", pos:"DEF", club:"OGC Nice", starter:true, goals:0, matches:0},
     {name:"Montassar Talbi", pos:"DEF", club:"FC Lorient", starter:true, goals:0, matches:0},
@@ -1493,7 +1493,7 @@ const TEAMS = {
     {name:"Anis Slimane", pos:"MIL", club:"Norwich City FC", starter:false, goals:0, matches:0},
     {name:"Sebastian Tounekti", pos:"MIL", club:"Celtic FC", starter:false, goals:0, matches:0},
   ]},
-  TUR: { name:"Turquie", flag:"🇹🇷", host:false, players:[
+  TUR: { name:"Turquie", flag:"__TUR__", host:false, players:[
     {name:"Mert Gunok", pos:"GK", club:"Fenerbahçe SK", starter:true, goals:0, matches:0},
     {name:"Zeki Celik", pos:"DEF", club:"AS Roma", starter:true, goals:0, matches:0},
     {name:"Merih Demiral", pos:"DEF", club:"Al Ahli FC", starter:true, goals:0, matches:0},
@@ -1521,7 +1521,7 @@ const TEAMS = {
     {name:"Samet Akaydin", pos:"DEF", club:"Çaykur Rizespor", starter:false, goals:0, matches:0},
     {name:"Can Uzun", pos:"ATT", club:"Eintracht Frankfurt", starter:false, goals:0, matches:0},
   ]},
-  URU: { name:"Uruguay", flag:"🇺🇾", host:false, players:[
+  URU: { name:"Uruguay", flag:"__URU__", host:false, players:[
     {name:"Sergio Rochet", pos:"GK", club:"SC Internacional", starter:true, goals:0, matches:0},
     {name:"Jose Maria Gimenez", pos:"DEF", club:"Atlético De Madrid", starter:true, goals:0, matches:0},
     {name:"Sebastian Caceres", pos:"DEF", club:"Club América", starter:true, goals:0, matches:0},
@@ -1549,7 +1549,7 @@ const TEAMS = {
     {name:"Juan Manuel Sanabria", pos:"MIL", club:"Real Salt Lake", starter:false, goals:0, matches:0},
     {name:"Rodrigo Zalazar", pos:"MIL", club:"SC Braga", starter:false, goals:0, matches:0},
   ]},
-  USA: { name:"États-Unis", flag:"🇺🇸", host:true, players:[
+  USA: { name:"États-Unis", flag:"__USA__", host:true, players:[
     {name:"Matt Turner", pos:"GK", club:"New England Revolution", starter:true, goals:0, matches:0},
     {name:"Sergino Dest", pos:"DEF", club:"PSV Eindhoven", starter:true, goals:0, matches:0},
     {name:"Chris Richards", pos:"DEF", club:"Crystal Palace FC", starter:true, goals:0, matches:0},
@@ -1577,7 +1577,7 @@ const TEAMS = {
     {name:"Chris Brady", pos:"GK", club:"Chicago Fire FC", starter:false, goals:0, matches:0},
     {name:"Alex Zendejas", pos:"ATT", club:"Club América", starter:false, goals:0, matches:0},
   ]},
-  UZB: { name:"Ouzbékistan", flag:"🇺🇿", host:false, players:[
+  UZB: { name:"Ouzbékistan", flag:"__UZB__", host:false, players:[
     {name:"Utkir Yusupov", pos:"GK", club:"PFC Navbahor Namangan", starter:true, goals:0, matches:0},
     {name:"Abdukodir Khusanov", pos:"DEF", club:"Manchester City FC", starter:true, goals:0, matches:0},
     {name:"Khojiakbar Alijonov", pos:"DEF", club:"Pakhtakor Tashkent FK", starter:true, goals:0, matches:0},
@@ -1637,6 +1637,60 @@ function getGroupMatches(teams) {
   return m;
 }
 
+function flagHtml(f) {
+  function img(c) {
+    return "<img src='https://flagcdn.com/24x18/"+c+".png' style='height:1.4em;vertical-align:middle;border-radius:2px' alt='"+c+"'>";
+  }
+  if(f==="__ALG__") return img("dz");
+  if(f==="__ARG__") return img("ar");
+  if(f==="__AUS__") return img("au");
+  if(f==="__AUT__") return img("at");
+  if(f==="__BEL__") return img("be");
+  if(f==="__BIH__") return img("ba");
+  if(f==="__BRA__") return img("br");
+  if(f==="__CPV__") return img("cv");
+  if(f==="__CAN__") return img("ca");
+  if(f==="__CIV__") return img("ci");
+  if(f==="__COD__") return img("cd");
+  if(f==="__COL__") return img("co");
+  if(f==="__CRO__") return img("hr");
+  if(f==="__CUW__") return img("cw");
+  if(f==="__CZE__") return img("cz");
+  if(f==="__ECU__") return img("ec");
+  if(f==="__EGY__") return img("eg");
+  if(f==="__ENG__") return img("gb-eng");
+  if(f==="__ESP__") return img("es");
+  if(f==="__FRA__") return img("fr");
+  if(f==="__GER__") return img("de");
+  if(f==="__GHA__") return img("gh");
+  if(f==="__HAI__") return img("ht");
+  if(f==="__IRN__") return img("ir");
+  if(f==="__IRQ__") return img("iq");
+  if(f==="__JOR__") return img("jo");
+  if(f==="__JPN__") return img("jp");
+  if(f==="__KOR__") return img("kr");
+  if(f==="__KSA__") return img("sa");
+  if(f==="__MAR__") return img("ma");
+  if(f==="__MEX__") return img("mx");
+  if(f==="__NED__") return img("nl");
+  if(f==="__NOR__") return img("no");
+  if(f==="__NZL__") return img("nz");
+  if(f==="__PAN__") return img("pa");
+  if(f==="__PAR__") return img("py");
+  if(f==="__POR__") return img("pt");
+  if(f==="__QAT__") return img("qa");
+  if(f==="__RSA__") return img("za");
+  if(f==="__SCO__") return img("gb-sct");
+  if(f==="__SEN__") return img("sn");
+  if(f==="__SUI__") return img("ch");
+  if(f==="__SWE__") return img("se");
+  if(f==="__TUN__") return img("tn");
+  if(f==="__TUR__") return img("tr");
+  if(f==="__URU__") return img("uy");
+  if(f==="__USA__") return img("us");
+  if(f==="__UZB__") return img("uz");
+  return f;
+}
 function teamData(code) {
   return TEAMS[code] || { name: code, flag: "🏳️", host: false, players: [] };
 }
@@ -1692,7 +1746,7 @@ function renderMatchCard(home, away, label = '', venue = '') {
     </div>
     <div class="match-teams">
       <div class="team-side">
-        <span class="flag">${h.flag}</span>
+        <span class="flag">${flagHtml(h.flag)}</span>
         <div>
           <div class="team-name">${h.name} ${hostBadge(h)}</div>
           <div class="team-code">${home}</div>
@@ -1700,7 +1754,7 @@ function renderMatchCard(home, away, label = '', venue = '') {
       </div>
       <div class="vs">VS</div>
       <div class="team-side right">
-        <span class="flag">${a.flag}</span>
+        <span class="flag">${flagHtml(a.flag)}</span>
         <div>
           <div class="team-name">${a.name} ${hostBadge(a)}</div>
           <div class="team-code">${away}</div>
@@ -1719,11 +1773,11 @@ function renderMatchCard(home, away, label = '', venue = '') {
     <div class="squad-panel" id="${mid}-squad">
       <div class="squad-cols">
         <div>
-          <div class="squad-team-title">${h.flag} ${h.name}</div>
+          <div class="squad-team-title">${flagHtml(h.flag)} ${h.name}</div>
           <div class="player-list">${homePlayers || '<span style="color:var(--muted);font-size:0.8rem">Effectif à venir</span>'}</div>
         </div>
         <div>
-          <div class="squad-team-title">${a.flag} ${a.name}</div>
+          <div class="squad-team-title">${flagHtml(a.flag)} ${a.name}</div>
           <div class="player-list">${awayPlayers || '<span style="color:var(--muted);font-size:0.8rem">Effectif à venir</span>'}</div>
         </div>
       </div>
@@ -1754,7 +1808,7 @@ function buildGroups() {
 
     const teamBadges = g.teams.map(code => {
       const t = teamData(code);
-      return `<span title="${t.name}">${t.flag} ${t.name}</span>`;
+      return `<span title="${t.name}">${flagHtml(t.flag)} ${t.name}</span>`;
     }).join(' · ');
 
     html += `
@@ -1767,13 +1821,18 @@ function buildGroups() {
     </div>`;
   });
   container.innerHTML = html;
-}
+  }}
+}}
 
 // ════════════════════════════════════════════════════════
 //  B U I L D  PHASES  (placeholder — à remplir au fil du tournoi)
 // ════════════════════════════════════════════════════════
 function buildPhase(containerId, rounds) {
   const container = document.getElementById(containerId);
+  if (!rounds || rounds.length === 0 || rounds.every(r => !r.matches || r.matches.length === 0)) {
+    container.innerHTML = "<div style=\"text-align:center;padding:60px 20px;color:var(--muted)\">  <div style=\"font-size:3rem;margin-bottom:16px\">⏳</div>  <div style=\"font-size:1.2rem;font-weight:700;color:var(--text);margin-bottom:8px\">Pas encore commencé</div>  <div style=\"font-size:0.9rem\">Cette phase sera disponible à l'issue de la phase de groupes.<br>  Le tournoi démarre le <strong style=\"color:var(--accent)\">11 juin 2026</strong>.</div></div>";
+    return;
+  }
   let html = '';
   rounds.forEach(round => {
     let matchesHtml = round.matches.map(m =>
@@ -1788,34 +1847,13 @@ function buildPhase(containerId, rounds) {
   container.innerHTML = html;
 }
 
-const H8_MATCHES = [
-  {label:"Huitième 1", matches:[["FRA","COL","MetLife Stadium"],["ESP","MAR","AT&T Stadium"]]},
-  {label:"Huitième 2", matches:[["BRA","GER","SoFi Stadium"],["ARG","ENG","Rose Bowl"]]},
-  {label:"Huitième 3", matches:[["NED","SEN","Levi's Stadium"],["POR","URU","Hard Rock Stadium"]]},
-  {label:"Huitième 4", matches:[["USA","MEX","Rose Bowl"],["CAN","CRO","BC Place"]]},
-];
+const H8_MATCHES = [];
 
-const QF_MATCHES = [
-  {label:"Quart de finale", matches:[
-    ["FRA","BRA","MetLife Stadium"],
-    ["ESP","ARG","AT&T Stadium"],
-    ["NED","USA","SoFi Stadium"],
-    ["POR","ENG","Rose Bowl"],
-  ]},
-];
+const QF_MATCHES = [];
 
-const SEMI_MATCHES = [
-  {label:"Demi-finale", matches:[
-    ["FRA","ESP","MetLife Stadium"],
-    ["BRA","ENG","Rose Bowl"],
-  ]},
-];
+const SEMI_MATCHES = [];
 
-const FINAL_MATCHES = [
-  {label:"🏆 FINALE — 19 juillet 2026", matches:[
-    ["FRA","BRA","MetLife Stadium, New York"],
-  ]},
-];
+const FINAL_MATCHES = [];
 
 // ════════════════════════════════════════════════════════
 //  S T A T S  joueurs
@@ -1841,7 +1879,7 @@ function buildStats() {
     players.map((p, i) => `
     <div class="stat-row">
       <span class="stat-rank">${i+1}</span>
-      <span class="stat-flag">${p.flag}</span>
+      <span class="stat-flag">${flagHtml(p.flag)}</span>
       <div class="stat-info">
         <div class="stat-player">${p.name}</div>
         <div class="stat-team">${p.teamName} · ${p.club}</div>
@@ -1863,7 +1901,7 @@ function buildStats() {
       <div id="player-search-results">
         ${allPlayers.map(p => `
         <div class="stat-row player-searchable" data-name="${p.name.toLowerCase()}" data-team="${p.teamName.toLowerCase()}" data-club="${p.club.toLowerCase()}">
-          <span class="stat-flag">${p.flag}</span>
+          <span class="stat-flag">${flagHtml(p.flag)}</span>
           <span class="player-pos pos-${p.pos}" style="font-size:0.65rem;padding:2px 4px;border-radius:3px;">${p.pos}</span>
           <div class="stat-info">
             <div class="stat-player">${p.name}</div>
