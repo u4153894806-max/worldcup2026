@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coupe du Monde 2026 — Pronostics</title>
+<style>
+  :root {
+    --bg: #f0f4f8;
+    --surface: #ffffff;
+    --surface2: #f7f9fc;
+    --border: #dde3ee;
+    --accent: #c47d00;
+    --accent2: #2563eb;
+    --text: #1a2236;
+    --muted: #6b7a99;
+    --green: #16a34a;
+    --red: #dc2626;
+    --purple: #7c3aed;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; }
+
+  header {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 50%, #1e3a5f 100%);
+    border-bottom: 2px solid var(--accent);
+    padding: 18px 32px;
+    display: flex; align-items: center; gap: 20px;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  }
+  header h1 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; }
+  header h1 span { color: var(--accent); }
+  header .subtitle { color: var(--muted); font-size: 0.85rem; }
+
+  nav {
+    display: flex; gap: 6px;
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    padding: 0 24px; overflow-x: auto;
+  }
+  nav button {
+    background: none; border: none; color: var(--muted); cursor: pointer;
+    padding: 14px 18px; font-size: 0.9rem; font-weight: 600; white-space: nowrap;
+    border-bottom: 3px solid transparent; transition: all 0.2s;
+  }
+  nav button:hover { color: var(--text); }
+  nav button.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  .page { display: none; padding: 24px 32px; }
+  .page.active { display: block; }
+
+  /* ── GROUPES ── */
+  .groups-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 20px;
+  }
+  .group-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden;
+  }
+  .group-header {
+    background: linear-gradient(90deg, var(--accent2), #1e40af);
+    padding: 10px 16px; font-weight: 800; font-size: 1rem;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .group-matches { padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+
+  .match-card {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .match-card:hover { border-color: var(--accent2); }
+  .match-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 14px; border-bottom: 1px solid var(--border);
+    font-size: 0.75rem; color: var(--muted);
+  }
+  .match-teams {
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    align-items: center; padding: 10px 14px; gap: 8px;
+  }
+  .team-side { display: flex; align-items: center; gap: 8px; }
+  .team-side.right { flex-direction: row-reverse; text-align: right; }
+  .flag { font-size: 1.8rem; }
+  .team-name { font-weight: 700; font-size: 0.95rem; }
+  .team-code { font-size: 0.75rem; color: var(--muted); }
+  .vs { color: var(--accent); font-weight: 900; font-size: 0.9rem; text-align: center; }
+  .score-input {
+    display: flex; align-items: center; gap: 6px;
+    padding: 6px 14px 10px; justify-content: center;
+  }
+  .score-input input {
+    width: 42px; text-align: center; background: var(--bg); border: 1px solid var(--border);
+    border-radius: 6px; color: var(--text); font-size: 1.1rem; font-weight: 700;
+    padding: 5px; outline: none; transition: border-color 0.2s;
+  }
+  .score-input input:focus { border-color: var(--accent); }
+  .score-sep { color: var(--muted); font-weight: 700; }
+
+  .toggle-squad {
+    width: 100%; background: none; border: none; border-top: 1px solid var(--border);
+    color: var(--muted); cursor: pointer; padding: 7px;
+    font-size: 0.78rem; transition: background 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .toggle-squad:hover { background: var(--border); color: var(--text); }
+  .squad-panel { display: none; padding: 10px 12px; border-top: 1px solid var(--border); }
+  .squad-panel.open { display: block; }
+  .squad-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .squad-team-title { font-size: 0.75rem; font-weight: 700; color: var(--accent); margin-bottom: 6px; display: flex; gap: 6px; align-items: center; }
+
+  .player-list { display: flex; flex-direction: column; gap: 3px; }
+  .player-item {
+    display: flex; align-items: center; gap: 7px;
+    padding: 5px 7px; border-radius: 6px; cursor: default;
+    position: relative; transition: background 0.15s;
+    font-size: 0.8rem;
+  }
+  .player-item:hover { background: var(--border); }
+  .player-pos {
+    width: 26px; text-align: center; font-size: 0.65rem; font-weight: 700;
+    border-radius: 4px; padding: 2px 0;
+  }
+  .pos-GK { background: #7c3aed22; color: #a78bfa; border: 1px solid #7c3aed44; }
+  .pos-DEF { background: #0284c722; color: #38bdf8; border: 1px solid #0284c744; }
+  .pos-MIL { background: #15803d22; color: #4ade80; border: 1px solid #15803d44; }
+  .pos-ATT { background: #c2410c22; color: #fb923c; border: 1px solid #c2410c44; }
+  .player-name { flex: 1; font-weight: 500; }
+  .starter-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .starter-dot.starter { background: var(--green); }
+  .starter-dot.sub { background: var(--muted); }
+
+  /* ── TOOLTIP ── */
+  .tooltip {
+    display: none;
+    position: absolute; left: 50%; transform: translateX(-50%);
+    bottom: calc(100% + 8px);
+    background: #ffffff; border: 1px solid var(--accent); box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    border-radius: 10px; padding: 10px 14px;
+    width: 220px; z-index: 200;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.8);
+    pointer-events: none;
+  }
+  .tooltip::after {
+    content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+    border: 6px solid transparent; border-top-color: var(--accent);
+  }
+  .player-item:hover .tooltip { display: block; }
+  .tt-name { font-weight: 800; font-size: 0.9rem; margin-bottom: 6px; color: var(--text); }
+  .tt-club { font-size: 0.82rem; color: var(--accent); margin-bottom: 6px; }
+  .tt-row { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--muted); border-top: 1px solid var(--border); padding-top: 5px; margin-top: 2px; gap: 10px; }
+  .tt-stat { display: flex; flex-direction: column; align-items: center; }
+  .tt-stat strong { color: var(--text); font-size: 1rem; }
+  .tt-status { display: inline-flex; align-items: center; gap: 5px; font-size: 0.75rem; padding: 2px 8px; border-radius: 12px; }
+  .tt-status.starter { background: #16a34a22; color: #4ade80; border: 1px solid #16a34a44; }
+  .tt-status.sub { background: #71717a22; color: #a1a1aa; border: 1px solid #71717a44; }
+
+  /* ── PHASES ── */
+  .phase-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 20px; color: var(--accent); }
+  .bracket-round { margin-bottom: 32px; }
+  .round-title { font-size: 1rem; font-weight: 700; color: var(--accent2); margin-bottom: 14px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+  .matches-row { display: flex; flex-wrap: wrap; gap: 14px; }
+  .match-ko {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; min-width: 280px; overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .match-ko:hover { border-color: var(--accent2); }
+  .match-ko .match-header { font-size: 0.72rem; }
+  .match-ko .match-teams { padding: 8px 12px; }
+  .match-ko .flag { font-size: 1.5rem; }
+  .match-ko .team-name { font-size: 0.88rem; }
+
+  /* ── STATS ── */
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .stat-card h3 { font-size: 0.85rem; color: var(--muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .stat-row { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--border); }
+  .stat-row:last-child { border: none; }
+  .stat-rank { width: 20px; text-align: center; font-size: 0.75rem; color: var(--muted); }
+  .stat-flag { font-size: 1.1rem; }
+  .stat-info { flex: 1; }
+  .stat-player { font-size: 0.85rem; font-weight: 600; }
+  .stat-team { font-size: 0.72rem; color: var(--muted); }
+  .stat-value { font-weight: 800; font-size: 1rem; color: var(--accent); }
+
+  .search-bar {
+    width: 100%; max-width: 400px; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text); padding: 10px 14px; font-size: 0.9rem; outline: none;
+    margin-bottom: 20px; transition: border-color 0.2s;
+  }
+  .search-bar:focus { border-color: var(--accent); }
+  .no-result { color: var(--muted); font-size: 0.9rem; padding: 20px 0; }
+
+  .legend { display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.78rem; color: var(--muted); }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  .badge-host { background: var(--accent); color: #000; font-size: 0.62rem; font-weight: 700; padding: 1px 6px; border-radius: 10px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>🏆 Coupe du Monde <span>2026</span></h1>
+    <div class="subtitle">USA · Canada · Mexique — 11 juin – 19 juillet 2026 · 48 équipes</div>
+  </div>
+</header>
+
+<nav>
+  <button class="active" onclick="showPage('groupes')">⚽ Groupes</button>
+  <button onclick="showPage('huitiemes')">🔟 Huitièmes</button>
+  <button onclick="showPage('quarts')">🔢 Quarts</button>
+  <button onclick="showPage('demis')">🥈 Demies</button>
+  <button onclick="showPage('finale')">🏆 Finale</button>
+  <button onclick="showPage('stats')">📊 Stats joueurs</button>
+</nav>
+
+<div id="groupes" class="page active">
+  <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap;">
+    <h2 style="font-size:1.2rem;font-weight:800;">Phase de groupes</h2>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Titulaire</div>
+      <div class="legend-dot" style="background:var(--muted)"></div><span style="font-size:0.78rem;color:var(--muted)">Remplaçant</span>
+      <div class="legend-item"><span style="font-size:0.72rem;background:var(--accent);color:#000;padding:1px 6px;border-radius:10px;font-weight:700;">HÔTE</span> Pays hôte</div>
+    </div>
+  </div>
+  <div class="groups-grid" id="groups-container"></div>
+</div>
+
+<div id="huitiemes" class="page">
+  <div class="phase-title">⚡ Huitièmes de finale — Round of 32</div>
+  <div id="huitiemes-container"></div>
+</div>
+
+<div id="quarts" class="page">
+  <div class="phase-title">🔥 Quarts de finale</div>
+  <div id="quarts-container"></div>
+</div>
+
+<div id="demis" class="page">
+  <div class="phase-title">✨ Demi-finales</div>
+  <div id="demis-container"></div>
+</div>
+
+<div id="finale" class="page">
+  <div class="phase-title">🏆 Finale — MetLife Stadium, New York</div>
+  <div id="finale-container"></div>
+</div>
+
+<div id="stats" class="page">
+  <h2 style="font-size:1.2rem;font-weight:800;margin-bottom:16px;">Statistiques joueurs (saison 2025-26)</h2>
+  <input class="search-bar" type="text" placeholder="🔍 Rechercher un joueur ou une sélection..." oninput="filterPlayers(this.value)">
+  <div id="stats-container" class="stats-grid"></div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════
+//  D O N N É E S
+// ════════════════════════════════════════════════════════
+const TEAMS = {
+  FRA: { name:"France", flag:"🇫🇷", host:false, players:[
+    {name:"M. Maignan",       pos:"GK",  club:"AC Milan",          starter:true,  goals:0,  matches:38},
+    {name:"A. Areola",        pos:"GK",  club:"West Ham",          starter:false, goals:0,  matches:12},
+    {name:"T. Hernandez",     pos:"DEF", club:"AC Milan",          starter:true,  goals:3,  matches:30},
+    {name:"J. Konaté",        pos:"DEF", club:"Liverpool",         starter:true,  goals:4,  matches:36},
+    {name:"W. Saliba",        pos:"DEF", club:"Arsenal",           starter:true,  goals:3,  matches:37},
+    {name:"B. Pavard",        pos:"DEF", club:"Inter Milan",       starter:true,  goals:2,  matches:28},
+    {name:"J. Koundé",        pos:"DEF", club:"FC Barcelone",      starter:true,  goals:2,  matches:32},
+    {name:"A. Tchouaméni",    pos:"MIL", club:"Real Madrid",       starter:true,  goals:3,  matches:30},
+    {name:"A. Rabiot",        pos:"MIL", club:"Marseille",         starter:true,  goals:4,  matches:31},
+    {name:"E. Camavinga",     pos:"MIL", club:"Real Madrid",       starter:true,  goals:5,  matches:33},
+    {name:"Y. Fofana",        pos:"MIL", club:"Chelsea",           starter:true,  goals:2,  matches:34},
+    {name:"M. Zaire-Emery",   pos:"MIL", club:"PSG",               starter:false, goals:6,  matches:30},
+    {name:"K. Mbappé",        pos:"ATT", club:"Real Madrid",       starter:true,  goals:34, matches:38},
+    {name:"O. Dembélé",       pos:"ATT", club:"PSG",               starter:true,  goals:18, matches:35},
+    {name:"A. Griezmann",     pos:"ATT", club:"Atlético Madrid",   starter:true,  goals:14, matches:36},
+    {name:"M. Thuram",        pos:"ATT", club:"Inter Milan",       starter:true,  goals:16, matches:35},
+    {name:"B. Diallo",        pos:"ATT", club:"PSG",               starter:false, goals:9,  matches:28},
+  ]},
+  ESP: { name:"Espagne", flag:"🇪🇸", host:false, players:[
+    {name:"U. Simón",         pos:"GK",  club:"Athletic Bilbao",   starter:true,  goals:0,  matches:38},
+    {name:"D. Carvajal",      pos:"DEF", club:"Real Madrid",       starter:true,  goals:1,  matches:28},
+    {name:"A. Laporte",       pos:"DEF", club:"Al-Nassr",          starter:false, goals:1,  matches:24},
+    {name:"R. Le Normand",    pos:"DEF", club:"Atlético Madrid",   starter:true,  goals:2,  matches:30},
+    {name:"M. Cucurella",     pos:"DEF", club:"Chelsea",           starter:true,  goals:1,  matches:35},
+    {name:"R. Merino",        pos:"MIL", club:"Arsenal",           starter:true,  goals:5,  matches:32},
+    {name:"Pedri",            pos:"MIL", club:"FC Barcelone",      starter:true,  goals:10, matches:30},
+    {name:"F. Ruiz",          pos:"MIL", club:"PSG",               starter:true,  goals:7,  matches:34},
+    {name:"M. Olmo",          pos:"MIL", club:"FC Barcelone",      starter:true,  goals:12, matches:32},
+    {name:"Lamine Yamal",     pos:"ATT", club:"FC Barcelone",      starter:true,  goals:22, matches:36},
+    {name:"Nico Williams",    pos:"ATT", club:"Athletic Bilbao",   starter:true,  goals:15, matches:34},
+    {name:"Á. Morata",        pos:"ATT", club:"AC Milan",          starter:true,  goals:12, matches:32},
+    {name:"Ferran Torres",    pos:"ATT", club:"FC Barcelone",      starter:false, goals:8,  matches:28},
+  ]},
+  BRA: { name:"Brésil", flag:"🇧🇷", host:false, players:[
+    {name:"Ederson",          pos:"GK",  club:"Man. City",         starter:true,  goals:0,  matches:38},
+    {name:"Danilo",           pos:"DEF", club:"Flamengo",          starter:false, goals:1,  matches:22},
+    {name:"Militão",          pos:"DEF", club:"Real Madrid",       starter:true,  goals:2,  matches:30},
+    {name:"Gabriel Magalhães",pos:"DEF", club:"Arsenal",           starter:true,  goals:5,  matches:36},
+    {name:"Wendell",          pos:"DEF", club:"Porto",             starter:true,  goals:0,  matches:30},
+    {name:"Casemiro",         pos:"MIL", club:"Man. United",       starter:true,  goals:3,  matches:30},
+    {name:"Bruno Guimarães",  pos:"MIL", club:"Newcastle",         starter:true,  goals:8,  matches:35},
+    {name:"Lucas Paquetá",    pos:"MIL", club:"West Ham",          starter:true,  goals:9,  matches:32},
+    {name:"Vinicius Jr.",     pos:"ATT", club:"Real Madrid",       starter:true,  goals:29, matches:38},
+    {name:"Rodrygo",          pos:"ATT", club:"Real Madrid",       starter:true,  goals:18, matches:36},
+    {name:"Endrick",          pos:"ATT", club:"Real Madrid",       starter:true,  goals:14, matches:34},
+    {name:"Savinho",          pos:"ATT", club:"Man. City",         starter:false, goals:10, matches:30},
+    {name:"Gabriel Martinelli",pos:"ATT",club:"Arsenal",           starter:false, goals:11, matches:32},
+  ]},
+  ARG: { name:"Argentine", flag:"🇦🇷", host:false, players:[
+    {name:"E. Martínez",      pos:"GK",  club:"Aston Villa",       starter:true,  goals:0,  matches:38},
+    {name:"G. Montiel",       pos:"DEF", club:"Séville",           starter:false, goals:0,  matches:20},
+    {name:"N. Otamendi",      pos:"DEF", club:"Benfica",           starter:true,  goals:2,  matches:30},
+    {name:"C. Romero",        pos:"DEF", club:"Tottenham",         starter:true,  goals:3,  matches:32},
+    {name:"N. Molina",        pos:"DEF", club:"Atlético Madrid",   starter:true,  goals:4,  matches:34},
+    {name:"R. De Paul",       pos:"MIL", club:"Atlético Madrid",   starter:true,  goals:5,  matches:33},
+    {name:"E. Fernández",     pos:"MIL", club:"Chelsea",           starter:true,  goals:4,  matches:32},
+    {name:"A. Mac Allister",  pos:"MIL", club:"Liverpool",         starter:true,  goals:9,  matches:35},
+    {name:"L. Messi",         pos:"ATT", club:"Inter Miami",       starter:true,  goals:20, matches:28},
+    {name:"J. Álvarez",       pos:"ATT", club:"Atlético Madrid",   starter:true,  goals:22, matches:38},
+    {name:"L. Martínez",      pos:"ATT", club:"Inter Milan",       starter:true,  goals:26, matches:36},
+    {name:"Á. Di María",      pos:"ATT", club:"Benfica",           starter:false, goals:6,  matches:24},
+  ]},
+  ENG: { name:"Angleterre", flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿", host:false, players:[
+    {name:"J. Pickford",      pos:"GK",  club:"Everton",           starter:true,  goals:0,  matches:38},
+    {name:"K. Walker",        pos:"DEF", club:"Man. City",         starter:true,  goals:0,  matches:28},
+    {name:"H. Maguire",       pos:"DEF", club:"Man. United",       starter:false, goals:1,  matches:20},
+    {name:"J. Guehi",         pos:"DEF", club:"Newcastle",         starter:true,  goals:2,  matches:34},
+    {name:"L. Shaw",          pos:"DEF", club:"Man. United",       starter:false, goals:0,  matches:18},
+    {name:"J. Bellingham",    pos:"MIL", club:"Real Madrid",       starter:true,  goals:22, matches:36},
+    {name:"D. Rice",          pos:"MIL", club:"Arsenal",           starter:true,  goals:8,  matches:36},
+    {name:"T. Alexander-Arnold",pos:"MIL",club:"Real Madrid",      starter:true,  goals:9,  matches:34},
+    {name:"B. Saka",          pos:"ATT", club:"Arsenal",           starter:true,  goals:20, matches:36},
+    {name:"P. Foden",         pos:"ATT", club:"Man. City",         starter:true,  goals:16, matches:34},
+    {name:"H. Kane",          pos:"ATT", club:"Bayern Munich",     starter:true,  goals:36, matches:38},
+    {name:"M. Rashford",      pos:"ATT", club:"Aston Villa",       starter:false, goals:12, matches:30},
+    {name:"C. Palmer",        pos:"ATT", club:"Chelsea",           starter:false, goals:18, matches:34},
+  ]},
+  GER: { name:"Allemagne", flag:"🇩🇪", host:false, players:[
+    {name:"M. Neuer",         pos:"GK",  club:"Bayern Munich",     starter:true,  goals:0,  matches:30},
+    {name:"J. Kimmich",       pos:"DEF", club:"Bayern Munich",     starter:true,  goals:5,  matches:34},
+    {name:"A. Rüdiger",       pos:"DEF", club:"Real Madrid",       starter:true,  goals:4,  matches:32},
+    {name:"J. Tah",           pos:"DEF", club:"Bayern Munich",     starter:true,  goals:2,  matches:30},
+    {name:"M. Mittelstädt",   pos:"DEF", club:"Stuttgart",         starter:true,  goals:3,  matches:32},
+    {name:"F. Wirtz",         pos:"MIL", club:"Bayern Munich",     starter:true,  goals:18, matches:34},
+    {name:"J. Musiala",       pos:"MIL", club:"Bayern Munich",     starter:true,  goals:16, matches:35},
+    {name:"L. Goretzka",      pos:"MIL", club:"Bayern Munich",     starter:false, goals:6,  matches:28},
+    {name:"I. Gündogan",      pos:"MIL", club:"Man. City",         starter:true,  goals:7,  matches:30},
+    {name:"K. Havertz",       pos:"ATT", club:"Arsenal",           starter:true,  goals:18, matches:36},
+    {name:"L. Nmecha",        pos:"ATT", club:"Dortmund",          starter:false, goals:8,  matches:28},
+    {name:"N. Füllkrug",      pos:"ATT", club:"West Ham",          starter:true,  goals:14, matches:30},
+  ]},
+  POR: { name:"Portugal", flag:"🇵🇹", host:false, players:[
+    {name:"D. Costa",         pos:"GK",  club:"Aston Villa",       starter:true,  goals:0,  matches:34},
+    {name:"João Cancelo",     pos:"DEF", club:"FC Barcelone",      starter:true,  goals:4,  matches:32},
+    {name:"R. Dias",          pos:"DEF", club:"Man. City",         starter:true,  goals:2,  matches:30},
+    {name:"A. Silva",         pos:"DEF", club:"Milan",             starter:true,  goals:1,  matches:28},
+    {name:"N. Mendes",        pos:"DEF", club:"PSG",               starter:true,  goals:3,  matches:33},
+    {name:"B. Fernandes",     pos:"MIL", club:"Man. United",       starter:true,  goals:14, matches:36},
+    {name:"V. Horta",         pos:"MIL", club:"Villarreal",        starter:false, goals:8,  matches:30},
+    {name:"R. Neves",         pos:"MIL", club:"Al-Hilal",          starter:true,  goals:5,  matches:30},
+    {name:"C. Ronaldo",       pos:"ATT", club:"Al-Nassr",          starter:true,  goals:35, matches:36},
+    {name:"Pedro Neto",       pos:"ATT", club:"Chelsea",           starter:true,  goals:12, matches:34},
+    {name:"R. Leão",          pos:"ATT", club:"AC Milan",          starter:true,  goals:16, matches:34},
+    {name:"João Félix",       pos:"ATT", club:"FC Barcelone",      starter:false, goals:11, matches:28},
+  ]},
+  NED: { name:"Pays-Bas", flag:"🇳🇱", host:false, players:[
+    {name:"B. Flekken",       pos:"GK",  club:"Brentford",         starter:true,  goals:0,  matches:34},
+    {name:"D. Dumfries",      pos:"DEF", club:"Inter Milan",       starter:true,  goals:5,  matches:33},
+    {name:"M. de Ligt",       pos:"DEF", club:"Man. United",       starter:true,  goals:2,  matches:28},
+    {name:"V. van Dijk",      pos:"DEF", club:"Liverpool",         starter:true,  goals:4,  matches:36},
+    {name:"I. Gakpo",         pos:"ATT", club:"Liverpool",         starter:true,  goals:18, matches:35},
+    {name:"X. Simons",        pos:"MIL", club:"PSG",               starter:true,  goals:11, matches:34},
+    {name:"T. Reijnders",     pos:"MIL", club:"AC Milan",          starter:true,  goals:9,  matches:33},
+    {name:"F. de Jong",       pos:"MIL", club:"FC Barcelone",      starter:true,  goals:6,  matches:30},
+    {name:"W. Weghorst",      pos:"ATT", club:"Hoffenheim",        starter:false, goals:10, matches:30},
+    {name:"B. Brobbey",       pos:"ATT", club:"Ajax",              starter:false, goals:16, matches:32},
+    {name:"D. Bergwijn",      pos:"ATT", club:"Ajax",              starter:false, goals:12, matches:32},
+  ]},
+  BEL: { name:"Belgique", flag:"🇧🇪", host:false, players:[
+    {name:"K. Casteels",      pos:"GK",  club:"Al-Qadsiah",        starter:true,  goals:0,  matches:28},
+    {name:"T. Castagne",      pos:"DEF", club:"Fulham",            starter:true,  goals:2,  matches:32},
+    {name:"W. Faes",          pos:"DEF", club:"Leicester",         starter:true,  goals:1,  matches:30},
+    {name:"A. Theate",        pos:"DEF", club:"Francfort",         starter:true,  goals:3,  matches:32},
+    {name:"J. Vertonghen",    pos:"DEF", club:"Anderlecht",        starter:false, goals:0,  matches:20},
+    {name:"A. Trossard",      pos:"MIL", club:"Arsenal",           starter:true,  goals:10, matches:34},
+    {name:"Y. Tielemans",     pos:"MIL", club:"Aston Villa",       starter:true,  goals:7,  matches:33},
+    {name:"O. Doku",          pos:"ATT", club:"Man. City",         starter:true,  goals:10, matches:30},
+    {name:"L. Openda",        pos:"ATT", club:"RB Leipzig",        starter:true,  goals:20, matches:35},
+    {name:"R. Lukaku",        pos:"ATT", club:"Napoli",            starter:true,  goals:22, matches:34},
+    {name:"J. Doku",          pos:"ATT", club:"Man. City",         starter:false, goals:8,  matches:26},
+  ]},
+  URU: { name:"Uruguay", flag:"🇺🇾", host:false, players:[
+    {name:"S. Rochet",        pos:"GK",  club:"Nacional",          starter:true,  goals:0,  matches:30},
+    {name:"G. Varela",        pos:"DEF", club:"Flamengo",          starter:true,  goals:1,  matches:28},
+    {name:"R. Araújo",        pos:"DEF", club:"FC Barcelone",      starter:true,  goals:3,  matches:28},
+    {name:"M. Olivera",       pos:"DEF", club:"Napoli",            starter:true,  goals:2,  matches:30},
+    {name:"F. Valverde",      pos:"MIL", club:"Real Madrid",       starter:true,  goals:12, matches:35},
+    {name:"M. Ugarte",        pos:"MIL", club:"PSG",               starter:true,  goals:4,  matches:32},
+    {name:"N. De La Cruz",    pos:"MIL", club:"Flamengo",          starter:true,  goals:8,  matches:30},
+    {name:"D. Núñez",         pos:"ATT", club:"Liverpool",         starter:true,  goals:22, matches:36},
+    {name:"M. Olivera",       pos:"ATT", club:"Napoli",            starter:false, goals:4,  matches:28},
+    {name:"F. Torres",        pos:"ATT", club:"Boca Juniors",      starter:false, goals:9,  matches:26},
+  ]},
+  COL: { name:"Colombie", flag:"🇨🇴", host:false, players:[
+    {name:"C. Vargas",        pos:"GK",  club:"Tigres (MEX)",      starter:true,  goals:0,  matches:30},
+    {name:"D. Muñoz",         pos:"DEF", club:"Crystal Palace",    starter:true,  goals:2,  matches:32},
+    {name:"Y. Mina",          pos:"DEF", club:"Fiorentina",        starter:false, goals:1,  matches:20},
+    {name:"D. Sánchez",       pos:"DEF", club:"Udinese",           starter:true,  goals:0,  matches:28},
+    {name:"J. Mojica",        pos:"DEF", club:"Girona",            starter:true,  goals:1,  matches:30},
+    {name:"J. Lerma",         pos:"MIL", club:"Crystal Palace",    starter:true,  goals:3,  matches:34},
+    {name:"R. Arias",         pos:"MIL", club:"Atlético Madrid",   starter:true,  goals:5,  matches:30},
+    {name:"J. Cuadrado",      pos:"MIL", club:"Inter Miami",       starter:false, goals:3,  matches:22},
+    {name:"L. Díaz",          pos:"ATT", club:"Liverpool",         starter:true,  goals:16, matches:36},
+    {name:"J. Durán",         pos:"ATT", club:"Aston Villa",       starter:true,  goals:18, matches:34},
+    {name:"R. Falcao",        pos:"ATT", club:"Rayo Vallecano",    starter:false, goals:5,  matches:20},
+  ]},
+  MAR: { name:"Maroc", flag:"🇲🇦", host:false, players:[
+    {name:"Y. Bounou",        pos:"GK",  club:"Al-Hilal",          starter:true,  goals:0,  matches:30},
+    {name:"A. Hakimi",        pos:"DEF", club:"PSG",               starter:true,  goals:5,  matches:34},
+    {name:"N. Aguerd",        pos:"DEF", club:"Crystal Palace",    starter:true,  goals:2,  matches:30},
+    {name:"R. Saïss",         pos:"DEF", club:"Besiktas",          starter:false, goals:1,  matches:22},
+    {name:"N. Mazraoui",      pos:"DEF", club:"Man. United",       starter:true,  goals:3,  matches:30},
+    {name:"S. Amrabat",       pos:"MIL", club:"Fenerbahçe",        starter:true,  goals:2,  matches:32},
+    {name:"A. Ounahi",        pos:"MIL", club:"Marseille",         starter:true,  goals:4,  matches:30},
+    {name:"H. Ziyech",        pos:"MIL", club:"Galatasaray",       starter:true,  goals:12, matches:32},
+    {name:"Y. En-Nesyri",     pos:"ATT", club:"Fenerbahçe",        starter:true,  goals:20, matches:36},
+    {name:"S. Boufal",        pos:"ATT", club:"Angers",            starter:false, goals:8,  matches:28},
+    {name:"H. Dari",          pos:"DEF", club:"Southampton",       starter:true,  goals:1,  matches:28},
+  ]},
+  SEN: { name:"Sénégal", flag:"🇸🇳", host:false, players:[
+    {name:"E. Mendy",         pos:"GK",  club:"Al-Ahli",           starter:true,  goals:0,  matches:28},
+    {name:"Y. Sabaly",        pos:"DEF", club:"Betis",             starter:true,  goals:1,  matches:30},
+    {name:"K. Koulibaly",     pos:"DEF", club:"Al-Hilal",          starter:true,  goals:2,  matches:28},
+    {name:"A. Diallo",        pos:"DEF", club:"Borussia Dortmund", starter:true,  goals:1,  matches:30},
+    {name:"I. Gueye",         pos:"MIL", club:"Everton",           starter:true,  goals:4,  matches:30},
+    {name:"N. Mendy",         pos:"MIL", club:"Leicester",         starter:true,  goals:3,  matches:32},
+    {name:"P. Gueye",         pos:"MIL", club:"Nottingham Forest",  starter:false, goals:2,  matches:26},
+    {name:"S. Mané",          pos:"ATT", club:"Al-Nassr",          starter:true,  goals:18, matches:32},
+    {name:"I. Sarr",          pos:"ATT", club:"Aston Villa",       starter:true,  goals:12, matches:34},
+    {name:"B. Diallo",        pos:"ATT", club:"Frankfurt",         starter:false, goals:14, matches:32},
+  ]},
+  JPN: { name:"Japon", flag:"🇯🇵", host:false, players:[
+    {name:"S. Gonda",         pos:"GK",  club:"Séville",           starter:true,  goals:0,  matches:28},
+    {name:"H. Sakai",         pos:"DEF", club:"Marseille",         starter:false, goals:0,  matches:18},
+    {name:"K. Itakura",       pos:"DEF", club:"Borussia M'Gladbach",starter:true, goals:2,  matches:30},
+    {name:"T. Tomiyasu",      pos:"DEF", club:"Arsenal",           starter:true,  goals:1,  matches:28},
+    {name:"Y. Nagatomo",      pos:"DEF", club:"FC Tokyo",          starter:false, goals:0,  matches:20},
+    {name:"H. Morita",        pos:"MIL", club:"Sporting CP",       starter:true,  goals:5,  matches:32},
+    {name:"W. Endo",          pos:"MIL", club:"Liverpool",         starter:true,  goals:3,  matches:32},
+    {name:"K. Mitoma",        pos:"ATT", club:"Brighton",          starter:true,  goals:16, matches:34},
+    {name:"D. Kamada",        pos:"ATT", club:"Crystal Palace",    starter:true,  goals:9,  matches:30},
+    {name:"Ao Tanaka",        pos:"MIL", club:"Borussia Dortmund", starter:true,  goals:4,  matches:30},
+    {name:"T. Ueda",          pos:"ATT", club:"Benfica",           starter:true,  goals:12, matches:32},
+  ]},
+  USA: { name:"États-Unis", flag:"🇺🇸", host:true, players:[
+    {name:"M. Turner",        pos:"GK",  club:"Nottingham Forest",  starter:true,  goals:0,  matches:34},
+    {name:"S. Dest",          pos:"DEF", club:"PSV Eindhoven",      starter:false, goals:2,  matches:22},
+    {name:"T. Ream",          pos:"DEF", club:"Fulham",             starter:true,  goals:1,  matches:30},
+    {name:"C. Richards",      pos:"DEF", club:"Crystal Palace",     starter:true,  goals:1,  matches:30},
+    {name:"A. Robinson",      pos:"DEF", club:"Bournemouth",        starter:true,  goals:2,  matches:32},
+    {name:"W. McKennie",      pos:"MIL", club:"Juventus",           starter:true,  goals:5,  matches:28},
+    {name:"T. Adams",         pos:"MIL", club:"Bournemouth",        starter:true,  goals:2,  matches:28},
+    {name:"Y. Musah",         pos:"MIL", club:"AC Milan",           starter:true,  goals:4,  matches:30},
+    {name:"C. Pulisic",       pos:"ATT", club:"AC Milan",           starter:true,  goals:14, matches:34},
+    {name:"F. Weah",          pos:"ATT", club:"Juventus",           starter:true,  goals:6,  matches:30},
+    {name:"R. Reyna",         pos:"ATT", club:"Nottingham Forest",  starter:false, goals:8,  matches:26},
+    {name:"F. Balogun",       pos:"ATT", club:"Monaco",             starter:true,  goals:16, matches:34},
+  ]},
+  MEX: { name:"Mexique", flag:"🇲🇽", host:true, players:[
+    {name:"G. Ochoa",         pos:"GK",  club:"Salernitana",        starter:true,  goals:0,  matches:28},
+    {name:"J. Sánchez",       pos:"DEF", club:"PSV Eindhoven",      starter:true,  goals:1,  matches:30},
+    {name:"H. Moreno",        pos:"DEF", club:"Al-Qadsiah",         starter:true,  goals:2,  matches:28},
+    {name:"C. Montes",        pos:"DEF", club:"Espanyol",           starter:true,  goals:1,  matches:30},
+    {name:"G. Reyes",         pos:"DEF", club:"Chivas",             starter:false, goals:0,  matches:20},
+    {name:"É. Gutiérrez",     pos:"MIL", club:"PSG",                starter:true,  goals:4,  matches:28},
+    {name:"C. Rodríguez",     pos:"MIL", club:"Tigres",             starter:false, goals:3,  matches:24},
+    {name:"H. Herrera",       pos:"MIL", club:"Monterrey",          starter:true,  goals:3,  matches:30},
+    {name:"H. Lozano",        pos:"ATT", club:"PSV Eindhoven",      starter:true,  goals:10, matches:30},
+    {name:"R. Jiménez",       pos:"ATT", club:"Fulham",             starter:true,  goals:12, matches:32},
+    {name:"A. Vega",          pos:"ATT", club:"Chivas",             starter:false, goals:8,  matches:28},
+  ]},
+  KOR: { name:"Corée du Sud", flag:"🇰🇷", host:false, players:[
+    {name:"S. Hyeon-woo",     pos:"GK",  club:"Ulsan HD",           starter:true,  goals:0,  matches:30},
+    {name:"K. Moon-hwan",     pos:"DEF", club:"Jeonbuk Motors",     starter:true,  goals:1,  matches:28},
+    {name:"K. Min-jae",       pos:"DEF", club:"Bayern Munich",      starter:true,  goals:3,  matches:32},
+    {name:"J. Hyun-soo",      pos:"DEF", club:"Al-Gharafa",         starter:true,  goals:1,  matches:26},
+    {name:"L. Yong",          pos:"DEF", club:"Jeonbuk Motors",     starter:false, goals:0,  matches:20},
+    {name:"H. In-beom",       pos:"MIL", club:"Jeonbuk Motors",     starter:true,  goals:4,  matches:30},
+    {name:"P. Ji-sung",       pos:"MIL", club:"Ulsan HD",           starter:false, goals:2,  matches:22},
+    {name:"L. Jae-sung",      pos:"MIL", club:"Mainz",              starter:true,  goals:6,  matches:30},
+    {name:"S. Heung-min",     pos:"ATT", club:"Tottenham",          starter:true,  goals:18, matches:34},
+    {name:"H. Hee-chan",       pos:"ATT", club:"Wolverhampton",      starter:true,  goals:10, matches:30},
+    {name:"C. Jun",           pos:"ATT", club:"Feyenoord",          starter:true,  goals:12, matches:32},
+  ]},
+  CZE: { name:"Tchéquie", flag:"🇨🇿", host:false, players:[
+    {name:"J. Staněk",        pos:"GK",  club:"FC Barcelone",       starter:true,  goals:0,  matches:30},
+    {name:"V. Coufal",        pos:"DEF", club:"West Ham",           starter:true,  goals:1,  matches:28},
+    {name:"T. Souček",        pos:"MIL", club:"West Ham",           starter:true,  goals:8,  matches:34},
+    {name:"A. Barák",         pos:"MIL", club:"Fiorentina",         starter:true,  goals:6,  matches:28},
+    {name:"P. Schick",        pos:"ATT", club:"Bayer Leverkusen",   starter:true,  goals:14, matches:28},
+    {name:"M. Kuchta",        pos:"ATT", club:"Slavia Prague",      starter:false, goals:8,  matches:26},
+    {name:"V. Sadílek",       pos:"MIL", club:"FC Twente",          starter:true,  goals:3,  matches:30},
+    {name:"D. Jurásek",       pos:"DEF", club:"Benfica",            starter:true,  goals:2,  matches:28},
+  ]},
+  QAT: { name:"Qatar", flag:"🇶🇦", host:false, players:[
+    {name:"M. Barsham",       pos:"GK",  club:"Al-Sadd",            starter:true,  goals:0,  matches:26},
+    {name:"P. Correia",       pos:"DEF", club:"Al-Duhail",          starter:true,  goals:1,  matches:24},
+    {name:"B. Al Rawi",       pos:"DEF", club:"Al-Sadd",            starter:true,  goals:0,  matches:24},
+    {name:"H. Al Haydos",     pos:"MIL", club:"Al-Sadd",            starter:true,  goals:7,  matches:26},
+    {name:"A. Afif",          pos:"ATT", club:"Al-Sadd",            starter:true,  goals:12, matches:26},
+    {name:"M. Muntari",       pos:"ATT", club:"Al-Duhail",          starter:true,  goals:8,  matches:24},
+    {name:"K. Boudiaf",       pos:"MIL", club:"Al-Duhail",          starter:true,  goals:3,  matches:24},
+    {name:"Y. Al Bakhit",     pos:"DEF", club:"Al-Sadd",            starter:false, goals:0,  matches:18},
+  ]},
+  BIH: { name:"Bosnie-Herzégovine", flag:"🇧🇦", host:false, players:[
+    {name:"I. Pirić",         pos:"GK",  club:"Dinamo Zagreb",      starter:true,  goals:0,  matches:28},
+    {name:"S. Kolasinac",     pos:"DEF", club:"Atalanta",           starter:true,  goals:2,  matches:28},
+    {name:"E. Džeko",         pos:"ATT", club:"Fenerbahçe",         starter:true,  goals:14, matches:28},
+    {name:"M. Pjanic",        pos:"MIL", club:"Sharjah FC",         starter:false, goals:3,  matches:20},
+    {name:"S. Rahmanović",    pos:"MIL", club:"Maccabi Tel Aviv",   starter:true,  goals:5,  matches:26},
+    {name:"A. Husic",         pos:"ATT", club:"Lecce",              starter:false, goals:4,  matches:22},
+    {name:"E. Civic",         pos:"MIL", club:"Red Bull Salzbourg", starter:true,  goals:6,  matches:28},
+    {name:"N. Jamak",         pos:"DEF", club:"Twente",             starter:true,  goals:1,  matches:24},
+  ]},
+  SCO: { name:"Écosse", flag:"🏴󠁧󠁢󠁳󠁣󠁴󠁿", host:false, players:[
+    {name:"A. Gunn",          pos:"GK",  club:"Southampton",        starter:true,  goals:0,  matches:28},
+    {name:"A. Robertson",     pos:"DEF", club:"Liverpool",          starter:true,  goals:3,  matches:32},
+    {name:"J. Hendry",        pos:"DEF", club:"Club Brugge",        starter:true,  goals:2,  matches:28},
+    {name:"G. Hanley",        pos:"DEF", club:"Hearts",             starter:false, goals:1,  matches:20},
+    {name:"S. McTominay",     pos:"MIL", club:"Napoli",             starter:true,  goals:10, matches:34},
+    {name:"R. Christie",      pos:"MIL", club:"Bournemouth",        starter:true,  goals:5,  matches:30},
+    {name:"B. Gilmour",       pos:"MIL", club:"Brighton",           starter:true,  goals:4,  matches:32},
+    {name:"J. McGinn",        pos:"MIL", club:"Aston Villa",        starter:true,  goals:7,  matches:30},
+    {name:"C. Adams",         pos:"ATT", club:"Southampton",        starter:true,  goals:8,  matches:26},
+    {name:"L. Dykes",         pos:"ATT", club:"QPR",                starter:false, goals:6,  matches:24},
+  ]},
+  HAI: { name:"Haïti", flag:"🇭🇹", host:false, players:[
+    {name:"J. Dorelus",       pos:"GK",  club:"UD Las Palmas",      starter:true,  goals:0,  matches:22},
+    {name:"J. Vorbe",         pos:"DEF", club:"Charlotte FC",       starter:true,  goals:0,  matches:24},
+    {name:"C. Brüll",         pos:"DEF", club:"Sint-Truiden",       starter:true,  goals:1,  matches:22},
+    {name:"K. Jumeau",        pos:"MIL", club:"Rayo Vallecano",     starter:true,  goals:3,  matches:24},
+    {name:"G. Chery",         pos:"MIL", club:"Al-Hazm",            starter:true,  goals:5,  matches:24},
+    {name:"D. Thermilus",     pos:"ATT", club:"Metz",               starter:false, goals:3,  matches:20},
+    {name:"K. Saint-Fleur",   pos:"ATT", club:"Inter Miami",        starter:true,  goals:4,  matches:22},
+    {name:"B. Nicolas",       pos:"DEF", club:"Stade Rennais",      starter:true,  goals:1,  matches:20},
+  ]},
+  PRY: { name:"Paraguay", flag:"🇵🇾", host:false, players:[
+    {name:"A. Silva",         pos:"GK",  club:"Olympiakos",         starter:true,  goals:0,  matches:28},
+    {name:"R. Rojas",         pos:"DEF", club:"Flamengo",           starter:true,  goals:1,  matches:26},
+    {name:"G. Alderete",      pos:"DEF", club:"Getafe",             starter:true,  goals:2,  matches:28},
+    {name:"J. Alonso",        pos:"DEF", club:"Club Olimpia",       starter:false, goals:0,  matches:20},
+    {name:"M. Villasanti",    pos:"MIL", club:"Grêmio",             starter:true,  goals:3,  matches:28},
+    {name:"M. Almiron",       pos:"MIL", club:"Newcastle",          starter:true,  goals:8,  matches:32},
+    {name:"R. Sanabria",      pos:"ATT", club:"Torino",             starter:true,  goals:10, matches:28},
+    {name:"A. Enciso",        pos:"ATT", club:"Brighton",           starter:true,  goals:9,  matches:30},
+    {name:"Ángel Romero",     pos:"ATT", club:"Club Olimpia",       starter:false, goals:6,  matches:24},
+  ]},
+  AUS: { name:"Australie", flag:"🇦🇺", host:false, players:[
+    {name:"M. Ryan",          pos:"GK",  club:"Real Sociedad",      starter:true,  goals:0,  matches:28},
+    {name:"N. Atkinson",      pos:"DEF", club:"Sheffield United",   starter:true,  goals:1,  matches:26},
+    {name:"H. Souttar",       pos:"DEF", club:"Leicester City",     starter:true,  goals:2,  matches:26},
+    {name:"A. Rowles",        pos:"DEF", club:"Hearts",             starter:false, goals:0,  matches:20},
+    {name:"A. Mooy",          pos:"MIL", club:"Celtic",             starter:true,  goals:4,  matches:30},
+    {name:"R. McGree",        pos:"MIL", club:"Middlesbrough",      starter:true,  goals:5,  matches:28},
+    {name:"M. Leckie",        pos:"ATT", club:"Melbourne City",     starter:true,  goals:4,  matches:24},
+    {name:"M. Duke",          pos:"ATT", club:"St. Mirren",         starter:false, goals:3,  matches:22},
+    {name:"M. Goodwin",       pos:"ATT", club:"Al-Qadsiah",         starter:true,  goals:6,  matches:26},
+  ]},
+  TUR: { name:"Turquie", flag:"🇹🇷", host:false, players:[
+    {name:"A. Bayındır",      pos:"GK",  club:"Man. United",        starter:true,  goals:0,  matches:20},
+    {name:"M. Müldür",        pos:"DEF", club:"Séville",            starter:true,  goals:2,  matches:28},
+    {name:"S. Demiral",       pos:"DEF", club:"Al-Qadsiah",         starter:true,  goals:3,  matches:26},
+    {name:"K. Ayhan",         pos:"DEF", club:"Real Sociedad",      starter:true,  goals:1,  matches:28},
+    {name:"H. Çalhanoğlu",    pos:"MIL", club:"Inter Milan",        starter:true,  goals:8,  matches:34},
+    {name:"A. Güler",         pos:"MIL", club:"Real Madrid",        starter:true,  goals:12, matches:32},
+    {name:"S. Özcan",         pos:"MIL", club:"Dortmund",           starter:true,  goals:4,  matches:28},
+    {name:"K. Aktürkoğlu",    pos:"ATT", club:"Galatasaray",        starter:true,  goals:14, matches:32},
+    {name:"B. Yılmaz",        pos:"ATT", club:"Trabzonspor",        starter:false, goals:8,  matches:26},
+    {name:"C. Ünder",         pos:"ATT", club:"Fenerbahçe",         starter:false, goals:7,  matches:26},
+  ]},
+  CUR: { name:"Curaçao", flag:"🇨🇼", host:false, players:[
+    {name:"E. Tiendalli",     pos:"GK",  club:"Jong Utrecht",       starter:true,  goals:0,  matches:20},
+    {name:"C. Bakboord",      pos:"DEF", club:"HFC Haarlem",        starter:true,  goals:0,  matches:20},
+    {name:"E. Frías",         pos:"MIL", club:"WV-FCVS",            starter:true,  goals:2,  matches:20},
+    {name:"J. Felida",        pos:"ATT", club:"Top Oss",            starter:true,  goals:4,  matches:22},
+    {name:"C. Kwidama",       pos:"ATT", club:"Almere City",        starter:false, goals:3,  matches:18},
+    {name:"L. Martina",       pos:"DEF", club:"Twente",             starter:true,  goals:1,  matches:22},
+    {name:"J. Quasten",       pos:"MIL", club:"HFC Haarlem",        starter:false, goals:1,  matches:18},
+  ]},
+  CRC: { name:"Costa Rica", flag:"🇨🇷", host:false, players:[
+    {name:"K. Navas",         pos:"GK",  club:"LD Alajuelense",     starter:true,  goals:0,  matches:22},
+    {name:"B. Oviedo",        pos:"DEF", club:"Sunderland",         starter:true,  goals:2,  matches:30},
+    {name:"F. Calvo",         pos:"DEF", club:"Celta Vigo",         starter:true,  goals:1,  matches:26},
+    {name:"Y. Tejeda",        pos:"MIL", club:"Salernitana",        starter:true,  goals:3,  matches:24},
+    {name:"C. Galo",          pos:"MIL", club:"Al-Qadsiah",         starter:true,  goals:5,  matches:26},
+    {name:"J. Campbell",      pos:"ATT", club:"LD Alajuelense",     starter:false, goals:4,  matches:20},
+    {name:"J. Venegas",       pos:"ATT", club:"CD Guadalupe",       starter:true,  goals:6,  matches:24},
+    {name:"J. Contreras",     pos:"DEF", club:"Salernitana",        starter:true,  goals:0,  matches:22},
+  ]},
+  ECU: { name:"Équateur", flag:"🇪🇨", host:false, players:[
+    {name:"H. Galíndez",      pos:"GK",  club:"Athletic Bilbao",    starter:true,  goals:0,  matches:26},
+    {name:"Á. Preciado",      pos:"DEF", club:"Deportivo Alavés",   starter:true,  goals:2,  matches:28},
+    {name:"P. Hincapié",      pos:"DEF", club:"Bayer Leverkusen",   starter:true,  goals:3,  matches:30},
+    {name:"F. Torres",        pos:"DEF", club:"FC Barcelone",       starter:true,  goals:1,  matches:22},
+    {name:"J. Caicedo",       pos:"MIL", club:"Chelsea",            starter:true,  goals:5,  matches:32},
+    {name:"C. Gruezo",        pos:"MIL", club:"Augsbourg",          starter:true,  goals:3,  matches:26},
+    {name:"J. Plata",         pos:"ATT", club:"Vancouver WFC",      starter:true,  goals:8,  matches:26},
+    {name:"E. Valencia",      pos:"ATT", club:"LDU Quito",          starter:false, goals:6,  matches:22},
+    {name:"Á. Mena",          pos:"ATT", club:"Independiente",      starter:true,  goals:7,  matches:26},
+  ]},
+  TUN: { name:"Tunisie", flag:"🇹🇳", host:false, players:[
+    {name:"A. Dahmen",        pos:"GK",  club:"Montpellier",        starter:true,  goals:0,  matches:26},
+    {name:"M. Talbi",         pos:"DEF", club:"UD Las Palmas",      starter:true,  goals:1,  matches:26},
+    {name:"Y. Meriah",        pos:"DEF", club:"Lecce",              starter:true,  goals:1,  matches:24},
+    {name:"W. Kechrida",      pos:"DEF", club:"Trabzonspor",        starter:true,  goals:2,  matches:26},
+    {name:"E. Skhiri",        pos:"MIL", club:"Francfort",          starter:true,  goals:4,  matches:28},
+    {name:"A. Laidouni",      pos:"MIL", club:"Ferencváros",        starter:true,  goals:3,  matches:26},
+    {name:"Y. Msakni",        pos:"ATT", club:"Espérance Tunis",    starter:false, goals:5,  matches:22},
+    {name:"I. Sliti",         pos:"ATT", club:"Nantes",             starter:true,  goals:6,  matches:24},
+    {name:"S. Jaziri",        pos:"ATT", club:"Angers",             starter:false, goals:4,  matches:20},
+  ]},
+  SWE: { name:"Suède", flag:"🇸🇪", host:false, players:[
+    {name:"R. Olsen",         pos:"GK",  club:"Roma",               starter:true,  goals:0,  matches:26},
+    {name:"E. Krafth",        pos:"DEF", club:"Newcastle",          starter:false, goals:0,  matches:18},
+    {name:"V. Lindelöf",      pos:"DEF", club:"Man. United",        starter:true,  goals:2,  matches:26},
+    {name:"I. Hien",          pos:"DEF", club:"Atalanta",           starter:true,  goals:3,  matches:30},
+    {name:"A. Ekdal",         pos:"MIL", club:"Malmö FF",           starter:false, goals:2,  matches:20},
+    {name:"D. Kulusevski",    pos:"ATT", club:"Tottenham",          starter:true,  goals:12, matches:30},
+    {name:"A. Isak",          pos:"ATT", club:"Newcastle",          starter:true,  goals:24, matches:36},
+    {name:"E. Forsberg",      pos:"MIL", club:"RB Leipzig",         starter:true,  goals:7,  matches:26},
+    {name:"Z. Ibrahimović",   pos:"ATT", club:"AC Milan (dir.)",    starter:false, goals:0,  matches:0},
+    {name:"M. Hjulmand",      pos:"MIL", club:"Sporting CP",        starter:true,  goals:5,  matches:28},
+  ]},
+  EGY: { name:"Égypte", flag:"🇪🇬", host:false, players:[
+    {name:"M. El-Shennawy",   pos:"GK",  club:"Al-Ahly",            starter:true,  goals:0,  matches:26},
+    {name:"A. Ashraf",        pos:"DEF", club:"Benfica",            starter:true,  goals:3,  matches:28},
+    {name:"M. Abdelmonem",    pos:"DEF", club:"Al-Ahly",            starter:true,  goals:1,  matches:24},
+    {name:"O. Kamal",         pos:"DEF", club:"Al-Ahly",            starter:true,  goals:0,  matches:22},
+    {name:"T. Hamed",         pos:"MIL", club:"Nottingham Forest",  starter:true,  goals:3,  matches:26},
+    {name:"M. Elneny",        pos:"MIL", club:"Besiktas",           starter:true,  goals:2,  matches:24},
+    {name:"M. Salah",         pos:"ATT", club:"Liverpool",          starter:true,  goals:26, matches:36},
+    {name:"O. Marmoush",      pos:"ATT", club:"Man. City",          starter:true,  goals:18, matches:32},
+    {name:"R. Ashour",        pos:"ATT", club:"Al-Ahly",            starter:false, goals:5,  matches:22},
+  ]},
+  IRN: { name:"Iran", flag:"🇮🇷", host:false, players:[
+    {name:"A. Beiranvand",    pos:"GK",  club:"Persepolis",         starter:true,  goals:0,  matches:24},
+    {name:"S. Hosseini",      pos:"DEF", club:"Esteghlal",          starter:true,  goals:1,  matches:22},
+    {name:"R. Rezaeian",      pos:"DEF", club:"Nottingham Forest",  starter:true,  goals:2,  matches:24},
+    {name:"S. Azmoun",        pos:"ATT", club:"Roma",               starter:true,  goals:10, matches:26},
+    {name:"M. Taremi",        pos:"ATT", club:"Inter Milan",        starter:true,  goals:14, matches:30},
+    {name:"A. Jahanbakhsh",   pos:"ATT", club:"Feyenoord",          starter:true,  goals:8,  matches:28},
+    {name:"V. Amiri",         pos:"MIL", club:"Bayer Leverkusen",   starter:false, goals:4,  matches:22},
+    {name:"S. Karimi",        pos:"MIL", club:"Bayern Munich",      starter:false, goals:3,  matches:20},
+  ]},
+  NZL: { name:"Nouvelle-Zélande", flag:"🇳🇿", host:false, players:[
+    {name:"O. Sail",          pos:"GK",  club:"Nantes",             starter:true,  goals:0,  matches:22},
+    {name:"N. Kalmar",        pos:"DEF", club:"FK Bodø/Glimt",      starter:true,  goals:1,  matches:22},
+    {name:"M. Boxall",        pos:"DEF", club:"Minnesota United",   starter:true,  goals:0,  matches:20},
+    {name:"C. Wood",          pos:"ATT", club:"Newcastle",          starter:true,  goals:16, matches:32},
+    {name:"R. De Vries",      pos:"MIL", club:"Hibernian",          starter:true,  goals:4,  matches:24},
+    {name:"C. Rojas",         pos:"MIL", club:"Real Betis",         starter:true,  goals:5,  matches:26},
+    {name:"W. McGarry",       pos:"ATT", club:"Wellington Phoenix",  starter:false, goals:3,  matches:20},
+  ]},
+  CPV: { name:"Cap-Vert", flag:"🇨🇻", host:false, players:[
+    {name:"V. Mendes",        pos:"GK",  club:"FC Metz",            starter:true,  goals:0,  matches:22},
+    {name:"A. Tavares",       pos:"DEF", club:"Spezia",             starter:true,  goals:1,  matches:22},
+    {name:"S. Lopes",         pos:"DEF", club:"Monaco",             starter:true,  goals:1,  matches:24},
+    {name:"L. Andrade",       pos:"MIL", club:"Toulouse FC",        starter:true,  goals:3,  matches:24},
+    {name:"G. Tavares",       pos:"ATT", club:"Arsenal",            starter:true,  goals:8,  matches:26},
+    {name:"Z. Figueiredo",    pos:"ATT", club:"Midtjylland",        starter:false, goals:4,  matches:20},
+    {name:"J. Semedo",        pos:"MIL", club:"Nottingham Forest",  starter:true,  goals:5,  matches:28},
+  ]},
+  KSA: { name:"Arabie Saoudite", flag:"🇸🇦", host:false, players:[
+    {name:"M. Al-Owais",      pos:"GK",  club:"Al-Hilal",           starter:true,  goals:0,  matches:26},
+    {name:"S. Al-Ghannam",    pos:"DEF", club:"Al-Ittihad",         starter:true,  goals:1,  matches:24},
+    {name:"A. Al-Amri",       pos:"DEF", club:"Al-Hilal",           starter:true,  goals:0,  matches:24},
+    {name:"S. Al-Dawsari",    pos:"ATT", club:"Al-Hilal",           starter:true,  goals:12, matches:26},
+    {name:"F. Al-Brikan",     pos:"ATT", club:"Al-Qadsiah",         starter:true,  goals:10, matches:26},
+    {name:"M. Kanno",         pos:"MIL", club:"Al-Ittihad",         starter:true,  goals:5,  matches:26},
+    {name:"A. Al-Hassan",     pos:"MIL", club:"Al-Ahli",            starter:true,  goals:4,  matches:24},
+    {name:"H. Al-Shahrani",   pos:"DEF", club:"Al-Hilal",           starter:false, goals:1,  matches:18},
+  ]},
+  ALG: { name:"Algérie", flag:"🇩🇿", host:false, players:[
+    {name:"R. M'Bolhi",       pos:"GK",  club:"Al-Faisaly",         starter:true,  goals:0,  matches:22},
+    {name:"M. Tahrat",        pos:"DEF", club:"Montpellier",        starter:true,  goals:1,  matches:24},
+    {name:"A. Mandi",         pos:"DEF", club:"Villarreal",         starter:true,  goals:1,  matches:26},
+    {name:"S. Benrahma",      pos:"MIL", club:"Lyon",               starter:true,  goals:9,  matches:28},
+    {name:"S. Feghouli",      pos:"MIL", club:"Galatasaray",        starter:false, goals:4,  matches:20},
+    {name:"Y. Atal",          pos:"DEF", club:"Nice",               starter:true,  goals:4,  matches:26},
+    {name:"B. Bounedjah",     pos:"ATT", club:"Al-Sadd",            starter:false, goals:6,  matches:20},
+    {name:"R. Mahrez",        pos:"ATT", club:"Al-Ahli",            starter:true,  goals:10, matches:26},
+    {name:"I. Slimani",       pos:"ATT", club:"CS Constantine",     starter:false, goals:5,  matches:18},
+  ]},
+  AUT: { name:"Autriche", flag:"🇦🇹", host:false, players:[
+    {name:"P. Pentz",         pos:"GK",  club:"Bayer Leverkusen",   starter:true,  goals:0,  matches:24},
+    {name:"S. Posch",         pos:"DEF", club:"Bologna",            starter:true,  goals:3,  matches:28},
+    {name:"M. Wöber",         pos:"DEF", club:"Leeds United",       starter:true,  goals:2,  matches:26},
+    {name:"K. Laimer",        pos:"MIL", club:"Bayern Munich",      starter:true,  goals:6,  matches:30},
+    {name:"N. Sabitzer",      pos:"MIL", club:"Man. United",        starter:true,  goals:8,  matches:28},
+    {name:"C. Baumgartner",   pos:"MIL", club:"Hoffenheim",         starter:true,  goals:7,  matches:28},
+    {name:"M. Arnautović",    pos:"ATT", club:"Inter Milan",        starter:true,  goals:8,  matches:24},
+    {name:"A. Grüll",         pos:"ATT", club:"Werder Brême",       starter:false, goals:6,  matches:24},
+  ]},
+  JOR: { name:"Jordanie", flag:"🇯🇴", host:false, players:[
+    {name:"Y. Al-Nimer",      pos:"GK",  club:"Al-Faisaly",         starter:true,  goals:0,  matches:20},
+    {name:"E. Al-Bawab",      pos:"DEF", club:"Al-Wehdat",          starter:true,  goals:1,  matches:20},
+    {name:"O. Al-Rashdan",    pos:"MIL", club:"Al-Jazira",          starter:true,  goals:2,  matches:20},
+    {name:"Y. Al-Naimat",     pos:"ATT", club:"Anorthosis",         starter:true,  goals:5,  matches:22},
+    {name:"M. Abu Zema",      pos:"ATT", club:"Al-Ahly Amman",      starter:false, goals:3,  matches:18},
+    {name:"B. Alashhab",      pos:"MIL", club:"Al-Wehdat",          starter:true,  goals:3,  matches:20},
+  ]},
+  UZB: { name:"Ouzbékistan", flag:"🇺🇿", host:false, players:[
+    {name:"U. Nishonov",      pos:"GK",  club:"Pakhtakor",          starter:true,  goals:0,  matches:22},
+    {name:"S. Jaloliddinov",  pos:"DEF", club:"Pakhtakor",          starter:true,  goals:0,  matches:20},
+    {name:"A. Shomurodov",    pos:"ATT", club:"Roma",               starter:true,  goals:8,  matches:24},
+    {name:"J. Abdullayev",    pos:"MIL", club:"Pakhtakor",          starter:true,  goals:4,  matches:22},
+    {name:"D. Ergashev",      pos:"MIL", club:"Qarabag",            starter:true,  goals:5,  matches:22},
+    {name:"K. Tursunov",      pos:"ATT", club:"FK Neftchi Baku",    starter:false, goals:3,  matches:18},
+  ]},
+  COD: { name:"RD Congo", flag:"🇨🇩", host:false, players:[
+    {name:"F. Ngadeu",        pos:"GK",  club:"Antwerp",            starter:true,  goals:0,  matches:22},
+    {name:"C. Mbemba",        pos:"DEF", club:"Marseille",          starter:true,  goals:2,  matches:24},
+    {name:"J. Kayembe",       pos:"MIL", club:"Genk",               starter:true,  goals:3,  matches:24},
+    {name:"A. Mbokani",       pos:"ATT", club:"TP Mazembe",         starter:false, goals:5,  matches:18},
+    {name:"D. Bolasie",       pos:"ATT", club:"Çaykur Rizespor",    starter:true,  goals:4,  matches:22},
+    {name:"M. Bakambu",       pos:"ATT", club:"Côme",               starter:true,  goals:6,  matches:22},
+    {name:"P. Bongonda",      pos:"ATT", club:"Trabzonspor",        starter:false, goals:4,  matches:20},
+  ]},
+  GHA: { name:"Ghana", flag:"🇬🇭", host:false, players:[
+    {name:"L. Ati-Zigi",      pos:"GK",  club:"St. Gallen",         starter:true,  goals:0,  matches:24},
+    {name:"T. Odoi",          pos:"DEF", club:"Club Brugge",        starter:true,  goals:1,  matches:24},
+    {name:"D. Amartey",       pos:"DEF", club:"Leicester City",     starter:true,  goals:1,  matches:24},
+    {name:"T. Partey",        pos:"MIL", club:"Arsenal",            starter:true,  goals:5,  matches:28},
+    {name:"J. Ayew",          pos:"ATT", club:"Le Havre",           starter:false, goals:4,  matches:20},
+    {name:"A. Kudus",         pos:"ATT", club:"West Ham",           starter:true,  goals:14, matches:30},
+    {name:"I. Sulemana",      pos:"ATT", club:"Rennes",             starter:true,  goals:8,  matches:26},
+  ]},
+  PAN: { name:"Panama", flag:"🇵🇦", host:false, players:[
+    {name:"L. Mejía",         pos:"GK",  club:"Deportivo Árabe Unido",starter:true, goals:0,  matches:20},
+    {name:"M. Murillo",       pos:"DEF", club:"Chelsea",            starter:true,  goals:2,  matches:24},
+    {name:"É. Torres",        pos:"DEF", club:"Club Atlético Peñarol",starter:true, goals:0,  matches:20},
+    {name:"Á. Murillo",       pos:"MIL", club:"Club de Foot Montréal",starter:true, goals:3,  matches:22},
+    {name:"A. Pulido",        pos:"ATT", club:"Chivas",             starter:true,  goals:8,  matches:24},
+    {name:"R. Fábrega",       pos:"MIL", club:"Independiente",      starter:false, goals:2,  matches:18},
+    {name:"G. Torres",        pos:"ATT", club:"UD Las Palmas",       starter:true,  goals:5,  matches:22},
+  ]},
+  NOR: { name:"Norvège", flag:"🇳🇴", host:false, players:[
+    {name:"Ø. Nyland",        pos:"GK",  club:"Sunderland",         starter:true,  goals:0,  matches:24},
+    {name:"S. Ryerson",       pos:"DEF", club:"Dortmund",           starter:true,  goals:2,  matches:28},
+    {name:"A. Vindal",        pos:"DEF", club:"Aston Villa",        starter:true,  goals:1,  matches:24},
+    {name:"L. Sævik",         pos:"DEF", club:"Bochum",             starter:false, goals:0,  matches:18},
+    {name:"M. Ødegaard",      pos:"MIL", club:"Arsenal",            starter:true,  goals:12, matches:32},
+    {name:"S. Berge",         pos:"MIL", club:"Brighton",           starter:true,  goals:5,  matches:28},
+    {name:"E. Haaland",       pos:"ATT", club:"Man. City",          starter:true,  goals:38, matches:38},
+    {name:"A. Sørloth",       pos:"ATT", club:"Atlético Madrid",    starter:false, goals:12, matches:26},
+    {name:"M. Thorsby",       pos:"MIL", club:"Genoa",              starter:true,  goals:3,  matches:26},
+  ]},
+  IRQ: { name:"Irak", flag:"🇮🇶", host:false, players:[
+    {name:"J. Hameed",        pos:"GK",  club:"Al-Zawraa",          starter:true,  goals:0,  matches:20},
+    {name:"A. Adnan",         pos:"DEF", club:"Fulham",             starter:true,  goals:1,  matches:26},
+    {name:"S. Ameen",         pos:"DEF", club:"Al-Quwa Al-Jawiya",  starter:true,  goals:0,  matches:18},
+    {name:"A. Al-Hamdani",    pos:"MIL", club:"Al-Shorta",          starter:true,  goals:4,  matches:22},
+    {name:"M. Al-Tamari",     pos:"ATT", club:"Middlesbrough",      starter:true,  goals:6,  matches:24},
+    {name:"A. Karrar",        pos:"ATT", club:"Al-Zawraa",          starter:false, goals:4,  matches:18},
+    {name:"A. Abdul-Zehra",   pos:"MIL", club:"Al-Quwa Al-Jawiya",  starter:true,  goals:3,  matches:20},
+  ]},
+  RSA: { name:"Afrique du Sud", flag:"🇿🇦", host:false, players:[
+    {name:"R. Williams",      pos:"GK",  club:"Mamelodi Sundowns",  starter:true,  goals:0,  matches:28},
+    {name:"T. Mvala",         pos:"DEF", club:"Mamelodi Sundowns",  starter:true,  goals:1,  matches:30},
+    {name:"S. Modiba",        pos:"DEF", club:"SuperSport United",  starter:true,  goals:0,  matches:28},
+    {name:"L. Sesane",        pos:"DEF", club:"Mamelodi Sundowns",  starter:true,  goals:1,  matches:26},
+    {name:"H. Safranko",      pos:"DEF", club:"Galatasaray",        starter:false, goals:0,  matches:18},
+    {name:"T. Zwane",         pos:"MIL", club:"Mamelodi Sundowns",  starter:true,  goals:8,  matches:30},
+    {name:"E. Zungu",         pos:"MIL", club:"Amiens",             starter:true,  goals:3,  matches:28},
+    {name:"Y. Mkhize",        pos:"MIL", club:"Kaizer Chiefs",      starter:false, goals:2,  matches:24},
+    {name:"P. Lakay",         pos:"ATT", club:"Mamelodi Sundowns",  starter:true,  goals:6,  matches:28},
+    {name:"P. Mhlongo",       pos:"ATT", club:"AmaZulu",            starter:false, goals:4,  matches:22},
+    {name:"P. Hlatshwayo",    pos:"DEF", club:"Mamelodi Sundowns",  starter:true,  goals:2,  matches:30},
+  ]},
+  CAN: { name:"Canada", flag:"🇨🇦", host:true, players:[
+    {name:"M. Crepeau",       pos:"GK",  club:"LA Galaxy",          starter:true,  goals:0,  matches:30},
+    {name:"A. Johnston",      pos:"DEF", club:"Celtic",             starter:true,  goals:3,  matches:32},
+    {name:"K. Miller",        pos:"DEF", club:"Wolfsburg",          starter:true,  goals:1,  matches:30},
+    {name:"S. Vitoria",       pos:"DEF", club:"Sheffield Utd",      starter:false, goals:0,  matches:18},
+    {name:"S. Davies",        pos:"DEF", club:"Bournemouth",        starter:true,  goals:2,  matches:30},
+    {name:"S. Eustaquio",     pos:"MIL", club:"Porto",              starter:true,  goals:5,  matches:32},
+    {name:"J. Piette",        pos:"MIL", club:"Al-Qadsiah",         starter:true,  goals:2,  matches:28},
+    {name:"I. Gordo",         pos:"MIL", club:"LA FC",              starter:false, goals:3,  matches:26},
+    {name:"A. Davies",        pos:"DEF", club:"Bayern Munich",      starter:true,  goals:4,  matches:33},
+    {name:"C. Larin",         pos:"ATT", club:"Valladolid",         starter:true,  goals:10, matches:28},
+    {name:"J. David",         pos:"ATT", club:"Lille",              starter:true,  goals:26, matches:36},
+    {name:"T. Buchanan",      pos:"ATT", club:"Inter Milan",        starter:false, goals:6,  matches:22},
+  ]},
+  CRO: { name:"Croatie", flag:"🇭🇷", host:false, players:[
+    {name:"D. Livaković",     pos:"GK",  club:"Fenerbahçe",         starter:true,  goals:0,  matches:32},
+    {name:"J. Stanišić",      pos:"DEF", club:"Bayer Leverkusen",   starter:true,  goals:1,  matches:30},
+    {name:"L. Gvardiol",      pos:"DEF", club:"Man. City",          starter:true,  goals:5,  matches:35},
+    {name:"D. Vida",          pos:"DEF", club:"Besiktas",           starter:false, goals:0,  matches:22},
+    {name:"J. Šutalo",        pos:"DEF", club:"Ajax",               starter:true,  goals:2,  matches:30},
+    {name:"M. Brozović",      pos:"MIL", club:"Al-Nassr",           starter:true,  goals:3,  matches:28},
+    {name:"L. Modrić",        pos:"MIL", club:"Real Madrid",        starter:true,  goals:6,  matches:30},
+    {name:"M. Kovačić",       pos:"MIL", club:"Man. City",          starter:true,  goals:4,  matches:30},
+    {name:"I. Perišić",       pos:"ATT", club:"Hajduk Split",       starter:false, goals:5,  matches:22},
+    {name:"A. Kramarić",      pos:"ATT", club:"Hoffenheim",         starter:true,  goals:14, matches:32},
+    {name:"M. Pašalić",       pos:"ATT", club:"Atalanta",           starter:false, goals:10, matches:30},
+  ]},
+  SUI: { name:"Suisse", flag:"🇨🇭", host:false, players:[
+    {name:"Y. Sommer",        pos:"GK",  club:"Inter Milan",        starter:true,  goals:0,  matches:34},
+    {name:"M. Widmer",        pos:"DEF", club:"Stuttgart",          starter:true,  goals:2,  matches:30},
+    {name:"F. Schär",         pos:"DEF", club:"Newcastle",          starter:true,  goals:3,  matches:34},
+    {name:"M. Akanji",        pos:"DEF", club:"Man. City",          starter:true,  goals:2,  matches:32},
+    {name:"R. Rodríguez",     pos:"DEF", club:"Torino",             starter:true,  goals:1,  matches:30},
+    {name:"G. Xhaka",         pos:"MIL", club:"Bayer Leverkusen",   starter:true,  goals:7,  matches:34},
+    {name:"D. Freuler",       pos:"MIL", club:"Bologne",            starter:true,  goals:4,  matches:32},
+    {name:"R. Vargas",        pos:"ATT", club:"Augsbourg",          starter:false, goals:6,  matches:28},
+    {name:"B. Embolo",        pos:"ATT", club:"Monaco",             starter:true,  goals:10, matches:28},
+    {name:"N. Okafor",        pos:"ATT", club:"AC Milan",           starter:false, goals:8,  matches:26},
+    {name:"Z. Amdouni",       pos:"ATT", club:"Burnley",            starter:false, goals:5,  matches:24},
+  ]},
+};
+
+// ════════════════════════════════════════════════════════
+//  G R O U P E S  — Tirage officiel du 5 déc. 2025, Washington D.C.
+// ════════════════════════════════════════════════════════
+const GROUPS = [
+  { id:"A", teams:["MEX","RSA","KOR","CZE"],  venue:"Mexico City / Guadalajara" },
+  { id:"B", teams:["CAN","SUI","QAT","BIH"],  venue:"Toronto / Vancouver" },
+  { id:"C", teams:["BRA","MAR","SCO","HAI"],  venue:"Los Angeles / San Francisco" },
+  { id:"D", teams:["USA","PRY","AUS","TUR"],  venue:"New York / Boston" },
+  { id:"E", teams:["GER","CUR","CRC","ECU"],  venue:"Dallas / Houston" },
+  { id:"F", teams:["NED","JPN","TUN","SWE"],  venue:"Seattle / Los Angeles" },
+  { id:"G", teams:["BEL","EGY","IRN","NZL"],  venue:"Miami / Atlanta" },
+  { id:"H", teams:["ESP","CPV","KSA","URU"],  venue:"Kansas City / Philadelphia" },
+  { id:"I", teams:["FRA","SEN","NOR","IRQ"],  venue:"New York / Boston" },
+  { id:"J", teams:["ARG","ALG","AUT","JOR"],  venue:"Miami / Los Angeles" },
+  { id:"K", teams:["POR","COL","UZB","COD"],  venue:"Seattle / San Francisco" },
+  { id:"L", teams:["ENG","CRO","GHA","PAN"],  venue:"New York / Dallas" },
+];
+const PLACEHOLDER_GROUPS = [];
+
+// Matchs par groupe (round-robin)
+function getGroupMatches(teams) {
+  const m = [];
+  for (let i = 0; i < teams.length; i++) {
+    for (let j = i + 1; j < teams.length; j++) {
+      m.push([teams[i], teams[j]]);
+    }
+  }
+  return m;
+}
+
+function teamData(code) {
+  return TEAMS[code] || { name: code, flag: "🏳️", host: false, players: [] };
+}
+
+// ════════════════════════════════════════════════════════
+//  R E N D E R  JOUEUR
+// ════════════════════════════════════════════════════════
+function renderPlayer(p, goalOrMatch = 'both') {
+  const posClass = `pos-${p.pos}`;
+  const starterClass = p.starter ? 'starter' : 'sub';
+  const starterLabel = p.starter ? 'Titulaire' : 'Remplaçant';
+  return `
+  <div class="player-item">
+    <span class="player-pos ${posClass}">${p.pos}</span>
+    <span class="player-name">${p.name}</span>
+    <span class="starter-dot ${starterClass}"></span>
+    <div class="tooltip">
+      <div class="tt-name">${p.name}</div>
+      <div class="tt-club">🏟️ ${p.club}</div>
+      <div>
+        <span class="tt-status ${starterClass}">
+          <span class="starter-dot ${starterClass}" style="display:inline-block"></span>
+          ${starterLabel}
+        </span>
+      </div>
+      <div class="tt-row">
+        <div class="tt-stat"><strong>${p.matches}</strong><span>Matchs</span></div>
+        <div class="tt-stat"><strong>${p.goals}</strong><span>${p.pos === 'GK' || p.pos === 'DEF' ? 'Buts' : p.pos === 'MIL' ? 'Buts' : 'Buts'}</span></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════════
+//  R E N D E R  MATCH  avec effectif
+// ════════════════════════════════════════════════════════
+let matchIdCounter = 0;
+function renderMatchCard(home, away, label = '', venue = '') {
+  const h = teamData(home);
+  const a = teamData(away);
+  const mid = `m${++matchIdCounter}`;
+
+  const homePlayers = h.players.map(p => renderPlayer(p)).join('');
+  const awayPlayers = a.players.map(p => renderPlayer(p)).join('');
+
+  const hostBadge = (t) => t.host ? `<span class="badge-host">HÔTE</span>` : '';
+
+  return `
+  <div class="match-card">
+    <div class="match-header">
+      <span>${label}</span>
+      <span>${venue}</span>
+    </div>
+    <div class="match-teams">
+      <div class="team-side">
+        <span class="flag">${h.flag}</span>
+        <div>
+          <div class="team-name">${h.name} ${hostBadge(h)}</div>
+          <div class="team-code">${home}</div>
+        </div>
+      </div>
+      <div class="vs">VS</div>
+      <div class="team-side right">
+        <span class="flag">${a.flag}</span>
+        <div>
+          <div class="team-name">${a.name} ${hostBadge(a)}</div>
+          <div class="team-code">${away}</div>
+        </div>
+      </div>
+    </div>
+    <div class="score-input">
+      <input type="number" min="0" max="20" placeholder="–" title="${h.name}" id="${mid}-h">
+      <span class="score-sep">:</span>
+      <input type="number" min="0" max="20" placeholder="–" title="${a.name}" id="${mid}-a">
+    </div>
+    ${h.players.length || a.players.length ? `
+    <button class="toggle-squad" onclick="toggleSquad('${mid}')">
+      <span id="${mid}-icon">▼</span> Voir les effectifs
+    </button>
+    <div class="squad-panel" id="${mid}-squad">
+      <div class="squad-cols">
+        <div>
+          <div class="squad-team-title">${h.flag} ${h.name}</div>
+          <div class="player-list">${homePlayers || '<span style="color:var(--muted);font-size:0.8rem">Effectif à venir</span>'}</div>
+        </div>
+        <div>
+          <div class="squad-team-title">${a.flag} ${a.name}</div>
+          <div class="player-list">${awayPlayers || '<span style="color:var(--muted);font-size:0.8rem">Effectif à venir</span>'}</div>
+        </div>
+      </div>
+    </div>` : ''}
+  </div>`;
+}
+
+function toggleSquad(mid) {
+  const panel = document.getElementById(`${mid}-squad`);
+  const icon = document.getElementById(`${mid}-icon`);
+  if (!panel) return;
+  const open = panel.classList.toggle('open');
+  icon.textContent = open ? '▲' : '▼';
+}
+
+// ════════════════════════════════════════════════════════
+//  B U I L D  GROUPES
+// ════════════════════════════════════════════════════════
+function buildGroups() {
+  const container = document.getElementById('groups-container');
+  let html = '';
+
+  [...GROUPS, ...PLACEHOLDER_GROUPS].forEach(g => {
+    const matches = getGroupMatches(g.teams);
+    let matchesHtml = matches.map((m, i) =>
+      renderMatchCard(m[0], m[1], `Journée ${Math.ceil((i+1)/2)}`, g.venue)
+    ).join('');
+
+    const teamBadges = g.teams.map(code => {
+      const t = teamData(code);
+      return `<span title="${t.name}">${t.flag} ${t.name}</span>`;
+    }).join(' · ');
+
+    html += `
+    <div class="group-card">
+      <div class="group-header">
+        <span>GROUPE ${g.id}</span>
+        <span style="font-size:0.75rem;font-weight:400;opacity:0.8">${teamBadges}</span>
+      </div>
+      <div class="group-matches">${matchesHtml}</div>
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+// ════════════════════════════════════════════════════════
+//  B U I L D  PHASES  (placeholder — à remplir au fil du tournoi)
+// ════════════════════════════════════════════════════════
+function buildPhase(containerId, rounds) {
+  const container = document.getElementById(containerId);
+  let html = '';
+  rounds.forEach(round => {
+    let matchesHtml = round.matches.map(m =>
+      `<div class="match-ko">${renderMatchCard(m[0], m[1], round.label, m[2] || '')}</div>`
+    ).join('');
+    html += `
+    <div class="bracket-round">
+      <div class="round-title">${round.label}</div>
+      <div class="matches-row">${matchesHtml}</div>
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+const H8_MATCHES = [
+  {label:"Huitième 1", matches:[["FRA","COL","MetLife Stadium"],["ESP","MAR","AT&T Stadium"]]},
+  {label:"Huitième 2", matches:[["BRA","GER","SoFi Stadium"],["ARG","ENG","Rose Bowl"]]},
+  {label:"Huitième 3", matches:[["NED","SEN","Levi's Stadium"],["POR","URU","Hard Rock Stadium"]]},
+  {label:"Huitième 4", matches:[["USA","MEX","Rose Bowl"],["CAN","CRO","BC Place"]]},
+];
+
+const QF_MATCHES = [
+  {label:"Quart de finale", matches:[
+    ["FRA","BRA","MetLife Stadium"],
+    ["ESP","ARG","AT&T Stadium"],
+    ["NED","USA","SoFi Stadium"],
+    ["POR","ENG","Rose Bowl"],
+  ]},
+];
+
+const SEMI_MATCHES = [
+  {label:"Demi-finale", matches:[
+    ["FRA","ESP","MetLife Stadium"],
+    ["BRA","ENG","Rose Bowl"],
+  ]},
+];
+
+const FINAL_MATCHES = [
+  {label:"🏆 FINALE — 19 juillet 2026", matches:[
+    ["FRA","BRA","MetLife Stadium, New York"],
+  ]},
+];
+
+// ════════════════════════════════════════════════════════
+//  S T A T S  joueurs
+// ════════════════════════════════════════════════════════
+function buildStats() {
+  // Agréger tous les joueurs
+  let allPlayers = [];
+  Object.entries(TEAMS).forEach(([code, team]) => {
+    team.players.forEach(p => {
+      allPlayers.push({ ...p, teamCode: code, teamName: team.name, flag: team.flag });
+    });
+  });
+
+  // Top buteurs
+  const topGoals = [...allPlayers].sort((a,b) => b.goals - a.goals).slice(0, 15);
+  // Top matchs
+  const topMatches = [...allPlayers].sort((a,b) => b.matches - a.matches).slice(0, 10);
+  // Titulaires
+  const starters = allPlayers.filter(p => p.starter).length;
+  const subs = allPlayers.filter(p => !p.starter).length;
+
+  const renderStatRow = (players, valueKey, valueLabel) =>
+    players.map((p, i) => `
+    <div class="stat-row">
+      <span class="stat-rank">${i+1}</span>
+      <span class="stat-flag">${p.flag}</span>
+      <div class="stat-info">
+        <div class="stat-player">${p.name}</div>
+        <div class="stat-team">${p.teamName} · ${p.club}</div>
+      </div>
+      <span class="stat-value">${p[valueKey]}</span>
+    </div>`).join('');
+
+  document.getElementById('stats-container').innerHTML = `
+    <div class="stat-card">
+      <h3>⚽ Top buteurs (saison 2025-26)</h3>
+      ${renderStatRow(topGoals, 'goals', 'buts')}
+    </div>
+    <div class="stat-card">
+      <h3>📅 Plus de matchs joués</h3>
+      ${renderStatRow(topMatches, 'matches', 'matchs')}
+    </div>
+    <div class="stat-card" style="grid-column: 1 / -1;">
+      <h3>🔍 Tous les joueurs</h3>
+      <div id="player-search-results">
+        ${allPlayers.map(p => `
+        <div class="stat-row player-searchable" data-name="${p.name.toLowerCase()}" data-team="${p.teamName.toLowerCase()}" data-club="${p.club.toLowerCase()}">
+          <span class="stat-flag">${p.flag}</span>
+          <span class="player-pos pos-${p.pos}" style="font-size:0.65rem;padding:2px 4px;border-radius:3px;">${p.pos}</span>
+          <div class="stat-info">
+            <div class="stat-player">${p.name}</div>
+            <div class="stat-team">${p.teamName} · <span style="color:var(--accent)">${p.club}</span></div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;">
+            <span class="tt-stat" style="text-align:center"><strong style="color:var(--accent);font-weight:800;">${p.goals}</strong><br><span style="font-size:0.65rem;color:var(--muted)">buts</span></span>
+            <span class="tt-stat" style="text-align:center"><strong style="color:var(--text);font-weight:800;">${p.matches}</strong><br><span style="font-size:0.65rem;color:var(--muted)">matchs</span></span>
+            <span class="starter-dot ${p.starter ? 'starter' : 'sub'}" title="${p.starter ? 'Titulaire' : 'Remplaçant'}"></span>
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+function filterPlayers(query) {
+  const q = query.toLowerCase().trim();
+  document.querySelectorAll('.player-searchable').forEach(el => {
+    const match = !q ||
+      el.dataset.name.includes(q) ||
+      el.dataset.team.includes(q) ||
+      el.dataset.club.includes(q);
+    el.style.display = match ? '' : 'none';
+  });
+}
+
+// ════════════════════════════════════════════════════════
+//  N A V I G A T I O N
+// ════════════════════════════════════════════════════════
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ════════════════════════════════════════════════════════
+//  I N I T
+// ════════════════════════════════════════════════════════
+buildGroups();
+buildPhase('huitiemes-container', H8_MATCHES);
+buildPhase('quarts-container', QF_MATCHES);
+buildPhase('demis-container', SEMI_MATCHES);
+buildPhase('finale-container', FINAL_MATCHES);
+buildStats();
+</script>
+</body>
+</html>
