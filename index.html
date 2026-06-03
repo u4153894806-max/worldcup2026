@@ -1920,8 +1920,8 @@ function showCountrySquad(code) {
         <span class="player-pos pos-${p.pos}" style="font-size:0.62rem;width:28px;text-align:center;padding:2px 0;">${p.pos}</span>
         <span style="flex:1;font-weight:${p.starter?'600':'400'};">${p.name}</span>
         <span style="font-size:0.75rem;color:var(--muted);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${p.club}">${p.club}</span>
-        ${p.goals>0?`<span style="font-size:0.72rem;background:var(--accent);color:#000;border-radius:10px;padding:1px 6px;font-weight:700;white-space:nowrap;" title="Buts 2025-26">⚽ ${p.goals}</span>`:''}
-        ${p.matches>0?`<span style="font-size:0.7rem;color:var(--muted);white-space:nowrap;" title="Matchs joués 2025-26">${p.matches} matchs</span>`:''}
+        ${p.goals>0?'<span style="font-size:0.72rem;background:var(--accent);color:#000;border-radius:10px;padding:1px 6px;font-weight:700;white-space:nowrap;" title="Buts 2025-26">⚽ '+p.goals+'</span>':''}
+        ${p.matches>0?'<span style="font-size:0.7rem;color:var(--muted);white-space:nowrap;" title="Matchs 2025-26">'+p.matches+' matchs</span>':''}
         <span class="starter-dot ${p.starter?'starter':'sub'}" title="${p.starter?'Titulaire':'Remplaçant'}" style="flex-shrink:0;"></span>
       </div>`;
     });
