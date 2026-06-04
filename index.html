@@ -1731,7 +1731,7 @@ function renderPlayer(p, goalOrMatch = 'both') {
         <div class="tt-stat"><strong>${p.matches||0}</strong><span>Matchs</span></div>
         <div class="tt-stat"><strong>${p.goals||0}</strong><span>Buts</span></div>
         <div class="tt-stat"><strong>${p.assists||0}</strong><span>PD</span></div>
-        ${(p.rating||0)>0?`<div class="tt-stat"><strong style="color:var(--accent2)">★ ${(p.rating).toFixed(2)}</strong><span>Note</span></div>`:''}
+        ${(()=>{const sc=computeScore(p);return sc!==null?`<div class="tt-stat"><strong style="color:${scoreColor(sc)}">${sc.toFixed(1)}<small style="font-size:0.7em">/10</small></strong><span>Score</span></div>`:''})()}
       </div>
     </div>
   </div>`;
@@ -1948,7 +1948,17 @@ function showTopScorers(sortBy) {
       + '</td>'
       + '<td style="padding:8px 12px;text-align:center;font-size:0.82rem;width:60px;">' + (p.assists > 0 ? '<span style="background:' + (_statsSort==='assists'?'#3b82f6':'var(--border)') + ';color:' + (_statsSort==='assists'?'#fff':'var(--text)') + ';border-radius:8px;padding:2px 8px;font-weight:700;font-size:0.82rem;">' + p.assists + '</span>' : '—') + '</td>'
       + '<td style="padding:8px 12px;text-align:center;font-size:0.82rem;color:var(--muted);width:60px;">' + (p.matches > 0 ? p.matches + ' j.' : '—') + '</td>'
-      + '<td style="padding:8px 12px;text-align:center;font-size:0.82rem;width:60px;">' + (p.rating > 0 ? '<span style="color:' + (_statsSort==='rating'?'var(--accent2)':'var(--muted)') + ';font-weight:' + (_statsSort==='rating'?'800':'400') + ';">★ ' + p.rating.toFixed(2) + '</span>' : '—') + '</td>'
+      + (function(){
+          const sc = computeScore(p);
+          const col = scoreColor(sc);
+          const active = _statsSort==='rating';
+          return '<td style="padding:8px 12px;text-align:center;font-size:0.82rem;width:70px;">'
+            + (sc !== null ? '<div style="display:flex;flex-direction:column;align-items:center;gap:1px;">'
+              + '<span style="color:' + col + ';font-weight:' + (active?'800':'600') + ';font-size:0.88rem;">' + sc.toFixed(1) + '/10</span>'
+              + '<span style="font-size:0.65rem;color:var(--muted);">Sfsc ' + p.rating.toFixed(2) + '</span>'
+              + '</div>' : '—')
+            + '</td>';
+        })()
       + '</tr>';
   });
 
@@ -1984,6 +1994,58 @@ function showTopScorers(sortBy) {
     + '</table></div></div>';
 }
 
+// ════════════════════════════════════════════════════════
+//  S C O R E  intelligent par poste (0-10)
+// ════════════════════════════════════════════════════════
+function computeScore(p) {
+  const g = p.goals   || 0;
+  const a = p.assists || 0;
+  const m = p.matches || 0;
+  const r = p.rating  || 0;
+  if (m === 0 && r === 0) return null; // pas de données
+
+  // Note Sofascore normalisée → 0-10  (6.0 = 0 / 8.5 = 10)
+  const rScore = r > 0 ? Math.min(Math.max((r - 6.0) / 2.5 * 10, 0), 10) : 0;
+
+  const gpm   = m > 0 ? g / m : 0;
+  const apm   = m > 0 ? a / m : 0;
+  const avail = Math.min(m / 35 * 10, 10); // disponibilité (35 matchs = parfait)
+
+  let score;
+  if (p.pos === 'GK') {
+    // GK : note Sofascore inclut déjà arrêts / clean sheets
+    score = rScore * 0.80 + avail * 0.20;
+
+  } else if (p.pos === 'DEF') {
+    // Benchmark : 0.08 but/m et 0.10 passe/m = DEF très offensif
+    const gS = Math.min(gpm / 0.08 * 10, 10);
+    const aS = Math.min(apm / 0.10 * 10, 10);
+    score = rScore * 0.65 + gS * 0.10 + aS * 0.25;
+
+  } else if (p.pos === 'MIL') {
+    // Benchmark : 0.25 but/m et 0.20 passe/m = MIL très complet
+    const gS = Math.min(gpm / 0.25 * 10, 10);
+    const aS = Math.min(apm / 0.20 * 10, 10);
+    score = rScore * 0.50 + gS * 0.28 + aS * 0.22;
+
+  } else { // ATT
+    // Benchmark : 0.50 but/m et 0.25 passe/m = ATT élite
+    const gS = Math.min(gpm / 0.50 * 10, 10);
+    const aS = Math.min(apm / 0.25 * 10, 10);
+    score = rScore * 0.35 + gS * 0.45 + aS * 0.20;
+  }
+
+  return Math.round(score * 10) / 10;
+}
+
+function scoreColor(s) {
+  if (s === null) return 'var(--muted)';
+  if (s >= 7.5) return '#22c55e';
+  if (s >= 6.0) return 'var(--accent)';
+  if (s >= 4.5) return '#f97316';
+  return '#ef4444';
+}
+
 function showTeamRatings() {
   document.getElementById('btn-ratings').style.background = 'var(--accent2)';
   document.getElementById('btn-ratings').style.color = '#000';
@@ -2000,54 +2062,64 @@ function showTeamRatings() {
 
   const teams = allCodes.map(code => {
     const t = teamData(code);
-    const starters = t.players.filter(p => p.starter && (p.rating||0) > 0);
-    const avgRating = starters.length > 0
-      ? starters.reduce((s, p) => s + (p.rating||0), 0) / starters.length
-      : 0;
-    const totalGoals = t.players.filter(p => p.starter).reduce((s, p) => s + (p.goals||0), 0);
-    const totalAssists = t.players.filter(p => p.starter).reduce((s, p) => s + (p.assists||0), 0);
-    const avgMatches = starters.length > 0
-      ? Math.round(starters.reduce((s, p) => s + (p.matches||0), 0) / starters.length)
-      : 0;
-    return {code, t, avgRating, totalGoals, totalAssists, avgMatches, starters: starters.length};
+    const starters = t.players.filter(p => p.starter);
+    // Score intelligent par poste
+    const scored = starters.map(p => computeScore(p)).filter(s => s !== null);
+    const avgScore = scored.length > 0 ? scored.reduce((a,b) => a+b, 0) / scored.length : 0;
+    // Score par poste pour affichage détaillé
+    const byPos = {GK:[], DEF:[], MIL:[], ATT:[]};
+    starters.forEach(p => { if (byPos[p.pos]) { const s = computeScore(p); if (s !== null) byPos[p.pos].push(s); }});
+    const posAvg = pos => byPos[pos].length ? (byPos[pos].reduce((a,b)=>a+b,0)/byPos[pos].length).toFixed(1) : '—';
+    const totalGoals   = starters.reduce((s,p) => s + (p.goals||0), 0);
+    const totalAssists = starters.reduce((s,p) => s + (p.assists||0), 0);
+    const avgMatches   = scored.length > 0 ? Math.round(starters.reduce((s,p) => s + (p.matches||0), 0) / starters.length) : 0;
+    return {code, t, avgScore, posAvg, totalGoals, totalAssists, avgMatches, n: scored.length};
   });
 
-  teams.sort((a, b) => b.avgRating - a.avgRating);
+  teams.sort((a, b) => b.avgScore - a.avgScore);
+  const maxScore = teams[0].avgScore;
 
-  const maxRating = teams[0].avgRating;
   let rows = '';
   teams.forEach((item, i) => {
     const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1);
-    const pct = maxRating > 0 ? Math.round((item.avgRating / maxRating) * 100) : 0;
-    // color: green > 7.0, yellow 6.8-7.0, orange < 6.8
-    const rColor = item.avgRating >= 7.0 ? '#22c55e' : item.avgRating >= 6.8 ? 'var(--accent)' : 'var(--muted)';
+    const pct = maxScore > 0 ? Math.round((item.avgScore / maxScore) * 100) : 0;
+    const col = scoreColor(item.avgScore);
     rows += '<tr style="border-bottom:1px solid var(--border);transition:background 0.15s;" onmouseover="this.style.background=\'var(--surface2)\'" onmouseout="this.style.background=\'\'">'
       + '<td style="padding:8px 12px;text-align:center;font-weight:700;font-size:0.85rem;color:var(--muted);width:36px;">' + medal + '</td>'
       + '<td style="padding:8px 6px;width:32px;">' + flagHtml(item.t.flag) + '</td>'
       + '<td style="padding:8px 6px;font-weight:700;font-size:0.88rem;">' + item.t.name + '</td>'
-      + '<td style="padding:8px 12px;width:130px;">'
-      +   '<div style="display:flex;flex-direction:column;gap:3px;">'
-      +   '<div style="display:flex;align-items:center;gap:6px;">'
-      +   '<span style="color:' + rColor + ';font-weight:800;font-size:0.95rem;">★ ' + item.avgRating.toFixed(2) + '</span>'
-      +   '</div>'
-      +   '<div style="width:100px;height:5px;background:var(--border);border-radius:3px;overflow:hidden;"><div style="height:100%;width:' + pct + '%;background:' + rColor + ';border-radius:3px;transition:width 0.3s;"></div></div>'
+      + '<td style="padding:8px 12px;min-width:140px;">'
+      +   '<div style="display:flex;align-items:center;gap:8px;">'
+      +   '<span style="color:' + col + ';font-weight:800;font-size:1rem;min-width:32px;">' + item.avgScore.toFixed(1) + '</span>'
+      +   '<div style="flex:1;min-width:70px;height:6px;background:var(--border);border-radius:3px;overflow:hidden;"><div style="height:100%;width:' + pct + '%;background:' + col + ';border-radius:3px;"></div></div>'
       +   '</div>'
       + '</td>'
-      + '<td style="padding:8px 12px;text-align:center;font-size:0.82rem;color:var(--muted);">' + item.avgMatches + ' j. moy.</td>'
-      + '<td style="padding:8px 12px;text-align:center;">'
-      +   (item.totalGoals > 0 ? '<span style="background:var(--accent);color:#000;border-radius:8px;padding:1px 8px;font-weight:700;font-size:0.82rem;">⚽ ' + item.totalGoals + '</span>' : '<span style="color:var(--muted);">—</span>')
+      + '<td style="padding:6px 10px;font-size:0.72rem;white-space:nowrap;">'
+      +   '<span style="color:#94a3b8;" title="Gardiens">GK</span> <span style="font-weight:600;">' + item.posAvg('GK') + '</span>  '
+      +   '<span style="color:#60a5fa;" title="Défenseurs">DEF</span> <span style="font-weight:600;">' + item.posAvg('DEF') + '</span>  '
+      +   '<span style="color:#a78bfa;" title="Milieux">MIL</span> <span style="font-weight:600;">' + item.posAvg('MIL') + '</span>  '
+      +   '<span style="color:#f59e0b;" title="Attaquants">ATT</span> <span style="font-weight:600;">' + item.posAvg('ATT') + '</span>'
       + '</td>'
-      + '<td style="padding:8px 12px;text-align:center;">'
-      +   (item.totalAssists > 0 ? '<span style="background:#3b82f6;color:#fff;border-radius:8px;padding:1px 8px;font-weight:700;font-size:0.82rem;">🎯 ' + item.totalAssists + '</span>' : '<span style="color:var(--muted);">—</span>')
+      + '<td style="padding:8px 12px;text-align:center;font-size:0.82rem;color:var(--muted);">' + item.avgMatches + ' j.</td>'
+      + '<td style="padding:8px 10px;text-align:center;">'
+      +   (item.totalGoals > 0 ? '<span style="background:var(--accent);color:#000;border-radius:8px;padding:1px 8px;font-weight:700;font-size:0.8rem;">⚽ ' + item.totalGoals + '</span>' : '<span style="color:var(--muted);">—</span>')
       + '</td>'
-      + '<td style="padding:8px 12px;text-align:center;font-size:0.75rem;color:var(--muted);">' + item.starters + ' tit.</td>'
+      + '<td style="padding:8px 10px;text-align:center;">'
+      +   (item.totalAssists > 0 ? '<span style="background:#3b82f6;color:#fff;border-radius:8px;padding:1px 8px;font-weight:700;font-size:0.8rem;">🎯 ' + item.totalAssists + '</span>' : '<span style="color:var(--muted);">—</span>')
+      + '</td>'
       + '</tr>';
   });
 
   document.getElementById('squad-display').innerHTML = '<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;">'
     + '<div style="padding:12px 16px;font-weight:800;font-size:0.95rem;background:var(--surface2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;">'
-    +   '★ Note moyenne par sélection — Saison 2025-26'
-    +   '<span style="font-size:0.75rem;font-weight:400;color:var(--muted);margin-left:4px;">titulaires uniquement · source Sofascore</span>'
+    +   '🎯 Score par sélection — Saison 2025-26'
+    +   '<span style="font-size:0.75rem;font-weight:400;color:var(--muted);margin-left:4px;">titulaires · score /10 pondéré par poste</span>'
+    + '</div>'
+    + '<div style="padding:10px 16px;background:var(--surface);border-bottom:1px solid var(--border);font-size:0.72rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:16px;">'
+    +   '<span><strong style="color:var(--text)">GK</strong> : note Sofascore (80%) + disponibilité (20%)</span>'
+    +   '<span><strong style="color:var(--text)">DEF</strong> : note (65%) + passes/match (25%) + buts/match (10%)</span>'
+    +   '<span><strong style="color:var(--text)">MIL</strong> : note (50%) + buts/match (28%) + passes/match (22%)</span>'
+    +   '<span><strong style="color:var(--text)">ATT</strong> : buts/match (45%) + note (35%) + passes/match (20%)</span>'
     + '</div>'
     + '<div style="overflow-x:auto;">'
     + '<table style="width:100%;border-collapse:collapse;">'
@@ -2055,11 +2127,11 @@ function showTeamRatings() {
     +   '<th style="padding:8px 12px;">#</th>'
     +   '<th style="padding:8px 6px;"></th>'
     +   '<th style="padding:8px 6px;text-align:left;">Sélection</th>'
-    +   '<th style="padding:8px 12px;text-align:left;">Note moy. ★</th>'
-    +   '<th style="padding:8px 12px;">Matchs moy.</th>'
-    +   '<th style="padding:8px 12px;">Buts cumulés</th>'
-    +   '<th style="padding:8px 12px;">PD cumulées</th>'
-    +   '<th style="padding:8px 12px;">Titulaires</th>'
+    +   '<th style="padding:8px 12px;text-align:left;">Score /10</th>'
+    +   '<th style="padding:8px 10px;text-align:left;">Par poste</th>'
+    +   '<th style="padding:8px 12px;">Matchs</th>'
+    +   '<th style="padding:8px 10px;">Buts</th>'
+    +   '<th style="padding:8px 10px;">PD</th>'
     + '</tr></thead>'
     + '<tbody>' + rows + '</tbody>'
     + '</table></div></div>';
