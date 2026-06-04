@@ -1,0 +1,1709 @@
+
+// ════════════════════════════════════════════════════════
+//  D O N N É E S
+// ════════════════════════════════════════════════════════
+const TEAMS = {
+  ALG: { name:"Algérie", flag:"__ALG__", host:false, players:[
+    {name:"Melvin Mastil", pos:"GK", club:"FC Stade Nyonnais", starter:true, goals:0, matches:0},
+    {name:"Aissa Mandi", pos:"DEF", club:"Lille OSC", starter:true, goals:1, matches:28},
+    {name:"Achraf Abada", pos:"DEF", club:"USM Alger", starter:true, goals:0, matches:0},
+    {name:"Mohamed Amine Tougai", pos:"DEF", club:"Espérance De Tunisie", starter:true, goals:0, matches:0},
+    {name:"Zineddine Belaid", pos:"DEF", club:"JS Kabylie", starter:true, goals:0, matches:0},
+    {name:"Ramiz Zerrouki", pos:"MIL", club:"FC Twente", starter:true, goals:0, matches:0},
+    {name:"Riyad Mahrez", pos:"ATT", club:"Al Ahli FC", starter:true, goals:8, matches:25},
+    {name:"Houssem Aouar", pos:"MIL", club:"Al Ittihad", starter:true, goals:4, matches:25},
+    {name:"Amine Gouiri", pos:"ATT", club:"Olympique Marseille", starter:true, goals:0, matches:0},
+    {name:"Fares Chaibi", pos:"MIL", club:"Eintracht Frankfurt", starter:true, goals:0, matches:0},
+    {name:"Anis Hadj Moussa", pos:"ATT", club:"Feyenoord Rotterdam", starter:true, goals:0, matches:0},
+    {name:"Nadhir Benbouali", pos:"ATT", club:"Györi ETO FC", starter:false, goals:0, matches:0},
+    {name:"Jaouen Hadjam", pos:"DEF", club:"BSC Young Boys", starter:false, goals:0, matches:0},
+    {name:"Hicham Boudaoui", pos:"MIL", club:"OGC Nice", starter:false, goals:0, matches:0},
+    {name:"Rayan Ait-Nouri", pos:"DEF", club:"Manchester City FC", starter:false, goals:0, matches:0},
+    {name:"Oussama Benbot", pos:"GK", club:"USM Alger", starter:false, goals:0, matches:0},
+    {name:"Rafik Belghali", pos:"DEF", club:"Hellas Verona FC", starter:false, goals:0, matches:0},
+    {name:"Mohamed Amoura", pos:"ATT", club:"VfL Wolfsburg", starter:false, goals:0, matches:0},
+    {name:"Nabil Bentaleb", pos:"MIL", club:"Lille OSC", starter:false, goals:0, matches:0},
+    {name:"Adil Boulbina", pos:"ATT", club:"Al Duhail SC", starter:false, goals:0, matches:0},
+    {name:"Ramy Bensebaini", pos:"DEF", club:"Borussia Dortmund", starter:false, goals:0, matches:0},
+    {name:"Ibrahim Maza", pos:"MIL", club:"Bayer Leverkusen", starter:false, goals:0, matches:0},
+    {name:"Luca Zidane", pos:"GK", club:"Granada CF", starter:false, goals:0, matches:0},
+    {name:"Yassine Titraoui", pos:"MIL", club:"Sporting Charleroi", starter:false, goals:0, matches:0},
+    {name:"Fares Ghedjemis", pos:"ATT", club:"Frosinone", starter:false, goals:0, matches:0},
+    {name:"Samir Chergui", pos:"DEF", club:"Paris FC", starter:false, goals:0, matches:0},
+  ]},
+  ARG: { name:"Argentine", flag:"__ARG__", host:false, players:[
+    {name:"Juan Musso", pos:"GK", club:"Atlético De Madrid", starter:true, goals:0, matches:0},
+    {name:"Leonardo Balerdi", pos:"DEF", club:"Olympique Marseille", starter:true, goals:0, matches:0},
+    {name:"Nicolas Tagliafico", pos:"DEF", club:"Olympique Lyonnais", starter:true, goals:0, matches:0},
+    {name:"Gonzalo Montiel", pos:"DEF", club:"CA River Plate", starter:true, goals:0, matches:0},
+    {name:"Leandro Paredes", pos:"MIL", club:"CA Boca Juniors", starter:true, goals:2, matches:25},
+    {name:"Lisandro Martinez", pos:"DEF", club:"Manchester United FC", starter:true, goals:2, matches:30},
+    {name:"Rodrigo De Paul", pos:"MIL", club:"Inter Miami CF", starter:true, goals:4, matches:32},
+    {name:"Valentin Barco", pos:"MIL", club:"RC Strasbourg", starter:true, goals:0, matches:0},
+    {name:"Julian Alvarez", pos:"ATT", club:"Atlético De Madrid", starter:true, goals:18, matches:44},
+    {name:"Lionel Messi", pos:"ATT", club:"Inter Miami CF", starter:true, goals:16, matches:22},
+    {name:"Giovani Lo Celso", pos:"MIL", club:"Real Betis", starter:true, goals:0, matches:0},
+    {name:"Geronimo Rulli", pos:"GK", club:"Olympique Marseille", starter:false, goals:0, matches:0},
+    {name:"Cristian Romero", pos:"DEF", club:"Tottenham Hotspur FC", starter:false, goals:0, matches:0},
+    {name:"Exequiel Palacios", pos:"MIL", club:"Bayer Leverkusen", starter:false, goals:0, matches:0},
+    {name:"Nico Gonzalez", pos:"MIL", club:"Atlético De Madrid", starter:false, goals:0, matches:0},
+    {name:"Thiago Almada", pos:"ATT", club:"Atlético De Madrid", starter:false, goals:0, matches:0},
+    {name:"Giuliano Simeone", pos:"ATT", club:"Atlético De Madrid", starter:false, goals:0, matches:0},
+    {name:"Nico Paz", pos:"ATT", club:"Como", starter:false, goals:0, matches:0},
+    {name:"Nicolas Otamendi", pos:"DEF", club:"SL Benfica", starter:false, goals:0, matches:0},
+    {name:"Alexis Mac Allister", pos:"MIL", club:"Liverpool FC", starter:false, goals:0, matches:0},
+    {name:"Jose Manuel Lopez", pos:"ATT", club:"SE Palmeiras", starter:false, goals:0, matches:0},
+    {name:"Lautaro Martinez", pos:"ATT", club:"FC Internazionale Milano", starter:false, goals:17, matches:30},
+    {name:"Emiliano Martinez", pos:"GK", club:"Aston Villa FC", starter:false, goals:0, matches:0},
+    {name:"Enzo Fernandez", pos:"MIL", club:"Chelsea FC", starter:false, goals:11, matches:39},
+    {name:"Facundo Medina", pos:"DEF", club:"Olympique Marseille", starter:false, goals:0, matches:0},
+    {name:"Nahuel Molina", pos:"DEF", club:"Atlético De Madrid", starter:false, goals:0, matches:0},
+  ]},
+  AUS: { name:"Australie", flag:"__AUS__", host:false, players:[
+    {name:"Mathew Ryan", pos:"GK", club:"Levante UD", starter:true, goals:0, matches:0},
+    {name:"Milos Degenek", pos:"DEF", club:"APOEL FC", starter:true, goals:0, matches:0},
+    {name:"Alessandro Circati", pos:"DEF", club:"Parma", starter:true, goals:0, matches:0},
+    {name:"Jacob Italiano", pos:"DEF", club:"Grazer AK", starter:true, goals:0, matches:0},
+    {name:"Jordan Bos", pos:"DEF", club:"Feyenoord Rotterdam", starter:true, goals:0, matches:0},
+    {name:"Jason Geria", pos:"DEF", club:"Albirex Niigata", starter:true, goals:0, matches:0},
+    {name:"Mathew Leckie", pos:"ATT", club:"Melbourne City FC", starter:true, goals:0, matches:0},
+    {name:"Connor Metcalfe", pos:"MIL", club:"FC St. Pauli", starter:true, goals:0, matches:0},
+    {name:"Mohamed Toure", pos:"ATT", club:"Norwich City FC", starter:true, goals:0, matches:0},
+    {name:"Ajdin Hrustic", pos:"ATT", club:"SC Heracles Almelo", starter:true, goals:0, matches:0},
+    {name:"Awer Mabil", pos:"ATT", club:"CD Castellón", starter:true, goals:5, matches:25},
+    {name:"Paul Izzo", pos:"GK", club:"Randers FC", starter:false, goals:0, matches:0},
+    {name:"Aiden Oneill", pos:"MIL", club:"New York City FC", starter:false, goals:0, matches:0},
+    {name:"Cameron Devlin", pos:"MIL", club:"Heart Of Midlothian FC", starter:false, goals:0, matches:0},
+    {name:"Kai Trewin", pos:"DEF", club:"New York City FC", starter:false, goals:0, matches:0},
+    {name:"Aziz Behich", pos:"DEF", club:"Melbourne City FC", starter:false, goals:0, matches:0},
+    {name:"Nestory Irankunda", pos:"ATT", club:"Watford FC", starter:false, goals:0, matches:0},
+    {name:"Patrick Beach", pos:"GK", club:"Melbourne City FC", starter:false, goals:0, matches:0},
+    {name:"Harry Souttar", pos:"DEF", club:"Leicester City FC", starter:false, goals:0, matches:0},
+    {name:"Cristian Volpato", pos:"ATT", club:"US Sassuolo", starter:false, goals:0, matches:0},
+    {name:"Cameron Burgess", pos:"DEF", club:"Swansea City AFC", starter:false, goals:0, matches:0},
+    {name:"Jackson Irvine", pos:"MIL", club:"FC St. Pauli", starter:false, goals:0, matches:0},
+    {name:"Nishan Velupillay", pos:"ATT", club:"Melbourne Victory FC", starter:false, goals:0, matches:0},
+    {name:"Paul Okon-Engstler", pos:"MIL", club:"Sydney FC", starter:false, goals:0, matches:0},
+    {name:"Lucas Herrington", pos:"DEF", club:"Colorado Rapids", starter:false, goals:0, matches:0},
+    {name:"Tete Yengi", pos:"ATT", club:"FC Machida Zelvia", starter:false, goals:0, matches:0},
+  ]},
+  AUT: { name:"Autriche", flag:"__AUT__", host:false, players:[
+    {name:"Alexander Schlager", pos:"GK", club:"FC Red Bull Salzburg", starter:true, goals:0, matches:0},
+    {name:"David Affengruber", pos:"DEF", club:"Elche CF", starter:true, goals:0, matches:0},
+    {name:"Kevin Danso", pos:"DEF", club:"Tottenham Hotspur FC", starter:true, goals:0, matches:0},
+    {name:"Xaver Schlager", pos:"MIL", club:"RB Leipzig", starter:true, goals:0, matches:0},
+    {name:"Stefan Posch", pos:"DEF", club:"1. FSV Mainz 05", starter:true, goals:0, matches:0},
+    {name:"Nicolas Seiwald", pos:"MIL", club:"RB Leipzig", starter:true, goals:0, matches:0},
+    {name:"Marko Arnautovic", pos:"ATT", club:"FK Crvena Zvezda", starter:true, goals:5, matches:20},
+    {name:"David Alaba", pos:"DEF", club:"Real Madrid C. F.", starter:true, goals:1, matches:8},
+    {name:"Marcel Sabitzer", pos:"MIL", club:"Borussia Dortmund", starter:true, goals:8, matches:30},
+    {name:"Florian Grillitsch", pos:"MIL", club:"SC Braga", starter:true, goals:3, matches:25},
+    {name:"Michael Gregoritsch", pos:"ATT", club:"FC Augsburg", starter:true, goals:0, matches:0},
+    {name:"Florian Wiegele", pos:"GK", club:"FC Viktoria Plzeň", starter:false, goals:0, matches:0},
+    {name:"Patrick Pentz", pos:"GK", club:"Brøndby IF", starter:false, goals:0, matches:0},
+    {name:"Sasa Kalajdzic", pos:"ATT", club:"LASK Linz", starter:false, goals:0, matches:0},
+    {name:"Philipp Lienhart", pos:"DEF", club:"SC Freiburg", starter:false, goals:0, matches:0},
+    {name:"Phillip Mwene", pos:"DEF", club:"1. FSV Mainz 05", starter:false, goals:0, matches:0},
+    {name:"Carney Chukwuemeka", pos:"MIL", club:"Borussia Dortmund", starter:false, goals:0, matches:0},
+    {name:"Romano Schmid", pos:"MIL", club:"SV Werder Bremen", starter:false, goals:0, matches:0},
+    {name:"Christoph Baumgartner", pos:"MIL", club:"RB Leipzig", starter:false, goals:0, matches:0},
+    {name:"Konrad Laimer", pos:"MIL", club:"FC Bayern München", starter:false, goals:0, matches:0},
+    {name:"Patrick Wimmer", pos:"ATT", club:"VfL Wolfsburg", starter:false, goals:0, matches:0},
+    {name:"Alexander Prass", pos:"MIL", club:"TSG Hoffenheim", starter:false, goals:0, matches:0},
+    {name:"Marco Friedl", pos:"DEF", club:"SV Werder Bremen", starter:false, goals:0, matches:0},
+    {name:"Paul Wanner", pos:"MIL", club:"PSV Eindhoven", starter:false, goals:0, matches:0},
+    {name:"Michael Svoboda", pos:"DEF", club:"Venezia FC", starter:false, goals:0, matches:0},
+    {name:"Alessandro Schoepf", pos:"MIL", club:"Wolfsberger AC", starter:false, goals:0, matches:0},
+  ]},
+  BEL: { name:"Belgique", flag:"__BEL__", host:false, players:[
+    {name:"Thibaut Courtois", pos:"GK", club:"Real Madrid C. F.", starter:true, goals:0, matches:0},
+    {name:"Zeno Debast", pos:"DEF", club:"Sporting CP", starter:true, goals:0, matches:0},
+    {name:"Arthur Theate", pos:"DEF", club:"Eintracht Frankfurt", starter:true, goals:0, matches:0},
+    {name:"Brandon Mechele", pos:"DEF", club:"Club Brugge", starter:true, goals:0, matches:0},
+    {name:"Maxim De Cuyper", pos:"DEF", club:"Brighton & Hove Albion FC", starter:true, goals:0, matches:0},
+    {name:"Axel Witsel", pos:"MIL", club:"Girona FC", starter:true, goals:2, matches:20},
+    {name:"Kevin De Bruyne", pos:"MIL", club:"SSC Napoli", starter:true, goals:3, matches:25},
+    {name:"Youri Tielemans", pos:"MIL", club:"Aston Villa FC", starter:true, goals:0, matches:0},
+    {name:"Romelu Lukaku", pos:"ATT", club:"SSC Napoli", starter:true, goals:1, matches:5},
+    {name:"Leandro Trossard", pos:"ATT", club:"Arsenal FC", starter:true, goals:6, matches:30},
+    {name:"Jeremy Doku", pos:"ATT", club:"Manchester City FC", starter:true, goals:5, matches:30},
+    {name:"Senne Lammens", pos:"GK", club:"Manchester United FC", starter:false, goals:0, matches:0},
+    {name:"Mike Penders", pos:"GK", club:"RC Strasbourg", starter:false, goals:0, matches:0},
+    {name:"Dodi Lukebakio", pos:"ATT", club:"SL Benfica", starter:false, goals:0, matches:0},
+    {name:"Thomas Meunier", pos:"DEF", club:"Lille OSC", starter:false, goals:0, matches:0},
+    {name:"Koni De Winter", pos:"DEF", club:"AC Milan", starter:false, goals:0, matches:0},
+    {name:"Charles De Ketelaere", pos:"ATT", club:"Atalanta Bergamo", starter:false, goals:0, matches:0},
+    {name:"Joaquin Seys", pos:"DEF", club:"Club Brugge", starter:false, goals:0, matches:0},
+    {name:"Diego Moreira", pos:"MIL", club:"RC Strasbourg", starter:false, goals:0, matches:0},
+    {name:"Hans Vanaken", pos:"MIL", club:"Club Brugge", starter:false, goals:0, matches:0},
+    {name:"Timothy Castagne", pos:"DEF", club:"Fulham FC", starter:false, goals:0, matches:0},
+    {name:"Alexis Saelemaekers", pos:"MIL", club:"AC Milan", starter:false, goals:0, matches:0},
+    {name:"Nicolas Raskin", pos:"MIL", club:"Rangers FC", starter:false, goals:0, matches:0},
+    {name:"Amadou Onana", pos:"MIL", club:"Aston Villa FC", starter:false, goals:0, matches:0},
+    {name:"Nathan Ngoy", pos:"DEF", club:"Lille OSC", starter:false, goals:0, matches:0},
+    {name:"Matias Fernandez-Pardo", pos:"ATT", club:"Lille OSC", starter:false, goals:0, matches:0},
+  ]},
+  BIH: { name:"Bosnie-Herzégovine", flag:"__BIH__", host:false, players:[
+    {name:"Nikola Vasilj", pos:"GK", club:"FC St. Pauli", starter:true, goals:0, matches:0},
+    {name:"Nihad Mujakic", pos:"DEF", club:"Gaziantep FK", starter:true, goals:0, matches:0},
+    {name:"Dennis Hadzikadunic", pos:"DEF", club:"UC Sampdoria", starter:true, goals:0, matches:0},
+    {name:"Tarik Muharemovic", pos:"DEF", club:"US Sassuolo", starter:true, goals:0, matches:0},
+    {name:"Sead Kolasinac", pos:"DEF", club:"Atalanta Bergamo", starter:true, goals:1, matches:22},
+    {name:"Benjamin Tahirovic", pos:"MIL", club:"Brøndby IF", starter:true, goals:0, matches:0},
+    {name:"Amar Dedic", pos:"DEF", club:"SL Benfica", starter:true, goals:0, matches:0},
+    {name:"Armin Gigovic", pos:"MIL", club:"BSC Young Boys", starter:true, goals:0, matches:0},
+    {name:"Samed Bazdar", pos:"ATT", club:"Jagiellonia Białystok", starter:true, goals:0, matches:0},
+    {name:"Ermedin Demirovic", pos:"ATT", club:"VfB Stuttgart", starter:true, goals:12, matches:28},
+    {name:"Edin Dzeko", pos:"ATT", club:"FC Schalke 04", starter:true, goals:8, matches:25},
+    {name:"Mladen Jurkas", pos:"GK", club:"FK Borac Banja Luka", starter:false, goals:0, matches:0},
+    {name:"Ivan Basic", pos:"MIL", club:"FC Astana", starter:false, goals:0, matches:0},
+    {name:"Ivan Sunjic", pos:"MIL", club:"Pafos FC", starter:false, goals:0, matches:0},
+    {name:"Amar Memic", pos:"MIL", club:"FC Viktoria Plzeň", starter:false, goals:0, matches:0},
+    {name:"Amir Hadziahmetovic", pos:"MIL", club:"Hull City FC", starter:false, goals:0, matches:0},
+    {name:"Dzenis Burnic", pos:"MIL", club:"Karlsruher SC", starter:false, goals:0, matches:0},
+    {name:"Nikola Katic", pos:"DEF", club:"FC Schalke 04", starter:false, goals:0, matches:0},
+    {name:"Kerim Alajbegovic", pos:"ATT", club:"FC Red Bull Salzburg", starter:false, goals:0, matches:0},
+    {name:"Esmir Bajraktarevic", pos:"ATT", club:"PSV Eindhoven", starter:false, goals:0, matches:0},
+    {name:"Stjepan Radeljic", pos:"DEF", club:"HNK Rijeka", starter:false, goals:0, matches:0},
+    {name:"Martin Zlomislic", pos:"GK", club:"HNK Rijeka", starter:false, goals:0, matches:0},
+    {name:"Haris Tabakovic", pos:"ATT", club:"Borussia Mönchengladbach", starter:false, goals:0, matches:0},
+    {name:"Nidal Celik", pos:"DEF", club:"RC Lens", starter:false, goals:0, matches:0},
+    {name:"Jovo Lukic", pos:"ATT", club:"Universitatea Cluj", starter:false, goals:0, matches:0},
+    {name:"Ermin Mahmic", pos:"MIL", club:"FC Slovan Liberec", starter:false, goals:0, matches:0},
+  ]},
+  BRA: { name:"Brésil", flag:"__BRA__", host:false, players:[
+    {name:"Alisson", pos:"GK", club:"Liverpool FC", starter:true, goals:0, matches:0},
+    {name:"Wesley", pos:"DEF", club:"AS Roma", starter:true, goals:0, matches:0},
+    {name:"Gabriel Magalhaes", pos:"DEF", club:"Arsenal FC", starter:true, goals:0, matches:0},
+    {name:"Marquinhos", pos:"DEF", club:"Paris Saint-Germain", starter:true, goals:2, matches:35},
+    {name:"Casemiro", pos:"MIL", club:"Manchester United FC", starter:true, goals:3, matches:28},
+    {name:"Alex Sandro", pos:"DEF", club:"CR Flamengo", starter:true, goals:0, matches:0},
+    {name:"Vinicius Junior", pos:"ATT", club:"Real Madrid C. F.", starter:true, goals:21, matches:50},
+    {name:"Bruno Guimaraes", pos:"MIL", club:"Newcastle United FC", starter:true, goals:0, matches:0},
+    {name:"Matheus Cunha", pos:"ATT", club:"Manchester United FC", starter:true, goals:0, matches:0},
+    {name:"Neymar Jr", pos:"ATT", club:"Santos FC", starter:true, goals:0, matches:0},
+    {name:"Raphinha", pos:"ATT", club:"FC Barcelona", starter:true, goals:13, matches:20},
+    {name:"Weverton", pos:"GK", club:"Grêmio FBPA", starter:false, goals:0, matches:0},
+    {name:"Danilo", pos:"DEF", club:"CR Flamengo", starter:false, goals:0, matches:0},
+    {name:"Bremer", pos:"DEF", club:"Juventus FC", starter:false, goals:0, matches:0},
+    {name:"Leo Pereira", pos:"DEF", club:"CR Flamengo", starter:false, goals:0, matches:0},
+    {name:"Douglas Santos", pos:"DEF", club:"FC Zenit St. Petersburg", starter:false, goals:0, matches:0},
+    {name:"Fabinho", pos:"MIL", club:"Al Ittihad", starter:false, goals:0, matches:0},
+    {name:"Danilo Santos", pos:"MIL", club:"Botafogo", starter:false, goals:0, matches:0},
+    {name:"Endrick", pos:"ATT", club:"Olympique Lyonnais", starter:false, goals:5, matches:20},
+    {name:"Lucas Paqueta", pos:"MIL", club:"CR Flamengo", starter:false, goals:3, matches:20},
+    {name:"Luiz Henrique", pos:"ATT", club:"FC Zenit St. Petersburg", starter:false, goals:0, matches:0},
+    {name:"Gabriel Martinelli", pos:"ATT", club:"Arsenal FC", starter:false, goals:0, matches:0},
+    {name:"Ederson", pos:"GK", club:"Fenerbahçe SK", starter:false, goals:0, matches:0},
+    {name:"Roger Ibanez", pos:"DEF", club:"Al Ahli FC", starter:false, goals:0, matches:0},
+    {name:"Igor Thiago", pos:"ATT", club:"Brentford FC", starter:false, goals:0, matches:0},
+    {name:"Rayan", pos:"ATT", club:"AFC Bournemouth", starter:false, goals:0, matches:0},
+  ]},
+  CAN: { name:"Canada", flag:"__CAN__", host:true, players:[
+    {name:"Dayne St. Clair", pos:"GK", club:"Inter Miami CF", starter:true, goals:0, matches:0},
+    {name:"Alistair Johnston", pos:"DEF", club:"Celtic FC", starter:true, goals:0, matches:0},
+    {name:"Alfie Jones", pos:"DEF", club:"Middlesbrough FC", starter:true, goals:0, matches:0},
+    {name:"Luc De Fougerolles", pos:"DEF", club:"FCV Dender EH", starter:true, goals:0, matches:0},
+    {name:"Joel Waterman", pos:"DEF", club:"Chicago Fire FC", starter:true, goals:0, matches:0},
+    {name:"Mathieu Choiniere", pos:"MIL", club:"LAFC", starter:true, goals:0, matches:0},
+    {name:"Stephen Eustaquio", pos:"MIL", club:"LAFC", starter:true, goals:4, matches:30},
+    {name:"Ismael Kone", pos:"MIL", club:"US Sassuolo", starter:true, goals:0, matches:0},
+    {name:"Cyle Larin", pos:"ATT", club:"Southampton FC", starter:true, goals:8, matches:25},
+    {name:"Jonathan David", pos:"ATT", club:"Juventus FC", starter:true, goals:26, matches:30},
+    {name:"Liam Millar", pos:"MIL", club:"Hull City FC", starter:true, goals:0, matches:0},
+    {name:"Tani Oluwaseyi", pos:"ATT", club:"Villarreal CF", starter:false, goals:0, matches:0},
+    {name:"Derek Cornelius", pos:"DEF", club:"Rangers FC", starter:false, goals:0, matches:0},
+    {name:"Jacob Shaffelburg", pos:"MIL", club:"LAFC", starter:false, goals:0, matches:0},
+    {name:"Moise Bombito", pos:"DEF", club:"OGC Nice", starter:false, goals:0, matches:0},
+    {name:"Maxime Crepeau", pos:"GK", club:"Orlando City SC", starter:false, goals:0, matches:0},
+    {name:"Tajon Buchanan", pos:"ATT", club:"Villarreal CF", starter:false, goals:0, matches:0},
+    {name:"Owen Goodman", pos:"GK", club:"Barnsley", starter:false, goals:0, matches:0},
+    {name:"Alphonso Davies", pos:"DEF", club:"FC Bayern München", starter:false, goals:5, matches:32},
+    {name:"Ali Ahmed", pos:"ATT", club:"Norwich City FC", starter:false, goals:0, matches:0},
+    {name:"Jonathan Osorio", pos:"MIL", club:"Toronto FC", starter:false, goals:0, matches:0},
+    {name:"Richie Laryea", pos:"DEF", club:"Toronto FC", starter:false, goals:0, matches:0},
+    {name:"Niko Sigur", pos:"DEF", club:"HNK Hajduk Split", starter:false, goals:0, matches:0},
+    {name:"Promise David", pos:"ATT", club:"Royale Union Saint-Gilloise", starter:false, goals:0, matches:0},
+    {name:"Nathan Saliba", pos:"MIL", club:"RSC Anderlecht", starter:false, goals:0, matches:0},
+    {name:"Marcelo Flores", pos:"MIL", club:"Tigres UANL", starter:false, goals:0, matches:0},
+  ]},
+  CIV: { name:"Côte d'Ivoire", flag:"__CIV__", host:false, players:[
+    {name:"Yahia Fofana", pos:"GK", club:"Çaykur Rizespor", starter:true, goals:0, matches:0},
+    {name:"Ousmane Diomande", pos:"DEF", club:"Sporting CP", starter:true, goals:0, matches:0},
+    {name:"Ghislain Konan", pos:"DEF", club:"Gil Vicente FC", starter:true, goals:0, matches:0},
+    {name:"Jean Michael Seri", pos:"MIL", club:"NK Maribor", starter:true, goals:0, matches:0},
+    {name:"Wilfried Singo", pos:"DEF", club:"Galatasaray SK", starter:true, goals:0, matches:0},
+    {name:"Seko Fofana", pos:"MIL", club:"FC Porto", starter:true, goals:0, matches:0},
+    {name:"Odilon Kossounou", pos:"DEF", club:"Atalanta Bergamo", starter:true, goals:0, matches:0},
+    {name:"Franck Kessie", pos:"MIL", club:"Al Ahli FC", starter:true, goals:4, matches:28},
+    {name:"Ange-Yoan Bonny", pos:"ATT", club:"FC Internazionale Milano", starter:true, goals:0, matches:0},
+    {name:"Simon Adingra", pos:"ATT", club:"AS Monaco", starter:true, goals:0, matches:0},
+    {name:"Yan Diomande", pos:"ATT", club:"RB Leipzig", starter:true, goals:0, matches:0},
+    {name:"Elye Wahi", pos:"ATT", club:"OGC Nice", starter:false, goals:0, matches:0},
+    {name:"Christopher Operi", pos:"DEF", club:"Başakşehir FK", starter:false, goals:0, matches:0},
+    {name:"Oumar Diakite", pos:"ATT", club:"Cercle Brugge", starter:false, goals:0, matches:0},
+    {name:"Amad Diallo", pos:"ATT", club:"Manchester United FC", starter:false, goals:0, matches:0},
+    {name:"Mohamed Kone", pos:"GK", club:"Sporting Charleroi", starter:false, goals:0, matches:0},
+    {name:"Guela Doue", pos:"DEF", club:"RC Strasbourg", starter:false, goals:0, matches:0},
+    {name:"Ibrahim Sangare", pos:"MIL", club:"Nottingham Forest FC", starter:false, goals:0, matches:0},
+    {name:"Nicolas Pepe", pos:"ATT", club:"Villarreal CF", starter:false, goals:5, matches:20},
+    {name:"Emmanuel Agbadou", pos:"DEF", club:"Beşiktaş JK", starter:false, goals:0, matches:0},
+    {name:"Evan Ndicka", pos:"DEF", club:"AS Roma", starter:false, goals:0, matches:0},
+    {name:"Evann Guessand", pos:"ATT", club:"Crystal Palace FC", starter:false, goals:0, matches:0},
+    {name:"Alban Lafont", pos:"GK", club:"Panathinaikos FC", starter:false, goals:0, matches:0},
+    {name:"Bazoumana Toure", pos:"ATT", club:"TSG Hoffenheim", starter:false, goals:0, matches:0},
+    {name:"Parfait Guiagon", pos:"MIL", club:"Sporting Charleroi", starter:false, goals:0, matches:0},
+    {name:"Christ Inao Oulai", pos:"MIL", club:"Trabzonspor", starter:false, goals:0, matches:0},
+  ]},
+  COD: { name:"RD Congo", flag:"__COD__", host:false, players:[
+    {name:"Lionel Mpasi", pos:"GK", club:"Le Havre AC", starter:true, goals:0, matches:0},
+    {name:"Aaron Wan-Bissaka", pos:"DEF", club:"West Ham United FC", starter:true, goals:0, matches:0},
+    {name:"Steve Kapuadi", pos:"DEF", club:"Widzew Łódź", starter:true, goals:0, matches:0},
+    {name:"Axel Tuanzebe", pos:"DEF", club:"Burnley FC", starter:true, goals:0, matches:0},
+    {name:"Dylan Batubinsika", pos:"DEF", club:"AEL FC", starter:true, goals:0, matches:0},
+    {name:"Ngalayel Mukau", pos:"MIL", club:"Lille OSC", starter:true, goals:0, matches:0},
+    {name:"Nathanael Mbuku", pos:"MIL", club:"Montpellier HSC", starter:true, goals:0, matches:0},
+    {name:"Samuel Moutoussamy", pos:"MIL", club:"Atromitos FC", starter:true, goals:0, matches:0},
+    {name:"Brian Cipenga", pos:"ATT", club:"CD Castellón", starter:true, goals:0, matches:0},
+    {name:"Theo Bongonda", pos:"MIL", club:"FC Spartak Moscow", starter:true, goals:0, matches:0},
+    {name:"Gael Kakuta", pos:"ATT", club:"AEL FC", starter:true, goals:0, matches:0},
+    {name:"Joris Kayembe", pos:"DEF", club:"KRC Genk", starter:false, goals:0, matches:0},
+    {name:"Meschack Elia", pos:"ATT", club:"Alanyaspor", starter:false, goals:0, matches:0},
+    {name:"Noah Sadiki", pos:"MIL", club:"Sunderland AFC", starter:false, goals:0, matches:0},
+    {name:"Aaron Tshibola", pos:"MIL", club:"Kilmarnock FC", starter:false, goals:0, matches:0},
+    {name:"Timothy Fayulu", pos:"GK", club:"FC Noah", starter:false, goals:0, matches:0},
+    {name:"Cedric Bakambu", pos:"ATT", club:"Real Betis", starter:false, goals:5, matches:22},
+    {name:"Charles Pickel", pos:"MIL", club:"RCD Espanyol", starter:false, goals:0, matches:0},
+    {name:"Fiston Mayele", pos:"ATT", club:"Pyramids FC", starter:false, goals:0, matches:0},
+    {name:"Yoane Wissa", pos:"ATT", club:"Newcastle United FC", starter:false, goals:0, matches:0},
+    {name:"Matthieu Epolo", pos:"GK", club:"Standard Liège", starter:false, goals:0, matches:0},
+    {name:"Chancel Mbemba", pos:"DEF", club:"Lille OSC", starter:false, goals:2, matches:25},
+    {name:"Simon Banza", pos:"ATT", club:"Al Jazira", starter:false, goals:0, matches:0},
+    {name:"Gedeon Kalulu", pos:"DEF", club:"Aris Limassol FC", starter:false, goals:0, matches:0},
+    {name:"Edo Kayembe", pos:"MIL", club:"Watford FC", starter:false, goals:0, matches:0},
+    {name:"Arthur Masuaku", pos:"DEF", club:"RC Lens", starter:false, goals:0, matches:0},
+  ]},
+  COL: { name:"Colombie", flag:"__COL__", host:false, players:[
+    {name:"David Ospina", pos:"GK", club:"Atlético Nacional", starter:true, goals:0, matches:0},
+    {name:"Daniel Munoz", pos:"DEF", club:"Crystal Palace FC", starter:true, goals:0, matches:0},
+    {name:"Jhon Lucumi", pos:"DEF", club:"Bologna FC", starter:true, goals:0, matches:0},
+    {name:"Santiago Arias", pos:"DEF", club:"CA Independiente", starter:true, goals:0, matches:0},
+    {name:"Kevin Castano", pos:"MIL", club:"CA River Plate", starter:true, goals:0, matches:0},
+    {name:"Richard Rios", pos:"MIL", club:"SL Benfica", starter:true, goals:4, matches:28},
+    {name:"Luis Diaz", pos:"ATT", club:"FC Bayern München", starter:true, goals:15, matches:32},
+    {name:"Jorge Carrascal", pos:"MIL", club:"CR Flamengo", starter:true, goals:0, matches:0},
+    {name:"Jhon Cordoba", pos:"ATT", club:"FC Krasnodar", starter:true, goals:0, matches:0},
+    {name:"James Rodriguez", pos:"MIL", club:"Minnesota United FC", starter:true, goals:8, matches:30},
+    {name:"Jhon Arias", pos:"MIL", club:"SE Palmeiras", starter:true, goals:0, matches:0},
+    {name:"Camilo Vargas", pos:"GK", club:"Atlas FC", starter:false, goals:0, matches:0},
+    {name:"Yerry Mina", pos:"DEF", club:"Cagliari", starter:false, goals:2, matches:22},
+    {name:"Gustavo Puerta", pos:"DEF", club:"Racing Santander", starter:false, goals:0, matches:0},
+    {name:"Juan Portilla", pos:"MIL", club:"Athletico Paranaense", starter:false, goals:0, matches:0},
+    {name:"Jefferson Lerma", pos:"MIL", club:"Crystal Palace FC", starter:false, goals:0, matches:0},
+    {name:"Johan Mojica", pos:"DEF", club:"RCD Mallorca", starter:false, goals:0, matches:0},
+    {name:"Willer Ditta", pos:"DEF", club:"CF Cruz Azul", starter:false, goals:0, matches:0},
+    {name:"Cucho Hernandez", pos:"ATT", club:"Real Betis", starter:false, goals:0, matches:0},
+    {name:"Juan Quintero", pos:"MIL", club:"CA River Plate", starter:false, goals:0, matches:0},
+    {name:"Jaminton Campaz", pos:"ATT", club:"CA Rosario Central", starter:false, goals:0, matches:0},
+    {name:"Deiver Machado", pos:"DEF", club:"FC Nantes", starter:false, goals:0, matches:0},
+    {name:"Davinson Sanchez", pos:"DEF", club:"Galatasaray SK", starter:false, goals:0, matches:0},
+    {name:"Alvaro Montero", pos:"GK", club:"CA Vélez Sarsfield", starter:false, goals:0, matches:0},
+    {name:"Luis Suarez", pos:"ATT", club:"Sporting CP", starter:false, goals:0, matches:0},
+    {name:"Andres Gomez", pos:"ATT", club:"CR Vasco Da Gama", starter:false, goals:0, matches:0},
+  ]},
+  CPV: { name:"Cap-Vert", flag:"__CPV__", host:false, players:[
+    {name:"Vozinha", pos:"GK", club:"GD Chaves", starter:true, goals:0, matches:0},
+    {name:"Stopira", pos:"DEF", club:"SCU Torreense", starter:true, goals:0, matches:0},
+    {name:"Diney Borges", pos:"DEF", club:"Al Bataeh Club", starter:true, goals:0, matches:0},
+    {name:"Pico Lopes", pos:"DEF", club:"Shamrock Rovers FC", starter:true, goals:0, matches:0},
+    {name:"Logan Costa", pos:"DEF", club:"Villarreal CF", starter:true, goals:0, matches:0},
+    {name:"Kevin Pina", pos:"MIL", club:"FC Krasnodar", starter:true, goals:0, matches:0},
+    {name:"Jovane Cabral", pos:"MIL", club:"CF Estrela Da Amadora", starter:true, goals:0, matches:0},
+    {name:"Joao Paulo", pos:"MIL", club:"FC FCSB", starter:true, goals:0, matches:0},
+    {name:"Gilson Benchimol", pos:"ATT", club:"FC Akron Tolyatti", starter:true, goals:0, matches:0},
+    {name:"Jamiro Monteiro", pos:"MIL", club:"PEC Zwolle", starter:true, goals:0, matches:0},
+    {name:"Garry Rodrigues", pos:"MIL", club:"Apollon Limassol", starter:true, goals:5, matches:22},
+    {name:"Marcio Rosa", pos:"GK", club:"PFC Montana", starter:false, goals:0, matches:0},
+    {name:"Sidny Lopes Cabral", pos:"DEF", club:"SL Benfica", starter:false, goals:0, matches:0},
+    {name:"Deroy Duarte", pos:"MIL", club:"PFC Ludogorets Razgrad", starter:false, goals:0, matches:0},
+    {name:"Laros Duarte", pos:"MIL", club:"Puskás Akadémia FC", starter:false, goals:0, matches:0},
+    {name:"Yannick Semedo", pos:"MIL", club:"SC Farense", starter:false, goals:0, matches:0},
+    {name:"Willy Semedo", pos:"MIL", club:"AC Omonia", starter:false, goals:0, matches:0},
+    {name:"Telmo Arcanjo", pos:"MIL", club:"Vitória SC", starter:false, goals:0, matches:0},
+    {name:"Dailon Livramento", pos:"ATT", club:"Casa Pia AC", starter:false, goals:0, matches:0},
+    {name:"Ryan Mendes", pos:"ATT", club:"Iğdır FK", starter:false, goals:4, matches:20},
+    {name:"Nuno Da Costa", pos:"MIL", club:"Başakşehir FK", starter:false, goals:0, matches:0},
+    {name:"Steven Moreira", pos:"DEF", club:"Columbus Crew", starter:false, goals:0, matches:0},
+    {name:"Cj Dos Santos", pos:"GK", club:"San Diego FC", starter:false, goals:0, matches:0},
+    {name:"Wagner Pina", pos:"DEF", club:"Trabzonspor", starter:false, goals:0, matches:0},
+    {name:"Kelvin Pires", pos:"DEF", club:"SJK", starter:false, goals:0, matches:0},
+    {name:"Helio Varela", pos:"MIL", club:"Maccabi Tel-Aviv FC", starter:false, goals:0, matches:0},
+  ]},
+  CRO: { name:"Croatie", flag:"__CRO__", host:false, players:[
+    {name:"Dominik Livakovic", pos:"GK", club:"GNK Dinamo Zagreb", starter:true, goals:0, matches:0},
+    {name:"Josip Stanisic", pos:"DEF", club:"FC Bayern München", starter:true, goals:0, matches:0},
+    {name:"Marin Pongracic", pos:"DEF", club:"ACF Fiorentina", starter:true, goals:0, matches:0},
+    {name:"Josko Gvardiol", pos:"DEF", club:"Manchester City FC", starter:true, goals:0, matches:0},
+    {name:"Duje Caleta-Car", pos:"DEF", club:"Real Sociedad", starter:true, goals:0, matches:0},
+    {name:"Josip Sutalo", pos:"DEF", club:"AFC Ajax", starter:true, goals:2, matches:22},
+    {name:"Nikola Moro", pos:"MIL", club:"Bologna FC", starter:true, goals:0, matches:0},
+    {name:"Mateo Kovacic", pos:"MIL", club:"Manchester City FC", starter:true, goals:5, matches:35},
+    {name:"Andrej Kramaric", pos:"ATT", club:"TSG Hoffenheim", starter:true, goals:15, matches:30},
+    {name:"Luka Modric", pos:"MIL", club:"AC Milan", starter:true, goals:5, matches:28},
+    {name:"Ante Budimir", pos:"ATT", club:"CA Osasuna", starter:true, goals:0, matches:0},
+    {name:"Ivor Pandur", pos:"GK", club:"Hull City FC", starter:false, goals:0, matches:0},
+    {name:"Nikola Vlasic", pos:"MIL", club:"Torino FC", starter:false, goals:0, matches:0},
+    {name:"Ivan Perisic", pos:"ATT", club:"PSV Eindhoven", starter:false, goals:4, matches:25},
+    {name:"Mario Pasalic", pos:"MIL", club:"Atalanta Bergamo", starter:false, goals:0, matches:0},
+    {name:"Martin Baturina", pos:"MIL", club:"Como", starter:false, goals:0, matches:0},
+    {name:"Petar Sucic", pos:"MIL", club:"FC Internazionale Milano", starter:false, goals:0, matches:0},
+    {name:"Kristijan Jakic", pos:"DEF", club:"FC Augsburg", starter:false, goals:0, matches:0},
+    {name:"Toni Fruk", pos:"MIL", club:"HNK Rijeka", starter:false, goals:0, matches:0},
+    {name:"Igor Matanovic", pos:"ATT", club:"SC Freiburg", starter:false, goals:0, matches:0},
+    {name:"Luka Sucic", pos:"MIL", club:"Real Sociedad", starter:false, goals:0, matches:0},
+    {name:"Luka Vuskovic", pos:"DEF", club:"Hamburger SV", starter:false, goals:0, matches:0},
+    {name:"Dominik Kotarski", pos:"GK", club:"FC København", starter:false, goals:0, matches:0},
+    {name:"Marco Pasalic", pos:"ATT", club:"Orlando City SC", starter:false, goals:0, matches:0},
+    {name:"Martin Erlic", pos:"DEF", club:"FC Midtjylland", starter:false, goals:0, matches:0},
+    {name:"Petar Musa", pos:"ATT", club:"FC Dallas", starter:false, goals:0, matches:0},
+  ]},
+  CUW: { name:"Curaçao", flag:"__CUW__", host:false, players:[
+    {name:"Eloy Room", pos:"GK", club:"Miami FC", starter:true, goals:0, matches:0},
+    {name:"Shurandy Sambo", pos:"DEF", club:"Sparta Rotterdam", starter:true, goals:0, matches:0},
+    {name:"Jurien Gaari", pos:"DEF", club:"Abha Club", starter:true, goals:3, matches:20},
+    {name:"Roshon Van Eijma", pos:"DEF", club:"RKC Waalwijk", starter:true, goals:0, matches:0},
+    {name:"Sherel Floranus", pos:"DEF", club:"PEC Zwolle", starter:true, goals:0, matches:0},
+    {name:"Godfried Roemeratoe", pos:"MIL", club:"RKC Waalwijk", starter:true, goals:0, matches:0},
+    {name:"Juninho Bacuna", pos:"MIL", club:"FC Volendam", starter:true, goals:0, matches:0},
+    {name:"Livano Comenencia", pos:"MIL", club:"FC Zürich", starter:true, goals:0, matches:0},
+    {name:"Juergen Locadia", pos:"ATT", club:"Miami FC", starter:true, goals:0, matches:0},
+    {name:"Leandro Bacuna", pos:"MIL", club:"Iğdır FK", starter:true, goals:3, matches:22},
+    {name:"Jeremy Antonisse", pos:"ATT", club:"AE Kifisia FC", starter:true, goals:0, matches:0},
+    {name:"Sontje Hansen", pos:"ATT", club:"Middlesbrough FC", starter:false, goals:0, matches:0},
+    {name:"Tyrese Noslin", pos:"ATT", club:"SC Telstar", starter:false, goals:0, matches:0},
+    {name:"Kenji Gorre", pos:"ATT", club:"Maccabi Haifa FC", starter:false, goals:0, matches:0},
+    {name:"Arjany Martha", pos:"MIL", club:"Rotherham United FC", starter:false, goals:0, matches:0},
+    {name:"Jearl Margaritha", pos:"ATT", club:"SK Beveren", starter:false, goals:0, matches:0},
+    {name:"Brandley Kuwas", pos:"ATT", club:"FC Volendam", starter:false, goals:0, matches:0},
+    {name:"Armando Obispo", pos:"DEF", club:"PSV Eindhoven", starter:false, goals:0, matches:0},
+    {name:"Gervane Kastaneer", pos:"ATT", club:"Terengganu FC", starter:false, goals:0, matches:0},
+    {name:"Joshua Brenet", pos:"DEF", club:"Kayserispor", starter:false, goals:0, matches:0},
+    {name:"Tahith Chong", pos:"MIL", club:"Shefield United FC", starter:false, goals:0, matches:0},
+    {name:"Kevin Felida", pos:"MIL", club:"FC Den Bosch", starter:false, goals:0, matches:0},
+    {name:"Riechedly Bazoer", pos:"DEF", club:"Konyaspor", starter:false, goals:0, matches:0},
+    {name:"Deveron Fonville", pos:"DEF", club:"NEC Nijmegen", starter:false, goals:0, matches:0},
+    {name:"Tyrick Bodak", pos:"GK", club:"SC Telstar", starter:false, goals:0, matches:0},
+    {name:"Trevor Doornbusch", pos:"GK", club:"VVV Venlo", starter:false, goals:0, matches:0},
+  ]},
+  CZE: { name:"Tchéquie", flag:"__CZE__", host:false, players:[
+    {name:"Matej Kovar", pos:"GK", club:"", starter:true, goals:0, matches:0},
+    {name:"David Zima", pos:"DEF", club:"", starter:true, goals:0, matches:0},
+    {name:"Tomas Holes", pos:"DEF", club:"", starter:true, goals:0, matches:0},
+    {name:"Robin Hranac", pos:"DEF", club:"", starter:true, goals:0, matches:0},
+    {name:"Vladimir Coufal", pos:"DEF", club:"", starter:true, goals:2, matches:32},
+    {name:"Stepan Chaloupek", pos:"DEF", club:"", starter:true, goals:0, matches:0},
+    {name:"Ladislav Krejci", pos:"DEF", club:"", starter:true, goals:0, matches:0},
+    {name:"Vladimir Darida", pos:"MIL", club:"", starter:true, goals:0, matches:0},
+    {name:"Adam Hlozek", pos:"ATT", club:"", starter:true, goals:8, matches:30},
+    {name:"Patrik Schick", pos:"ATT", club:"", starter:true, goals:12, matches:25},
+    {name:"Jan Kuchta", pos:"ATT", club:"", starter:true, goals:0, matches:0},
+    {name:"Lukas Cerv", pos:"MIL", club:"", starter:false, goals:0, matches:0},
+    {name:"Mojmir Chytil", pos:"ATT", club:"", starter:false, goals:0, matches:0},
+    {name:"David Jurasek", pos:"DEF", club:"", starter:false, goals:0, matches:0},
+    {name:"Pavel Sulc", pos:"ATT", club:"", starter:false, goals:0, matches:0},
+    {name:"Jindrich Stanek", pos:"GK", club:"", starter:false, goals:0, matches:0},
+    {name:"Lukas Provod", pos:"MIL", club:"", starter:false, goals:0, matches:0},
+    {name:"Michal Sadilek", pos:"MIL", club:"", starter:false, goals:0, matches:0},
+    {name:"Tomas Chory", pos:"ATT", club:"", starter:false, goals:0, matches:0},
+    {name:"Jaroslav Zeleny", pos:"DEF", club:"", starter:false, goals:0, matches:0},
+    {name:"David Doudera", pos:"DEF", club:"", starter:false, goals:0, matches:0},
+    {name:"Tomas Soucek", pos:"MIL", club:"", starter:false, goals:6, matches:35},
+    {name:"Lukas Hornicek", pos:"GK", club:"", starter:false, goals:0, matches:0},
+    {name:"Alexandr Sojka", pos:"MIL", club:"", starter:false, goals:0, matches:0},
+    {name:"Hugo Sochurek", pos:"MIL", club:"", starter:false, goals:0, matches:0},
+    {name:"Denis Visinsky", pos:"ATT", club:"", starter:false, goals:0, matches:0},
+  ]},
+  ECU: { name:"Équateur", flag:"__ECU__", host:false, players:[
+    {name:"Hernan Galindez", pos:"GK", club:"CA Huracán", starter:true, goals:0, matches:0},
+    {name:"Felix Torres", pos:"DEF", club:"SC Internacional", starter:true, goals:0, matches:0},
+    {name:"Piero Hincapie", pos:"DEF", club:"Arsenal FC", starter:true, goals:0, matches:0},
+    {name:"Joel Ordonez", pos:"DEF", club:"Club Brugge", starter:true, goals:0, matches:0},
+    {name:"Jordy Alcivar", pos:"MIL", club:"Independiente Del Valle", starter:true, goals:0, matches:0},
+    {name:"Willian Pacho", pos:"DEF", club:"Paris Saint-Germain", starter:true, goals:0, matches:0},
+    {name:"Pervis Estupinan", pos:"DEF", club:"AC Milan", starter:true, goals:0, matches:0},
+    {name:"Anthony Valencia", pos:"MIL", club:"Royal Antwerp FC", starter:true, goals:0, matches:0},
+    {name:"John Yeboah", pos:"ATT", club:"Venezia FC", starter:true, goals:0, matches:0},
+    {name:"Kendry Paez", pos:"MIL", club:"CA River Plate", starter:true, goals:0, matches:0},
+    {name:"Kevin Rodriguez", pos:"ATT", club:"Royale Union Saint-Gilloise", starter:true, goals:0, matches:0},
+    {name:"Moises Ramirez", pos:"GK", club:"AE Kifisia FC", starter:false, goals:0, matches:0},
+    {name:"Enner Valencia", pos:"ATT", club:"CF Pachuca", starter:false, goals:8, matches:28},
+    {name:"Alan Minda", pos:"MIL", club:"Atlético Mineiro", starter:false, goals:0, matches:0},
+    {name:"Pedro Vite", pos:"MIL", club:"Pumas UNAM", starter:false, goals:0, matches:0},
+    {name:"Jordy Caicedo", pos:"ATT", club:"CA Huracán", starter:false, goals:0, matches:0},
+    {name:"Angelo Preciado", pos:"DEF", club:"Atlético Mineiro", starter:false, goals:0, matches:0},
+    {name:"Denil Castillo", pos:"MIL", club:"FC Midtjylland", starter:false, goals:0, matches:0},
+    {name:"Gonzalo Plata", pos:"ATT", club:"CR Flamengo", starter:false, goals:5, matches:28},
+    {name:"Nilson Angulo", pos:"ATT", club:"Sunderland AFC", starter:false, goals:0, matches:0},
+    {name:"Alan Franco", pos:"MIL", club:"Atlético Mineiro", starter:false, goals:0, matches:0},
+    {name:"Gonzalo Valle", pos:"GK", club:"LDU Quito", starter:false, goals:0, matches:0},
+    {name:"Moises Caicedo", pos:"MIL", club:"Chelsea FC", starter:false, goals:3, matches:35},
+    {name:"Jeremy Arevalo", pos:"ATT", club:"VfB Stuttgart", starter:false, goals:0, matches:0},
+    {name:"Jackson Porozo", pos:"DEF", club:"Club Tijuana", starter:false, goals:0, matches:0},
+    {name:"Yaimar Medina", pos:"DEF", club:"KRC Genk", starter:false, goals:0, matches:0},
+  ]},
+  EGY: { name:"Égypte", flag:"__EGY__", host:false, players:[
+    {name:"Mohamed Elshenawy", pos:"GK", club:"Al Ahly FC", starter:true, goals:0, matches:0},
+    {name:"Yasser Ibrahim", pos:"DEF", club:"Al Ahly FC", starter:true, goals:0, matches:0},
+    {name:"Mohamed Hany", pos:"DEF", club:"Al Ahly FC", starter:true, goals:0, matches:0},
+    {name:"Hossam Abdelmaguid", pos:"DEF", club:"Zamalek SC", starter:true, goals:0, matches:0},
+    {name:"Ramy Rabia", pos:"DEF", club:"Al Ain FC", starter:true, goals:0, matches:0},
+    {name:"Mohamed Abdelmoneim", pos:"DEF", club:"OGC Nice", starter:true, goals:0, matches:0},
+    {name:"Trezeguet", pos:"ATT", club:"Al Ahly FC", starter:true, goals:0, matches:0},
+    {name:"Emam Ashour", pos:"MIL", club:"Al Ahly FC", starter:true, goals:0, matches:0},
+    {name:"Hamza Abdelkarim", pos:"ATT", club:"FC Barcelona", starter:true, goals:0, matches:0},
+    {name:"Mohamed Salah", pos:"ATT", club:"Liverpool FC", starter:true, goals:22, matches:38},
+    {name:"Mostafa Zico", pos:"MIL", club:"Pyramids FC", starter:true, goals:0, matches:0},
+    {name:"Haissem Hassan", pos:"ATT", club:"Real Oviedo", starter:false, goals:0, matches:0},
+    {name:"Ahmed Fatouh", pos:"DEF", club:"Zamalek SC", starter:false, goals:0, matches:0},
+    {name:"Hamdy Fathy", pos:"MIL", club:"Al Wakrah SC", starter:false, goals:0, matches:0},
+    {name:"Karim Hafez", pos:"DEF", club:"Pyramids FC", starter:false, goals:0, matches:0},
+    {name:"Mahdy Soliman", pos:"GK", club:"Zamalek SC", starter:false, goals:0, matches:0},
+    {name:"Mohanad Lashin", pos:"MIL", club:"Pyramids FC", starter:false, goals:0, matches:0},
+    {name:"Nabil Donga", pos:"MIL", club:"Al Najmah SC", starter:false, goals:0, matches:0},
+    {name:"Marawan Attia", pos:"MIL", club:"Al Ahly FC", starter:false, goals:0, matches:0},
+    {name:"Ibrahim Adel", pos:"ATT", club:"FC Nordsjælland", starter:false, goals:0, matches:0},
+    {name:"Mahmoud Saber", pos:"MIL", club:"ZED FC", starter:false, goals:0, matches:0},
+    {name:"Omar Marmoush", pos:"ATT", club:"Manchester City FC", starter:false, goals:22, matches:35},
+    {name:"Mostafa Shoubir", pos:"GK", club:"Al Ahly FC", starter:false, goals:0, matches:0},
+    {name:"Tarek Alaa", pos:"DEF", club:"ZED FC", starter:false, goals:0, matches:0},
+    {name:"Zizo", pos:"ATT", club:"Al Ahly FC", starter:false, goals:0, matches:0},
+    {name:"Mohamed Alaa", pos:"GK", club:"El Gouna FC", starter:false, goals:0, matches:0},
+  ]},
+  ENG: { name:"Angleterre", flag:"__ENG__", host:false, players:[
+    {name:"Jordan Pickford", pos:"GK", club:"Everton FC", starter:true, goals:0, matches:0},
+    {name:"Ezri Konsa", pos:"DEF", club:"Aston Villa FC", starter:true, goals:0, matches:0},
+    {name:"Nico Oreilly", pos:"DEF", club:"Manchester City FC", starter:true, goals:0, matches:0},
+    {name:"Declan Rice", pos:"MIL", club:"Arsenal FC", starter:true, goals:5, matches:38},
+    {name:"John Stones", pos:"DEF", club:"Manchester City FC", starter:true, goals:1, matches:28},
+    {name:"Marc Guehi", pos:"DEF", club:"Manchester City FC", starter:true, goals:0, matches:0},
+    {name:"Bukayo Saka", pos:"ATT", club:"Arsenal FC", starter:true, goals:10, matches:42},
+    {name:"Elliot Anderson", pos:"MIL", club:"Nottingham Forest FC", starter:true, goals:0, matches:0},
+    {name:"Harry Kane", pos:"ATT", club:"FC Bayern München", starter:true, goals:36, matches:31},
+    {name:"Jude Bellingham", pos:"MIL", club:"Real Madrid C. F.", starter:true, goals:8, matches:40},
+    {name:"Marcus Rashford", pos:"ATT", club:"FC Barcelona", starter:true, goals:5, matches:22},
+    {name:"Tino Livramento", pos:"DEF", club:"Newcastle United FC", starter:false, goals:0, matches:0},
+    {name:"Dean Henderson", pos:"GK", club:"Crystal Palace FC", starter:false, goals:0, matches:0},
+    {name:"Jordan Henderson", pos:"MIL", club:"Brentford FC", starter:false, goals:0, matches:0},
+    {name:"Dan Burn", pos:"DEF", club:"Newcastle United FC", starter:false, goals:0, matches:0},
+    {name:"Kobbie Mainoo", pos:"MIL", club:"Manchester United FC", starter:false, goals:0, matches:0},
+    {name:"Morgan Rogers", pos:"MIL", club:"Aston Villa FC", starter:false, goals:0, matches:0},
+    {name:"Anthony Gordon", pos:"ATT", club:"Newcastle United FC", starter:false, goals:0, matches:0},
+    {name:"Ollie Watkins", pos:"ATT", club:"Aston Villa FC", starter:false, goals:0, matches:0},
+    {name:"Noni Madueke", pos:"ATT", club:"Arsenal FC", starter:false, goals:0, matches:0},
+    {name:"Eberechi Eze", pos:"MIL", club:"Arsenal FC", starter:false, goals:0, matches:0},
+    {name:"Ivan Toney", pos:"ATT", club:"Al Ahli FC", starter:false, goals:0, matches:0},
+    {name:"James Trafford", pos:"GK", club:"Manchester City FC", starter:false, goals:0, matches:0},
+    {name:"Reece James", pos:"DEF", club:"Chelsea FC", starter:false, goals:0, matches:0},
+    {name:"Djed Spence", pos:"DEF", club:"Tottenham Hotspur FC", starter:false, goals:0, matches:0},
+    {name:"Jarell Quansah", pos:"DEF", club:"Bayer Leverkusen", starter:false, goals:0, matches:0},
+  ]},
+  ESP: { name:"Espagne", flag:"__ESP__", host:false, players:[
+    {name:"David Raya", pos:"GK", club:"Arsenal FC", starter:true, goals:0, matches:0},
+    {name:"Marc Pubill", pos:"DEF", club:"Atlético De Madrid", starter:true, goals:1, matches:28},
+    {name:"Alex Grimaldo", pos:"DEF", club:"Bayer Leverkusen", starter:true, goals:5, matches:38},
+    {name:"Eric Garcia", pos:"DEF", club:"FC Barcelona", starter:true, goals:1, matches:30},
+    {name:"Marcos Llorente", pos:"DEF", club:"Atlético De Madrid", starter:true, goals:4, matches:30},
+    {name:"Mikel Merino", pos:"MIL", club:"Arsenal FC", starter:true, goals:4, matches:30},
+    {name:"Ferran Torres", pos:"ATT", club:"FC Barcelona", starter:true, goals:8, matches:28},
+    {name:"Fabian Ruiz", pos:"MIL", club:"Paris Saint-Germain", starter:true, goals:5, matches:35},
+    {name:"Gavi", pos:"MIL", club:"FC Barcelona", starter:true, goals:0, matches:11},
+    {name:"Dani Olmo", pos:"ATT", club:"FC Barcelona", starter:true, goals:7, matches:26},
+    {name:"Yeremy Pino", pos:"ATT", club:"Crystal Palace FC", starter:true, goals:0, matches:0},
+    {name:"Pedro Porro", pos:"DEF", club:"Tottenham Hotspur FC", starter:false, goals:0, matches:0},
+    {name:"Joan Garcia", pos:"GK", club:"FC Barcelona", starter:false, goals:0, matches:0},
+    {name:"Aymeric Laporte", pos:"DEF", club:"Athletic Club", starter:false, goals:0, matches:0},
+    {name:"Alex Baena", pos:"MIL", club:"Atlético De Madrid", starter:false, goals:0, matches:0},
+    {name:"Rodri", pos:"MIL", club:"Manchester City FC", starter:false, goals:0, matches:0},
+    {name:"Nico Williams", pos:"ATT", club:"Athletic Club", starter:false, goals:6, matches:25},
+    {name:"Martin Zubimendi", pos:"MIL", club:"Arsenal FC", starter:false, goals:0, matches:0},
+    {name:"Lamine Yamal", pos:"ATT", club:"FC Barcelona", starter:false, goals:16, matches:28},
+    {name:"Pedri", pos:"MIL", club:"FC Barcelona", starter:false, goals:2, matches:29},
+    {name:"Mikel Oyarzabal", pos:"ATT", club:"Real Sociedad", starter:false, goals:0, matches:0},
+    {name:"Pau Cubarsi", pos:"DEF", club:"FC Barcelona", starter:false, goals:0, matches:0},
+    {name:"Unai Simon", pos:"GK", club:"Athletic Club", starter:false, goals:0, matches:0},
+    {name:"Marc Cucurella", pos:"DEF", club:"Chelsea FC", starter:false, goals:0, matches:0},
+    {name:"Victor Munoz", pos:"ATT", club:"CA Osasuna", starter:false, goals:0, matches:0},
+    {name:"Borja Iglesias", pos:"ATT", club:"RC Celta Vigo", starter:false, goals:0, matches:0},
+  ]},
+  FRA: { name:"France", flag:"__FRA__", host:false, players:[
+    {name:"Brice Samba", pos:"GK", club:"Stade Rennais FC", starter:true, goals:0, matches:30},
+    {name:"Malo Gusto", pos:"DEF", club:"Chelsea FC", starter:true, goals:0, matches:0},
+    {name:"Lucas Digne", pos:"DEF", club:"Aston Villa FC", starter:true, goals:1, matches:28},
+    {name:"Dayot Upamecano", pos:"DEF", club:"FC Bayern München", starter:true, goals:2, matches:30},
+    {name:"Jules Kounde", pos:"DEF", club:"FC Barcelona", starter:true, goals:2, matches:38},
+    {name:"Manu Kone", pos:"MIL", club:"AS Roma", starter:true, goals:4, matches:32},
+    {name:"Ousmane Dembele", pos:"ATT", club:"Paris Saint-Germain", starter:true, goals:18, matches:35},
+    {name:"Aurelien Tchouameni", pos:"MIL", club:"Real Madrid C. F.", starter:true, goals:3, matches:35},
+    {name:"Marcus Thuram", pos:"ATT", club:"FC Internazionale Milano", starter:true, goals:18, matches:37},
+    {name:"Kylian Mbappe", pos:"ATT", club:"Real Madrid C. F.", starter:true, goals:43, matches:39},
+    {name:"Michael Olise", pos:"ATT", club:"FC Bayern München", starter:true, goals:0, matches:0},
+    {name:"Bradley Barcola", pos:"ATT", club:"Paris Saint-Germain", starter:false, goals:0, matches:0},
+    {name:"Ngolo Kante", pos:"MIL", club:"Fenerbahçe SK", starter:false, goals:0, matches:0},
+    {name:"Adrien Rabiot", pos:"MIL", club:"AC Milan", starter:false, goals:0, matches:0},
+    {name:"Ibrahima Konate", pos:"DEF", club:"Liverpool FC", starter:false, goals:0, matches:0},
+    {name:"Mike Maignan", pos:"GK", club:"AC Milan", starter:false, goals:0, matches:0},
+    {name:"William Saliba", pos:"DEF", club:"Arsenal FC", starter:false, goals:0, matches:0},
+    {name:"Warren Zaire-Emery", pos:"MIL", club:"Paris Saint-Germain", starter:false, goals:0, matches:0},
+    {name:"Theo Hernandez", pos:"DEF", club:"Al Hilal SC", starter:false, goals:5, matches:28},
+    {name:"Desire Doue", pos:"ATT", club:"Paris Saint-Germain", starter:false, goals:0, matches:0},
+    {name:"Lucas Hernandez", pos:"DEF", club:"Paris Saint-Germain", starter:false, goals:0, matches:0},
+    {name:"Jean-Philippe Mateta", pos:"ATT", club:"Crystal Palace FC", starter:false, goals:0, matches:0},
+    {name:"Robin Risser", pos:"GK", club:"RC Lens", starter:false, goals:0, matches:0},
+    {name:"Rayan Cherki", pos:"MIL", club:"Manchester City FC", starter:false, goals:0, matches:0},
+    {name:"Maghnes Akliouche", pos:"MIL", club:"AS Monaco", starter:false, goals:0, matches:0},
+    {name:"Maxence Lacroix", pos:"DEF", club:"Crystal Palace FC", starter:false, goals:0, matches:0},
+  ]},
+  GER: { name:"Allemagne", flag:"__GER__", host:false, players:[
+    {name:"Manuel Neuer", pos:"GK", club:"FC Bayern München", starter:true, goals:0, matches:0},
+    {name:"Antonio Ruediger", pos:"DEF", club:"Real Madrid C. F.", starter:true, goals:0, matches:0},
+    {name:"Waldemar Anton", pos:"DEF", club:"Borussia Dortmund", starter:true, goals:0, matches:0},
+    {name:"Jonathan Tah", pos:"DEF", club:"FC Bayern München", starter:true, goals:0, matches:0},
+    {name:"Aleksandar Pavlovic", pos:"MIL", club:"FC Bayern München", starter:true, goals:0, matches:0},
+    {name:"Joshua Kimmich", pos:"DEF", club:"FC Bayern München", starter:true, goals:3, matches:38},
+    {name:"Kai Havertz", pos:"ATT", club:"Arsenal FC", starter:true, goals:2, matches:11},
+    {name:"Leon Goretzka", pos:"MIL", club:"FC Bayern München", starter:true, goals:4, matches:28},
+    {name:"Jamie Leweling", pos:"MIL", club:"VfB Stuttgart", starter:true, goals:0, matches:0},
+    {name:"Jamal Musiala", pos:"MIL", club:"FC Bayern München", starter:true, goals:4, matches:7},
+    {name:"Nick Woltemade", pos:"ATT", club:"Newcastle United FC", starter:true, goals:0, matches:0},
+    {name:"Oliver Baumann", pos:"GK", club:"TSG Hoffenheim", starter:false, goals:0, matches:0},
+    {name:"Pascal Gross", pos:"MIL", club:"Brighton & Hove Albion FC", starter:false, goals:0, matches:0},
+    {name:"Maximilian Beier", pos:"ATT", club:"Borussia Dortmund", starter:false, goals:0, matches:0},
+    {name:"Nico Schlotterbeck", pos:"DEF", club:"Borussia Dortmund", starter:false, goals:0, matches:0},
+    {name:"Angelo Stiller", pos:"MIL", club:"VfB Stuttgart", starter:false, goals:0, matches:0},
+    {name:"Florian Wirtz", pos:"MIL", club:"Liverpool FC", starter:false, goals:5, matches:33},
+    {name:"Nathaniel Brown", pos:"DEF", club:"Eintracht Frankfurt", starter:false, goals:0, matches:0},
+    {name:"Leroy Sane", pos:"MIL", club:"Galatasaray SK", starter:false, goals:7, matches:28},
+    {name:"Nadiem Amiri", pos:"MIL", club:"1. FSV Mainz 05", starter:false, goals:0, matches:0},
+    {name:"Alexander Nuebel", pos:"GK", club:"VfB Stuttgart", starter:false, goals:0, matches:0},
+    {name:"David Raum", pos:"DEF", club:"RB Leipzig", starter:false, goals:0, matches:0},
+    {name:"Felix Nmecha", pos:"MIL", club:"Borussia Dortmund", starter:false, goals:0, matches:0},
+    {name:"Malick Thiaw", pos:"DEF", club:"Newcastle United FC", starter:false, goals:0, matches:0},
+    {name:"Lennart Karl", pos:"MIL", club:"FC Bayern München", starter:false, goals:0, matches:0},
+    {name:"Deniz Undav", pos:"ATT", club:"VfB Stuttgart", starter:false, goals:0, matches:0},
+  ]},
+  GHA: { name:"Ghana", flag:"__GHA__", host:false, players:[
+    {name:"Lawrence Ati Zigi", pos:"GK", club:"FC St. Gallen", starter:true, goals:0, matches:0},
+    {name:"Alidu Seidu", pos:"DEF", club:"Stade Rennais FC", starter:true, goals:0, matches:0},
+    {name:"Caleb Yirenkyi", pos:"MIL", club:"FC Nordsjælland", starter:true, goals:0, matches:0},
+    {name:"Jonas Adjetey", pos:"DEF", club:"VfL Wolfsburg", starter:true, goals:0, matches:0},
+    {name:"Thomas Partey", pos:"MIL", club:"Villarreal CF", starter:true, goals:3, matches:25},
+    {name:"Abdul Mumin", pos:"DEF", club:"Rayo Vallecano", starter:true, goals:0, matches:0},
+    {name:"Fatawu Issahaku", pos:"ATT", club:"Leicester City FC", starter:true, goals:0, matches:0},
+    {name:"Kwasi Sibo", pos:"MIL", club:"Real Oviedo", starter:true, goals:0, matches:0},
+    {name:"Jordan Ayew", pos:"ATT", club:"Leicester City FC", starter:true, goals:5, matches:25},
+    {name:"Brandon Thomas-Asante", pos:"ATT", club:"Coventry City FC", starter:true, goals:0, matches:0},
+    {name:"Antoine Semenyo", pos:"MIL", club:"Manchester City FC", starter:true, goals:8, matches:28},
+    {name:"Joseph Anang", pos:"GK", club:"St Patrick's Athletic FC", starter:false, goals:0, matches:0},
+    {name:"Christopher Bonsu Baah", pos:"ATT", club:"Al Qadsiah FC", starter:false, goals:0, matches:0},
+    {name:"Gideon Mensah", pos:"DEF", club:"AJ Auxerre", starter:false, goals:0, matches:0},
+    {name:"Elisha Owusu", pos:"MIL", club:"AJ Auxerre", starter:false, goals:0, matches:0},
+    {name:"Benjamin Asare", pos:"GK", club:"Hearts Of Oak SC", starter:false, goals:0, matches:0},
+    {name:"Baba Rahman", pos:"DEF", club:"PAOK Saloniki", starter:false, goals:0, matches:0},
+    {name:"Jerome Opoku", pos:"DEF", club:"Başakşehir FK", starter:false, goals:0, matches:0},
+    {name:"Inaki Williams", pos:"ATT", club:"Athletic Club", starter:false, goals:0, matches:0},
+    {name:"Augustine Boakye", pos:"MIL", club:"AS Saint-Etienne", starter:false, goals:0, matches:0},
+    {name:"Kojo Peprah Oppong", pos:"DEF", club:"OGC Nice", starter:false, goals:0, matches:0},
+    {name:"Kamaldeen Sulemana", pos:"ATT", club:"Atalanta Bergamo", starter:false, goals:0, matches:0},
+    {name:"Derrick Luckassen", pos:"DEF", club:"Pafos FC", starter:false, goals:0, matches:0},
+    {name:"Ernest Nuamah", pos:"ATT", club:"Olympique Lyonnais", starter:false, goals:0, matches:0},
+    {name:"Prince Adu", pos:"ATT", club:"FC Viktoria Plzeň", starter:false, goals:0, matches:0},
+    {name:"Marvin Senaya", pos:"DEF", club:"AJ Auxerre", starter:false, goals:0, matches:0},
+  ]},
+  HAI: { name:"Haïti", flag:"__HAI__", host:false, players:[
+    {name:"Johny Placide", pos:"GK", club:"", starter:true, goals:0, matches:0},
+    {name:"Carlens Arcus", pos:"DEF", club:"", starter:true, goals:0, matches:0},
+    {name:"Keeto Thermoncy", pos:"DEF", club:"", starter:true, goals:0, matches:0},
+    {name:"Ricardo Ade", pos:"DEF", club:"", starter:true, goals:0, matches:0},
+    {name:"Hannes Delcroix", pos:"DEF", club:"", starter:true, goals:0, matches:0},
+    {name:"Carl Sainte", pos:"MIL", club:"", starter:true, goals:0, matches:0},
+    {name:"Derrick Etienne", pos:"ATT", club:"", starter:true, goals:4, matches:20},
+    {name:"Martin Experience", pos:"DEF", club:"", starter:true, goals:0, matches:0},
+    {name:"Duckens Nazon", pos:"ATT", club:"", starter:true, goals:0, matches:0},
+    {name:"Jean-Ricner Bellegarde", pos:"MIL", club:"", starter:true, goals:0, matches:0},
+    {name:"Louicius Deedson", pos:"ATT", club:"", starter:true, goals:0, matches:0},
+    {name:"Alexandre Pierre", pos:"GK", club:"", starter:false, goals:0, matches:0},
+    {name:"Markhus Lacroix", pos:"DEF", club:"", starter:false, goals:0, matches:0},
+    {name:"Leverton Pierre", pos:"MIL", club:"", starter:false, goals:0, matches:0},
+    {name:"Ruben Providence", pos:"ATT", club:"", starter:false, goals:0, matches:0},
+    {name:"Lenny Joseph", pos:"ATT", club:"", starter:false, goals:0, matches:0},
+    {name:"Danley Jean Jacques", pos:"MIL", club:"", starter:false, goals:0, matches:0},
+    {name:"Wilson Isidor", pos:"ATT", club:"", starter:false, goals:0, matches:0},
+    {name:"Yassin Fortune", pos:"ATT", club:"", starter:false, goals:0, matches:0},
+    {name:"Frantzdy Pierrot", pos:"ATT", club:"", starter:false, goals:6, matches:22},
+    {name:"Josue Casimir", pos:"ATT", club:"", starter:false, goals:0, matches:0},
+    {name:"Jean-Kevin Duverne", pos:"DEF", club:"", starter:false, goals:0, matches:0},
+    {name:"Josue Duverger", pos:"GK", club:"", starter:false, goals:0, matches:0},
+    {name:"Wilguens Paugain", pos:"DEF", club:"", starter:false, goals:0, matches:0},
+    {name:"Dominique Simon", pos:"MIL", club:"", starter:false, goals:0, matches:0},
+    {name:"Woodensky Pierre", pos:"MIL", club:"", starter:false, goals:0, matches:0},
+  ]},
+  IRN: { name:"Iran", flag:"__IRN__", host:false, players:[
+    {name:"Alireza Beiranvand", pos:"GK", club:"Tractor Sazi Tabriz FC", starter:true, goals:0, matches:0},
+    {name:"Saleh Hardani", pos:"DEF", club:"Esteghlal Tehran FC", starter:true, goals:0, matches:0},
+    {name:"Ehsan Hajisafi", pos:"DEF", club:"Sepahan SC", starter:true, goals:0, matches:0},
+    {name:"Shoja Khalilzadeh", pos:"DEF", club:"Tractor Sazi Tabriz FC", starter:true, goals:0, matches:0},
+    {name:"Milad Mohammadi", pos:"DEF", club:"Persepolis FC", starter:true, goals:0, matches:0},
+    {name:"Saeid Ezatolahi", pos:"MIL", club:"Shabab Al Ahli Club", starter:true, goals:0, matches:0},
+    {name:"Alireza Jahanbakhsh", pos:"MIL", club:"FCV Dender EH", starter:true, goals:5, matches:25},
+    {name:"Mohammad Mohebbi", pos:"MIL", club:"FC Rostov", starter:true, goals:0, matches:0},
+    {name:"Mehdi Taremi", pos:"ATT", club:"Olympiacos FC", starter:true, goals:12, matches:30},
+    {name:"Mehdi Ghayedi", pos:"ATT", club:"Al Nasr SC", starter:true, goals:0, matches:0},
+    {name:"Ali Alipour", pos:"ATT", club:"Persepolis FC", starter:true, goals:0, matches:0},
+    {name:"Payam Niazmand", pos:"GK", club:"Persepolis FC", starter:false, goals:0, matches:0},
+    {name:"Hossein Kanani", pos:"DEF", club:"Persepolis FC", starter:false, goals:0, matches:0},
+    {name:"Saman Ghoddos", pos:"MIL", club:"Al Ittihad Kalba SCC", starter:false, goals:0, matches:0},
+    {name:"Roozbeh Cheshmi", pos:"MIL", club:"Esteghlal Tehran FC", starter:false, goals:0, matches:0},
+    {name:"Mehdi Torabi", pos:"MIL", club:"Tractor Sazi Tabriz FC", starter:false, goals:0, matches:0},
+    {name:"Arya Yousefi", pos:"DEF", club:"Sepahan SC", starter:false, goals:0, matches:0},
+    {name:"Amirhossein Hosseinzadeh", pos:"ATT", club:"Tractor Sazi Tabriz FC", starter:false, goals:0, matches:0},
+    {name:"Ali Nemati", pos:"DEF", club:"Foolad Khuzestan FC", starter:false, goals:0, matches:0},
+    {name:"Shahriyar Moghanloo", pos:"ATT", club:"Al Ittihad Kalba SCC", starter:false, goals:0, matches:0},
+    {name:"Mohammad Ghorbani", pos:"MIL", club:"Al Wahda SC", starter:false, goals:0, matches:0},
+    {name:"Hossein Hosseini", pos:"GK", club:"Sepahan SC", starter:false, goals:0, matches:0},
+    {name:"Ramin Rezaeian", pos:"DEF", club:"Foolad Khuzestan FC", starter:false, goals:0, matches:0},
+    {name:"Dennis Dargahi", pos:"ATT", club:"Standard Liège", starter:false, goals:0, matches:0},
+    {name:"Danial Iri", pos:"DEF", club:"Malavan Anzali FC", starter:false, goals:0, matches:0},
+    {name:"Amirmohammad Razaghinia", pos:"MIL", club:"Esteghlal Tehran FC", starter:false, goals:0, matches:0},
+  ]},
+  IRQ: { name:"Irak", flag:"__IRQ__", host:false, players:[
+    {name:"Fahad Talib", pos:"GK", club:"Al Talaba SC", starter:true, goals:0, matches:0},
+    {name:"Rebin Ghareeb", pos:"DEF", club:"Port FC", starter:true, goals:0, matches:0},
+    {name:"Hussein Ali", pos:"DEF", club:"Pogoń Szczecin", starter:true, goals:0, matches:0},
+    {name:"Zaid Tahseen", pos:"DEF", club:"Pakhtakor Tashkent FK", starter:true, goals:0, matches:0},
+    {name:"Akam Hashim", pos:"DEF", club:"Al Zawra'a SC", starter:true, goals:0, matches:0},
+    {name:"Munaf Younus", pos:"DEF", club:"Al Shorta SC", starter:true, goals:0, matches:0},
+    {name:"Youssef Amyn", pos:"MIL", club:"AEK Larnaca FC", starter:true, goals:0, matches:0},
+    {name:"Ibrahim Bayesh", pos:"MIL", club:"Al Dhafra SCC", starter:true, goals:0, matches:0},
+    {name:"Ali Alhamadi", pos:"ATT", club:"Luton Town FC", starter:true, goals:0, matches:0},
+    {name:"Mohanad Ali", pos:"ATT", club:"Dibba FC", starter:true, goals:0, matches:0},
+    {name:"Ahmed Qasim", pos:"ATT", club:"Nashville SC", starter:true, goals:0, matches:0},
+    {name:"Jalal Hassan", pos:"GK", club:"Al Zawra'a SC", starter:false, goals:0, matches:0},
+    {name:"Ali Yousif", pos:"ATT", club:"Al Talaba SC", starter:false, goals:0, matches:0},
+    {name:"Zidane Iqbal", pos:"MIL", club:"FC Utrecht", starter:false, goals:0, matches:0},
+    {name:"Ahmed Yahya", pos:"DEF", club:"Al Shorta SC", starter:false, goals:0, matches:0},
+    {name:"Amir Alammari", pos:"MIL", club:"KS Cracovia", starter:false, goals:0, matches:0},
+    {name:"Ali Jasim", pos:"ATT", club:"Al Najmah SC", starter:false, goals:0, matches:0},
+    {name:"Aymen Hussein", pos:"ATT", club:"Al Karma SC", starter:false, goals:0, matches:0},
+    {name:"Kevin Yakob", pos:"MIL", club:"Aarhus GF", starter:false, goals:0, matches:0},
+    {name:"Aimar Sher", pos:"MIL", club:"Sarpsborg 08 FF", starter:false, goals:0, matches:0},
+    {name:"Marko Farji", pos:"ATT", club:"Venezia FC", starter:false, goals:0, matches:0},
+    {name:"Ahmed Basil", pos:"GK", club:"Al Shorta SC", starter:false, goals:0, matches:0},
+    {name:"Merchas Doski", pos:"DEF", club:"FC Viktoria Plzeň", starter:false, goals:0, matches:0},
+    {name:"Zaid Ismael", pos:"MIL", club:"Al Talaba SC", starter:false, goals:0, matches:0},
+    {name:"Mustafa Saadoon", pos:"DEF", club:"Al Shorta SC", starter:false, goals:0, matches:0},
+    {name:"Frans Putros", pos:"DEF", club:"Persib Bandung", starter:false, goals:0, matches:0},
+  ]},
+  JOR: { name:"Jordanie", flag:"__JOR__", host:false, players:[
+    {name:"Yazeed Abulaila", pos:"GK", club:"Al Hussein SC", starter:true, goals:0, matches:0},
+    {name:"Mohammad Abuhasheesh", pos:"DEF", club:"Al Karma SC", starter:true, goals:0, matches:0},
+    {name:"Abdallah Nasib", pos:"DEF", club:"Al Zawra'a SC", starter:true, goals:0, matches:0},
+    {name:"Husam Abudahab", pos:"DEF", club:"Al Faisaly SC", starter:true, goals:0, matches:0},
+    {name:"Yazan Alarab", pos:"DEF", club:"FC Seoul", starter:true, goals:0, matches:0},
+    {name:"Amer Jamous", pos:"MIL", club:"Al Zawra'a SC", starter:true, goals:0, matches:0},
+    {name:"Mohammad Abuzraiq", pos:"ATT", club:"Raja Casablanca", starter:true, goals:0, matches:0},
+    {name:"Noor Alrawabdeh", pos:"MIL", club:"Selangor FC", starter:true, goals:0, matches:0},
+    {name:"Ali Olwan", pos:"ATT", club:"Al Sailiya SC", starter:true, goals:0, matches:0},
+    {name:"Mousa Altamari", pos:"ATT", club:"Stade Rennais FC", starter:true, goals:0, matches:0},
+    {name:"Odeh Fakhoury", pos:"ATT", club:"Pyramids FC", starter:true, goals:0, matches:0},
+    {name:"Nour Baniateyah", pos:"GK", club:"Al Faisaly SC", starter:false, goals:0, matches:0},
+    {name:"Mahmoud Almardi", pos:"ATT", club:"Al Hussein SC", starter:false, goals:0, matches:0},
+    {name:"Rajaei Ayed", pos:"MIL", club:"Al Hussein SC", starter:false, goals:0, matches:0},
+    {name:"Ibrahim Sadeh", pos:"MIL", club:"Al Karma SC", starter:false, goals:0, matches:0},
+    {name:"Mohammad Abualnadi", pos:"DEF", club:"Selangor FC", starter:false, goals:0, matches:0},
+    {name:"Saleem Obaid", pos:"DEF", club:"Al Hussein SC", starter:false, goals:0, matches:0},
+    {name:"Ibrahim Sabra", pos:"ATT", club:"NK Lokomotiva Zagreb", starter:false, goals:0, matches:0},
+    {name:"Saed Alrosan", pos:"DEF", club:"Al Hussein SC", starter:false, goals:0, matches:0},
+    {name:"Mohannad Abutaha", pos:"MIL", club:"Al-Quwa Al-Jawiya", starter:false, goals:0, matches:0},
+    {name:"Nizar Alrashdan", pos:"MIL", club:"Qatar SC", starter:false, goals:0, matches:0},
+    {name:"Abdallah Alfakhori", pos:"GK", club:"Al Wahdat SC", starter:false, goals:0, matches:0},
+    {name:"Ehsan Haddad", pos:"DEF", club:"Al Hussein SC", starter:false, goals:0, matches:0},
+    {name:"Ali Azaizeh", pos:"ATT", club:"Al Shabab FC", starter:false, goals:0, matches:0},
+    {name:"Mohammad Aldaoud", pos:"MIL", club:"Al Wahdat SC", starter:false, goals:0, matches:0},
+    {name:"Anas Badawi", pos:"DEF", club:"Al Faisaly SC", starter:false, goals:0, matches:0},
+  ]},
+  JPN: { name:"Japon", flag:"__JPN__", host:false, players:[
+    {name:"Zion Suzuki", pos:"GK", club:"Parma", starter:true, goals:0, matches:0},
+    {name:"Yukinari Sugawara", pos:"DEF", club:"SV Werder Bremen", starter:true, goals:0, matches:0},
+    {name:"Shogo Taniguchi", pos:"DEF", club:"Sint-Truiden VV", starter:true, goals:0, matches:0},
+    {name:"Kou Itakura", pos:"DEF", club:"AFC Ajax", starter:true, goals:0, matches:0},
+    {name:"Yuto Nagatomo", pos:"DEF", club:"FC Tokyo", starter:true, goals:0, matches:0},
+    {name:"Wataru Endo", pos:"MIL", club:"Liverpool FC", starter:true, goals:0, matches:0},
+    {name:"Ao Tanaka", pos:"MIL", club:"Leeds United FC", starter:true, goals:0, matches:0},
+    {name:"Takefusa Kubo", pos:"MIL", club:"Real Sociedad", starter:true, goals:0, matches:0},
+    {name:"Keisuke Goto", pos:"ATT", club:"Sint-Truiden VV", starter:true, goals:0, matches:0},
+    {name:"Ritsu Doan", pos:"MIL", club:"Eintracht Frankfurt", starter:true, goals:9, matches:30},
+    {name:"Daizen Maeda", pos:"MIL", club:"Celtic FC", starter:true, goals:0, matches:0},
+    {name:"Keisuke Osako", pos:"GK", club:"Sanfrecce Hiroshima", starter:false, goals:0, matches:0},
+    {name:"Keito Nakamura", pos:"MIL", club:"Stade Reims", starter:false, goals:0, matches:0},
+    {name:"Junya Ito", pos:"MIL", club:"KRC Genk", starter:false, goals:0, matches:0},
+    {name:"Daichi Kamada", pos:"MIL", club:"Crystal Palace FC", starter:false, goals:5, matches:28},
+    {name:"Tsuyoshi Watanabe", pos:"DEF", club:"Feyenoord Rotterdam", starter:false, goals:0, matches:0},
+    {name:"Yuito Suzuki", pos:"MIL", club:"SC Freiburg", starter:false, goals:0, matches:0},
+    {name:"Ayase Ueda", pos:"ATT", club:"Feyenoord Rotterdam", starter:false, goals:0, matches:0},
+    {name:"Koki Ogawa", pos:"ATT", club:"NEC Nijmegen", starter:false, goals:0, matches:0},
+    {name:"Ayumu Seko", pos:"DEF", club:"Le Havre AC", starter:false, goals:0, matches:0},
+    {name:"Hiroki Ito", pos:"DEF", club:"FC Bayern München", starter:false, goals:2, matches:28},
+    {name:"Takehiro Tomiyasu", pos:"DEF", club:"AFC Ajax", starter:false, goals:1, matches:22},
+    {name:"Tomoki Hayakawa", pos:"GK", club:"Kashima Antlers", starter:false, goals:0, matches:0},
+    {name:"Kaishu Sano", pos:"MIL", club:"1. FSV Mainz 05", starter:false, goals:0, matches:0},
+    {name:"Junnosuke Suzuki", pos:"DEF", club:"FC København", starter:false, goals:0, matches:0},
+    {name:"Kento Shiogai", pos:"ATT", club:"VfL Wolfsburg", starter:false, goals:0, matches:0},
+  ]},
+  KOR: { name:"Corée du Sud", flag:"__KOR__", host:false, players:[
+    {name:"Seunggyu Kim", pos:"GK", club:"", starter:true, goals:0, matches:0},
+    {name:"Hanbeom Lee", pos:"DEF", club:"", starter:true, goals:0, matches:0},
+    {name:"Gihyuk Lee", pos:"MIL", club:"", starter:true, goals:0, matches:0},
+    {name:"Minjae Kim", pos:"DEF", club:"", starter:true, goals:2, matches:32},
+    {name:"Taehyeon Kim", pos:"DEF", club:"", starter:true, goals:0, matches:0},
+    {name:"Inbeom Hwang", pos:"MIL", club:"", starter:true, goals:0, matches:0},
+    {name:"Heungmin Son", pos:"ATT", club:"", starter:true, goals:18, matches:32},
+    {name:"Seungho Paik", pos:"MIL", club:"", starter:true, goals:0, matches:0},
+    {name:"Guesung Cho", pos:"ATT", club:"", starter:true, goals:0, matches:0},
+    {name:"Jaesung Lee", pos:"MIL", club:"", starter:true, goals:0, matches:0},
+    {name:"Heechan Hwang", pos:"MIL", club:"", starter:true, goals:0, matches:0},
+    {name:"Bumkeun Song", pos:"GK", club:"", starter:false, goals:0, matches:0},
+    {name:"Taeseok Lee", pos:"DEF", club:"", starter:false, goals:0, matches:0},
+    {name:"Wije Cho", pos:"DEF", club:"", starter:false, goals:0, matches:0},
+    {name:"Moonhwan Kim", pos:"DEF", club:"", starter:false, goals:0, matches:0},
+    {name:"Jinseob Park", pos:"DEF", club:"", starter:false, goals:0, matches:0},
+    {name:"Junho Bae", pos:"MIL", club:"", starter:false, goals:0, matches:0},
+    {name:"Hyeongyu Oh", pos:"ATT", club:"", starter:false, goals:0, matches:0},
+    {name:"Kangin Lee", pos:"MIL", club:"", starter:false, goals:0, matches:0},
+    {name:"Hyunjun Yang", pos:"MIL", club:"", starter:false, goals:0, matches:0},
+    {name:"Hyeonwoo Jo", pos:"GK", club:"", starter:false, goals:0, matches:0},
+    {name:"Youngwoo Seol", pos:"DEF", club:"", starter:false, goals:0, matches:0},
+    {name:"Jens Castrop", pos:"DEF", club:"", starter:false, goals:0, matches:0},
+    {name:"Jingyu Kim", pos:"MIL", club:"", starter:false, goals:0, matches:0},
+    {name:"Jisung Eom", pos:"MIL", club:"", starter:false, goals:0, matches:0},
+    {name:"Donggyeong Lee", pos:"MIL", club:"", starter:false, goals:0, matches:0},
+  ]},
+  KSA: { name:"Arabie Saoudite", flag:"__KSA__", host:false, players:[
+    {name:"Nawaf Alaqidi", pos:"GK", club:"Al Nassr FC", starter:true, goals:0, matches:0},
+    {name:"Ali Majrashi", pos:"DEF", club:"Al Ahli FC", starter:true, goals:0, matches:0},
+    {name:"Ali Lajami", pos:"DEF", club:"Al Hilal SC", starter:true, goals:0, matches:0},
+    {name:"Abdulelah Alamri", pos:"DEF", club:"Al Nassr FC", starter:true, goals:0, matches:0},
+    {name:"Hassan Altambakti", pos:"DEF", club:"Al Hilal SC", starter:true, goals:0, matches:0},
+    {name:"Nasser Aldawsari", pos:"MIL", club:"Al Hilal SC", starter:true, goals:0, matches:0},
+    {name:"Musab Aljuwayr", pos:"MIL", club:"Al Qadsiah FC", starter:true, goals:0, matches:0},
+    {name:"Aiman Yahya", pos:"ATT", club:"Al Nassr FC", starter:true, goals:0, matches:0},
+    {name:"Feras Albrikan", pos:"ATT", club:"Al Ahli FC", starter:true, goals:0, matches:0},
+    {name:"Salem Aldawsari", pos:"ATT", club:"Al Hilal SC", starter:true, goals:0, matches:0},
+    {name:"Saleh Alshehri", pos:"ATT", club:"Al Ittihad", starter:true, goals:0, matches:0},
+    {name:"Saud Abdulhamid", pos:"DEF", club:"RC Lens", starter:false, goals:0, matches:0},
+    {name:"Nawaf Bu Washl", pos:"DEF", club:"Al Nassr FC", starter:false, goals:0, matches:0},
+    {name:"Hassan Kadish", pos:"DEF", club:"Al Ittihad", starter:false, goals:0, matches:0},
+    {name:"Abdullah Alkhaibari", pos:"MIL", club:"Al Nassr FC", starter:false, goals:0, matches:0},
+    {name:"Ziyad Aljohani", pos:"MIL", club:"Al Ahli FC", starter:false, goals:0, matches:0},
+    {name:"Khalid Alghannam", pos:"ATT", club:"Al Ettifaq FC", starter:false, goals:0, matches:0},
+    {name:"Ala Alhajji", pos:"MIL", club:"Neom SC", starter:false, goals:0, matches:0},
+    {name:"Abdullah Alhamddan", pos:"ATT", club:"Al Nassr FC", starter:false, goals:0, matches:0},
+    {name:"Sultan Mandash", pos:"ATT", club:"Al Hilal SC", starter:false, goals:0, matches:0},
+    {name:"Mohammed Alowais", pos:"GK", club:"Al Ula Saudi FC", starter:false, goals:0, matches:0},
+    {name:"Ahmed Alkassar", pos:"GK", club:"Al Qadsiah FC", starter:false, goals:0, matches:0},
+    {name:"Mohamed Kanno", pos:"MIL", club:"Al Hilal SC", starter:false, goals:0, matches:0},
+    {name:"Moteb Alharbi", pos:"DEF", club:"Al Hilal SC", starter:false, goals:0, matches:0},
+    {name:"Jehad Thikri", pos:"DEF", club:"Al Qadsiah FC", starter:false, goals:0, matches:0},
+    {name:"Mohammed Abu Alshamat", pos:"DEF", club:"Al Qadsiah FC", starter:false, goals:0, matches:0},
+  ]},
+  MAR: { name:"Maroc", flag:"__MAR__", host:false, players:[
+    {name:"Yassine Bounou", pos:"GK", club:"Al Hilal SC", starter:true, goals:0, matches:0},
+    {name:"Achraf Hakimi", pos:"DEF", club:"Paris Saint-Germain", starter:true, goals:5, matches:35},
+    {name:"Noussair Mazraoui", pos:"DEF", club:"Manchester United FC", starter:true, goals:3, matches:32},
+    {name:"Sofyan Amrabat", pos:"MIL", club:"Real Betis", starter:true, goals:1, matches:28},
+    {name:"Nayef Aguerd", pos:"DEF", club:"Olympique Marseille", starter:true, goals:0, matches:0},
+    {name:"Ayyoub Bouaddi", pos:"MIL", club:"Lille OSC", starter:true, goals:0, matches:0},
+    {name:"Chemsdine Talbi", pos:"MIL", club:"Sunderland AFC", starter:true, goals:0, matches:0},
+    {name:"Azzedine Ounahi", pos:"MIL", club:"Girona FC", starter:true, goals:3, matches:28},
+    {name:"Soufiane Rahimi", pos:"ATT", club:"Al Ain FC", starter:true, goals:0, matches:0},
+    {name:"Brahim Diaz", pos:"ATT", club:"Real Madrid C. F.", starter:true, goals:0, matches:0},
+    {name:"Ismael Saibari", pos:"MIL", club:"PSV Eindhoven", starter:true, goals:0, matches:0},
+    {name:"Munir El Kajoui", pos:"GK", club:"RS Berkane", starter:false, goals:0, matches:0},
+    {name:"Zakaria El Ouahdi", pos:"DEF", club:"KRC Genk", starter:false, goals:0, matches:0},
+    {name:"Issa Diop", pos:"DEF", club:"Fulham FC", starter:false, goals:0, matches:0},
+    {name:"Samir El Mourabet", pos:"MIL", club:"RC Strasbourg", starter:false, goals:0, matches:0},
+    {name:"Gessime Yassine", pos:"MIL", club:"RC Strasbourg", starter:false, goals:0, matches:0},
+    {name:"Abde Ezzalzouli", pos:"ATT", club:"Real Betis", starter:false, goals:0, matches:0},
+    {name:"Chadi Riad", pos:"DEF", club:"Crystal Palace FC", starter:false, goals:0, matches:0},
+    {name:"Youssef Belammari", pos:"DEF", club:"Al Ahly FC", starter:false, goals:0, matches:0},
+    {name:"Ayoub El Kaabi", pos:"ATT", club:"Olympiacos FC", starter:false, goals:0, matches:0},
+    {name:"Ayoub Amaimouni", pos:"ATT", club:"Eintracht Frankfurt", starter:false, goals:0, matches:0},
+    {name:"Ahmed Reda Tagnaouti", pos:"GK", club:"ASFAR", starter:false, goals:0, matches:0},
+    {name:"Bilal El Khannouss", pos:"MIL", club:"VfB Stuttgart", starter:false, goals:0, matches:0},
+    {name:"Neil El Aynaoui", pos:"MIL", club:"AS Roma", starter:false, goals:0, matches:0},
+    {name:"Redouane Halhal", pos:"DEF", club:"KV Mechelen", starter:false, goals:0, matches:0},
+    {name:"Anass Salah Eddine", pos:"DEF", club:"PSV Eindhoven", starter:false, goals:0, matches:0},
+  ]},
+  MEX: { name:"Mexique", flag:"__MEX__", host:true, players:[
+    {name:"Raul Rangel", pos:"GK", club:"CD Guadalajara", starter:true, goals:0, matches:0},
+    {name:"Jorge Sanchez", pos:"DEF", club:"PAOK Saloniki", starter:true, goals:0, matches:0},
+    {name:"Cesar Montes", pos:"DEF", club:"FC Lokomotiv Moscow", starter:true, goals:0, matches:0},
+    {name:"Edson Alvarez", pos:"DEF", club:"Fenerbahçe SK", starter:true, goals:2, matches:32},
+    {name:"Johan Vasquez", pos:"DEF", club:"Genoa CFC", starter:true, goals:0, matches:0},
+    {name:"Erik Lira", pos:"MIL", club:"CF Cruz Azul", starter:true, goals:0, matches:0},
+    {name:"Luis Romo", pos:"MIL", club:"CD Guadalajara", starter:true, goals:0, matches:0},
+    {name:"Alvaro Fidalgo", pos:"MIL", club:"Real Betis", starter:true, goals:0, matches:0},
+    {name:"Raul Jimenez", pos:"ATT", club:"Fulham FC", starter:true, goals:10, matches:28},
+    {name:"Alexis Vega", pos:"ATT", club:"Deportivo Toluca FC", starter:true, goals:0, matches:0},
+    {name:"Santiago Gimenez", pos:"ATT", club:"AC Milan", starter:true, goals:22, matches:30},
+    {name:"Carlos Acevedo", pos:"GK", club:"Club Santos Laguna", starter:false, goals:0, matches:0},
+    {name:"Guillermo Ochoa", pos:"GK", club:"AEL Limassol", starter:false, goals:0, matches:0},
+    {name:"Armando Gonzalez", pos:"ATT", club:"CD Guadalajara", starter:false, goals:0, matches:0},
+    {name:"Israel Reyes", pos:"DEF", club:"Club América", starter:false, goals:0, matches:0},
+    {name:"Julian Quinones", pos:"ATT", club:"Al Qadsiah FC", starter:false, goals:0, matches:0},
+    {name:"Orbelin Pineda", pos:"MIL", club:"AEK Athens", starter:false, goals:0, matches:0},
+    {name:"Obed Vargas", pos:"MIL", club:"Atlético De Madrid", starter:false, goals:0, matches:0},
+    {name:"Gilberto Mora", pos:"MIL", club:"Club Tijuana", starter:false, goals:0, matches:0},
+    {name:"Mateo Chavez", pos:"DEF", club:"AZ Alkmaar", starter:false, goals:0, matches:0},
+    {name:"Cesar Huerta", pos:"ATT", club:"RSC Anderlecht", starter:false, goals:0, matches:0},
+    {name:"Guillermo Martinez", pos:"ATT", club:"Pumas UNAM", starter:false, goals:0, matches:0},
+    {name:"Jesus Gallardo", pos:"DEF", club:"Deportivo Toluca FC", starter:false, goals:0, matches:0},
+    {name:"Luis Chavez", pos:"MIL", club:"FC Dynamo Moscow", starter:false, goals:0, matches:0},
+    {name:"Roberto Alvarado", pos:"ATT", club:"CD Guadalajara", starter:false, goals:0, matches:0},
+    {name:"Brian Gutierrez", pos:"MIL", club:"CD Guadalajara", starter:false, goals:0, matches:0},
+  ]},
+  NED: { name:"Pays-Bas", flag:"__NED__", host:false, players:[
+    {name:"Bart Verbruggen", pos:"GK", club:"Brighton & Hove Albion FC", starter:true, goals:0, matches:0},
+    {name:"Jurrien Timber", pos:"DEF", club:"Arsenal FC", starter:true, goals:0, matches:0},
+    {name:"Marten De Roon", pos:"MIL", club:"Atalanta Bergamo", starter:true, goals:0, matches:0},
+    {name:"Virgil Van Dijk", pos:"DEF", club:"Liverpool FC", starter:true, goals:0, matches:0},
+    {name:"Nathan Ake", pos:"DEF", club:"Manchester City FC", starter:true, goals:2, matches:30},
+    {name:"Jan Paul Van Hecke", pos:"DEF", club:"Brighton & Hove Albion FC", starter:true, goals:0, matches:0},
+    {name:"Justin Kluivert", pos:"MIL", club:"AFC Bournemouth", starter:true, goals:0, matches:0},
+    {name:"Ryan Gravenberch", pos:"MIL", club:"Liverpool FC", starter:true, goals:0, matches:0},
+    {name:"Wout Weghorst", pos:"ATT", club:"AFC Ajax", starter:true, goals:0, matches:0},
+    {name:"Memphis Depay", pos:"ATT", club:"SC Corinthians", starter:true, goals:12, matches:43},
+    {name:"Cody Gakpo", pos:"ATT", club:"Liverpool FC", starter:true, goals:8, matches:41},
+    {name:"Mats Wieffer", pos:"DEF", club:"Brighton & Hove Albion FC", starter:false, goals:0, matches:0},
+    {name:"Robin Roefs", pos:"GK", club:"Sunderland AFC", starter:false, goals:0, matches:0},
+    {name:"Tijjani Reijnders", pos:"MIL", club:"Manchester City FC", starter:false, goals:6, matches:35},
+    {name:"Micky Van De Ven", pos:"DEF", club:"Tottenham Hotspur FC", starter:false, goals:0, matches:0},
+    {name:"Guus Til", pos:"MIL", club:"PSV Eindhoven", starter:false, goals:0, matches:0},
+    {name:"Noa Lang", pos:"ATT", club:"Galatasaray SK", starter:false, goals:0, matches:0},
+    {name:"Donyell Malen", pos:"ATT", club:"AS Roma", starter:false, goals:0, matches:0},
+    {name:"Brian Brobbey", pos:"ATT", club:"Sunderland AFC", starter:false, goals:0, matches:0},
+    {name:"Teun Koopmeiners", pos:"MIL", club:"Juventus FC", starter:false, goals:0, matches:0},
+    {name:"Frenkie De Jong", pos:"MIL", club:"FC Barcelona", starter:false, goals:0, matches:0},
+    {name:"Denzel Dumfries", pos:"DEF", club:"FC Internazionale Milano", starter:false, goals:4, matches:32},
+    {name:"Mark Flekken", pos:"GK", club:"Bayer Leverkusen", starter:false, goals:0, matches:0},
+    {name:"Crysencio Summerville", pos:"ATT", club:"West Ham United FC", starter:false, goals:0, matches:0},
+    {name:"Jorrel Hato", pos:"DEF", club:"Chelsea FC", starter:false, goals:0, matches:0},
+    {name:"Quinten Timber", pos:"MIL", club:"Olympique Marseille", starter:false, goals:0, matches:0},
+  ]},
+  NOR: { name:"Norvège", flag:"__NOR__", host:false, players:[
+    {name:"Orjan Nyland", pos:"GK", club:"Sevilla FC", starter:true, goals:0, matches:0},
+    {name:"Morten Thorsby", pos:"MIL", club:"US Cremonese", starter:true, goals:0, matches:0},
+    {name:"Kristoffer Ajer", pos:"DEF", club:"Brentford FC", starter:true, goals:0, matches:0},
+    {name:"Leo Ostigard", pos:"DEF", club:"Genoa CFC", starter:true, goals:0, matches:0},
+    {name:"David Moller Wolfe", pos:"DEF", club:"Wolverhampton Wanderers FC", starter:true, goals:0, matches:0},
+    {name:"Patrick Berg", pos:"MIL", club:"FK Bodø/Glimt", starter:true, goals:0, matches:0},
+    {name:"Alexander Sorloth", pos:"ATT", club:"Atlético De Madrid", starter:true, goals:15, matches:30},
+    {name:"Sander Berge", pos:"MIL", club:"Fulham FC", starter:true, goals:0, matches:0},
+    {name:"Erling Haaland", pos:"ATT", club:"Manchester City FC", starter:true, goals:34, matches:30},
+    {name:"Martin Odegaard", pos:"MIL", club:"Arsenal FC", starter:true, goals:8, matches:35},
+    {name:"Jorgen Strand Larsen", pos:"ATT", club:"Crystal Palace FC", starter:true, goals:0, matches:0},
+    {name:"Sander Tangvik", pos:"GK", club:"Hamburger SV", starter:false, goals:0, matches:0},
+    {name:"Egil Selvik", pos:"GK", club:"Watford FC", starter:false, goals:0, matches:0},
+    {name:"Fredrik Aursnes", pos:"MIL", club:"SL Benfica", starter:false, goals:0, matches:0},
+    {name:"Fredrik Andre Bjorkan", pos:"DEF", club:"FK Bodø/Glimt", starter:false, goals:0, matches:0},
+    {name:"Marcus Holmgren Pedersen", pos:"DEF", club:"Torino FC", starter:false, goals:0, matches:0},
+    {name:"Torbjorn Heggem", pos:"DEF", club:"Bologna FC", starter:false, goals:0, matches:0},
+    {name:"Kristian Thorstvedt", pos:"MIL", club:"US Sassuolo", starter:false, goals:0, matches:0},
+    {name:"Thelo Aasgaard", pos:"MIL", club:"Rangers FC", starter:false, goals:0, matches:0},
+    {name:"Antonio Nusa", pos:"ATT", club:"RB Leipzig", starter:false, goals:0, matches:0},
+    {name:"Andreas Schjelderup", pos:"MIL", club:"SL Benfica", starter:false, goals:0, matches:0},
+    {name:"Oscar Bobb", pos:"MIL", club:"Fulham FC", starter:false, goals:0, matches:0},
+    {name:"Jens Petter Hauge", pos:"MIL", club:"FK Bodø/Glimt", starter:false, goals:0, matches:0},
+    {name:"Sondre Langas", pos:"DEF", club:"Derby County FC", starter:false, goals:0, matches:0},
+    {name:"Henrik Falchener", pos:"DEF", club:"Viking Stavanger", starter:false, goals:0, matches:0},
+    {name:"Julian Ryerson", pos:"ATT", club:"Borussia Dortmund", starter:false, goals:0, matches:0},
+  ]},
+  NZL: { name:"Nouvelle-Zélande", flag:"__NZL__", host:false, players:[
+    {name:"Max Crocombe", pos:"GK", club:"Millwall FC", starter:true, goals:0, matches:0},
+    {name:"Tim Payne", pos:"DEF", club:"Wellington Phoenix FC", starter:true, goals:0, matches:0},
+    {name:"Francis De Vries", pos:"DEF", club:"Auckland FC", starter:true, goals:0, matches:0},
+    {name:"Tyler Bindon", pos:"DEF", club:"Shefield United FC", starter:true, goals:0, matches:0},
+    {name:"Michael Boxall", pos:"DEF", club:"Minnesota United FC", starter:true, goals:0, matches:0},
+    {name:"Joe Bell", pos:"MIL", club:"Viking Stavanger", starter:true, goals:0, matches:0},
+    {name:"Matthew Garbett", pos:"MIL", club:"Peterborough United FC", starter:true, goals:0, matches:0},
+    {name:"Marko Stamenic", pos:"MIL", club:"Swansea City AFC", starter:true, goals:0, matches:0},
+    {name:"Chris Wood", pos:"ATT", club:"Nottingham Forest FC", starter:true, goals:8, matches:28},
+    {name:"Sarpreet Singh", pos:"MIL", club:"Wellington Phoenix FC", starter:true, goals:0, matches:0},
+    {name:"Elijah Just", pos:"MIL", club:"Motherwell FC", starter:true, goals:0, matches:0},
+    {name:"Alex Paulsen", pos:"GK", club:"Lechia Gdańsk", starter:false, goals:0, matches:0},
+    {name:"Liberato Cacace", pos:"DEF", club:"Wrexham AFC", starter:false, goals:3, matches:28},
+    {name:"Alex Rufer", pos:"MIL", club:"Wellington Phoenix FC", starter:false, goals:0, matches:0},
+    {name:"Nando Pijnaker", pos:"DEF", club:"Auckland FC", starter:false, goals:0, matches:0},
+    {name:"Finn Surman", pos:"DEF", club:"Portland Timbers", starter:false, goals:0, matches:0},
+    {name:"Kosta Barbarouses", pos:"ATT", club:"WS Wanderers FC", starter:false, goals:0, matches:0},
+    {name:"Ben Waine", pos:"ATT", club:"Port Vale FC", starter:false, goals:0, matches:0},
+    {name:"Ben Old", pos:"MIL", club:"AS Saint-Etienne", starter:false, goals:0, matches:0},
+    {name:"McCOWATT Callum ", pos:"MIL", club:"Silkeborg IF", starter:false, goals:0, matches:0},
+    {name:"Jesse Randall", pos:"ATT", club:"Auckland FC", starter:false, goals:0, matches:0},
+    {name:"Michael Woud", pos:"GK", club:"Auckland FC", starter:false, goals:0, matches:0},
+    {name:"Ryan Thomas", pos:"MIL", club:"PEC Zwolle", starter:false, goals:0, matches:0},
+    {name:"Callan Elliot", pos:"DEF", club:"Auckland FC", starter:false, goals:0, matches:0},
+    {name:"Lachlan Bayliss", pos:"MIL", club:"Newcastle United Jets FC", starter:false, goals:0, matches:0},
+    {name:"Tommy Smith", pos:"DEF", club:"Braintree Town FC", starter:false, goals:0, matches:0},
+  ]},
+  PAN: { name:"Panama", flag:"__PAN__", host:false, players:[
+    {name:"Luis Mejia", pos:"GK", club:"Club Nacional", starter:true, goals:0, matches:0},
+    {name:"Cesar Blackman", pos:"DEF", club:"ŠK Slovan Bratislava", starter:true, goals:0, matches:0},
+    {name:"Jose Cordoba", pos:"DEF", club:"Norwich City FC", starter:true, goals:0, matches:0},
+    {name:"Fidel Escobar", pos:"DEF", club:"Deportivo Saprissa", starter:true, goals:0, matches:0},
+    {name:"Edgardo Farina", pos:"DEF", club:"FC Pari Nizhny Novgorod", starter:true, goals:0, matches:0},
+    {name:"Cristian Martinez", pos:"MIL", club:"Hapoel Kiryat Shmona FC", starter:true, goals:0, matches:0},
+    {name:"Jose Luis Rodriguez", pos:"MIL", club:"FC Juárez", starter:true, goals:0, matches:0},
+    {name:"Adalberto Carrasquilla", pos:"MIL", club:"Pumas UNAM", starter:true, goals:0, matches:0},
+    {name:"Tomas Rodriguez", pos:"ATT", club:"Deportivo Saprissa", starter:true, goals:0, matches:0},
+    {name:"Ismael Diaz", pos:"MIL", club:"Club León", starter:true, goals:0, matches:0},
+    {name:"Edgar Yoel Barcenas", pos:"MIL", club:"Mazatlán FC", starter:true, goals:0, matches:0},
+    {name:"Cesar Samudio", pos:"GK", club:"CD Marathón", starter:false, goals:0, matches:0},
+    {name:"Jiovany Ramos", pos:"DEF", club:"Puerto Cabello CF", starter:false, goals:0, matches:0},
+    {name:"Carlos Harvey", pos:"DEF", club:"Minnesota United FC", starter:false, goals:0, matches:0},
+    {name:"Eric Davis", pos:"DEF", club:"CD Plaza Amador", starter:false, goals:0, matches:0},
+    {name:"Andres Andrade", pos:"DEF", club:"LASK Linz", starter:false, goals:0, matches:0},
+    {name:"Jose Fajardo", pos:"ATT", club:"CD Universidad Católica", starter:false, goals:0, matches:0},
+    {name:"Cecilio Waterman", pos:"ATT", club:"CD Universidad De Concepción", starter:false, goals:6, matches:22},
+    {name:"Alberto Quintero", pos:"MIL", club:"CD Plaza Amador", starter:false, goals:3, matches:20},
+    {name:"Anibal Godoy", pos:"MIL", club:"San Diego FC", starter:false, goals:0, matches:0},
+    {name:"Cesar Yanis", pos:"MIL", club:"CD Cobresal", starter:false, goals:0, matches:0},
+    {name:"Orlando Mosquera", pos:"GK", club:"Al Fayha FC", starter:false, goals:0, matches:0},
+    {name:"Amir Murillo", pos:"DEF", club:"Beşiktaş JK", starter:false, goals:0, matches:0},
+    {name:"Azarias Londono", pos:"ATT", club:"CD Universidad Católica", starter:false, goals:0, matches:0},
+    {name:"Roderick Miller", pos:"DEF", club:"Turan Tovuz", starter:false, goals:0, matches:0},
+    {name:"Jorge Gutierrez", pos:"DEF", club:"Deportivo La Guaira", starter:false, goals:0, matches:0},
+  ]},
+  PAR: { name:"Paraguay", flag:"__PAR__", host:false, players:[
+    {name:"Gatito Fernandez", pos:"GK", club:"Cerro Porteño", starter:true, goals:0, matches:0},
+    {name:"Gustavo Velazquez", pos:"DEF", club:"Cerro Porteño", starter:true, goals:0, matches:0},
+    {name:"Omar Alderete", pos:"DEF", club:"Sunderland AFC", starter:true, goals:0, matches:0},
+    {name:"Juan Jose Caceres", pos:"DEF", club:"FC Dynamo Moscow", starter:true, goals:0, matches:0},
+    {name:"Fabian Balbuena", pos:"DEF", club:"Grêmio FBPA", starter:true, goals:0, matches:0},
+    {name:"Junior Alonso", pos:"DEF", club:"Atlético Mineiro", starter:true, goals:0, matches:0},
+    {name:"Ramon Sosa", pos:"MIL", club:"SE Palmeiras", starter:true, goals:0, matches:0},
+    {name:"Diego Gomez", pos:"MIL", club:"Brighton & Hove Albion FC", starter:true, goals:0, matches:0},
+    {name:"Antonio Sanabria", pos:"ATT", club:"US Cremonese", starter:true, goals:0, matches:0},
+    {name:"Miguel Almiron", pos:"MIL", club:"Atlanta United FC", starter:true, goals:5, matches:25},
+    {name:"Mauricio", pos:"MIL", club:"SE Palmeiras", starter:true, goals:0, matches:0},
+    {name:"Orlando Gill", pos:"GK", club:"CA San Lorenzo", starter:false, goals:0, matches:0},
+    {name:"Jose Canale", pos:"DEF", club:"CA Lanús", starter:false, goals:0, matches:0},
+    {name:"Andres Cubas", pos:"MIL", club:"Vancouver Whitecaps FC", starter:false, goals:0, matches:0},
+    {name:"Gustavo Gomez", pos:"DEF", club:"SE Palmeiras", starter:false, goals:3, matches:28},
+    {name:"Damian Bobadilla", pos:"MIL", club:"São Paulo FC", starter:false, goals:0, matches:0},
+    {name:"Alejandro Romero Gamarra", pos:"ATT", club:"Al Ain FC", starter:false, goals:0, matches:0},
+    {name:"Alex Arce", pos:"ATT", club:"CS Independiente Rivadavia", starter:false, goals:0, matches:0},
+    {name:"Julio Enciso", pos:"ATT", club:"RC Strasbourg", starter:false, goals:0, matches:0},
+    {name:"Braian Ojeda", pos:"MIL", club:"Orlando City SC", starter:false, goals:0, matches:0},
+    {name:"Gabriel Avalos", pos:"ATT", club:"CA Independiente", starter:false, goals:0, matches:0},
+    {name:"Gaston Olveira", pos:"GK", club:"Club Olimpia", starter:false, goals:0, matches:0},
+    {name:"Matias Galarza", pos:"MIL", club:"Atlanta United FC", starter:false, goals:0, matches:0},
+    {name:"Gustavo Caballero", pos:"MIL", club:"Portsmouth FC", starter:false, goals:0, matches:0},
+    {name:"Isidro Pitta", pos:"ATT", club:"Red Bull Bragantino", starter:false, goals:0, matches:0},
+    {name:"Alexandro Maidana", pos:"DEF", club:"CA Talleres", starter:false, goals:0, matches:0},
+  ]},
+  POR: { name:"Portugal", flag:"__POR__", host:false, players:[
+    {name:"Diogo Costa", pos:"GK", club:"FC Porto", starter:true, goals:0, matches:0},
+    {name:"Nelson Semedo", pos:"DEF", club:"Fenerbahçe SK", starter:true, goals:0, matches:0},
+    {name:"Ruben Dias", pos:"DEF", club:"Manchester City FC", starter:true, goals:0, matches:0},
+    {name:"Tomas Araujo", pos:"DEF", club:"SL Benfica", starter:true, goals:0, matches:0},
+    {name:"Diogo Dalot", pos:"DEF", club:"Manchester United FC", starter:true, goals:0, matches:0},
+    {name:"Matheus Nunes", pos:"MIL", club:"Manchester City FC", starter:true, goals:0, matches:0},
+    {name:"Cristiano Ronaldo", pos:"ATT", club:"Al Nassr FC", starter:true, goals:28, matches:30},
+    {name:"Bruno Fernandes", pos:"MIL", club:"Manchester United FC", starter:true, goals:9, matches:35},
+    {name:"Goncalo Ramos", pos:"ATT", club:"Paris Saint-Germain", starter:true, goals:0, matches:0},
+    {name:"Bernardo Silva", pos:"MIL", club:"Manchester City FC", starter:true, goals:2, matches:32},
+    {name:"Joao Felix", pos:"ATT", club:"Al Nassr FC", starter:true, goals:20, matches:30},
+    {name:"Jose Sa", pos:"GK", club:"Wolverhampton Wanderers FC", starter:false, goals:0, matches:0},
+    {name:"Renato Veiga", pos:"DEF", club:"Villarreal CF", starter:false, goals:0, matches:0},
+    {name:"Goncalo Inacio", pos:"DEF", club:"Sporting CP", starter:false, goals:0, matches:0},
+    {name:"Joao Neves", pos:"MIL", club:"Paris Saint-Germain", starter:false, goals:0, matches:0},
+    {name:"Francisco Trincao", pos:"ATT", club:"Sporting CP", starter:false, goals:0, matches:0},
+    {name:"Rafael Leao", pos:"ATT", club:"AC Milan", starter:false, goals:9, matches:29},
+    {name:"Pedro Neto", pos:"ATT", club:"Chelsea FC", starter:false, goals:0, matches:0},
+    {name:"Goncalo Guedes", pos:"ATT", club:"Real Sociedad", starter:false, goals:0, matches:0},
+    {name:"Joao Cancelo", pos:"DEF", club:"FC Barcelona", starter:false, goals:0, matches:0},
+    {name:"Ruben Neves", pos:"MIL", club:"Al Hilal SC", starter:false, goals:3, matches:28},
+    {name:"Rui Silva", pos:"GK", club:"Sporting CP", starter:false, goals:0, matches:0},
+    {name:"Vitinha", pos:"MIL", club:"Paris Saint-Germain", starter:false, goals:5, matches:35},
+    {name:"Samu Costa", pos:"DEF", club:"RCD Mallorca", starter:false, goals:0, matches:0},
+    {name:"Nuno Mendes", pos:"DEF", club:"Paris Saint-Germain", starter:false, goals:0, matches:0},
+    {name:"Francisco Conceicao", pos:"ATT", club:"Juventus FC", starter:false, goals:0, matches:0},
+  ]},
+  QAT: { name:"Qatar", flag:"__QAT__", host:false, players:[
+    {name:"Mahmoud Abunada", pos:"GK", club:"Al Rayyan SC", starter:true, goals:0, matches:0},
+    {name:"Pedro Miguel", pos:"DEF", club:"Al Sadd SC", starter:true, goals:0, matches:0},
+    {name:"Lucas Mendes", pos:"DEF", club:"Al Wakrah SC", starter:true, goals:0, matches:0},
+    {name:"Issa Laye", pos:"DEF", club:"Al Arabi SC", starter:true, goals:0, matches:0},
+    {name:"Jassem Gaber", pos:"DEF", club:"Al Rayyan SC", starter:true, goals:0, matches:0},
+    {name:"Abdulaziz Hatem", pos:"MIL", club:"Al Rayyan SC", starter:true, goals:0, matches:0},
+    {name:"Ahmed Alaaeldin", pos:"ATT", club:"Al Rayyan SC", starter:true, goals:0, matches:0},
+    {name:"Edmilson Junior", pos:"ATT", club:"Al Duhail SC", starter:true, goals:0, matches:0},
+    {name:"Mohammed Muntari", pos:"ATT", club:"Al Gharafa SC", starter:true, goals:0, matches:0},
+    {name:"Hassan Alhaydos", pos:"ATT", club:"Al Sadd SC", starter:true, goals:0, matches:0},
+    {name:"Akram Afif", pos:"ATT", club:"Al Sadd SC", starter:true, goals:12, matches:28},
+    {name:"Karim Boudiaf", pos:"MIL", club:"Al Duhail SC", starter:false, goals:0, matches:0},
+    {name:"Ayoub Aloui", pos:"DEF", club:"Al Gharafa SC", starter:false, goals:0, matches:0},
+    {name:"Homam Ahmed", pos:"DEF", club:"Cultural Leonesa", starter:false, goals:0, matches:0},
+    {name:"Yusuf Abdurisag", pos:"ATT", club:"Al Wakrah SC", starter:false, goals:0, matches:0},
+    {name:"Boualem Khoukhi", pos:"DEF", club:"Al Sadd SC", starter:false, goals:0, matches:0},
+    {name:"Ahmed Alganehi", pos:"MIL", club:"Al Gharafa SC", starter:false, goals:0, matches:0},
+    {name:"Sultan Albrake", pos:"DEF", club:"Al Duhail SC", starter:false, goals:0, matches:0},
+    {name:"Almoez Ali", pos:"ATT", club:"Al Duhail SC", starter:false, goals:8, matches:25},
+    {name:"Ahmed Fathy", pos:"MIL", club:"Al Arabi SC", starter:false, goals:0, matches:0},
+    {name:"Salah Zakaria", pos:"GK", club:"Al Duhail SC", starter:false, goals:0, matches:0},
+    {name:"Meshaal Barsham", pos:"GK", club:"Al Sadd SC", starter:false, goals:0, matches:0},
+    {name:"Assim Madibo", pos:"MIL", club:"Al Wakrah SC", starter:false, goals:0, matches:0},
+    {name:"Tahsin Jamshid", pos:"ATT", club:"Al Duhail SC", starter:false, goals:0, matches:0},
+    {name:"Alhashmi Alhussein", pos:"DEF", club:"Al Arabi SC", starter:false, goals:0, matches:0},
+    {name:"Mohamed Manai", pos:"ATT", club:"Al Shamal SC", starter:false, goals:0, matches:0},
+  ]},
+  RSA: { name:"Afrique du Sud", flag:"__RSA__", host:false, players:[
+    {name:"Ronwen Williams", pos:"GK", club:"Mamelodi Sundowns FC", starter:true, goals:0, matches:30},
+    {name:"Thabang Matuludi", pos:"DEF", club:"Polokwane City FC", starter:true, goals:0, matches:0},
+    {name:"Khulumani Ndamane", pos:"DEF", club:"Mamelodi Sundowns FC", starter:true, goals:0, matches:0},
+    {name:"Teboho Mokoena", pos:"MIL", club:"Mamelodi Sundowns FC", starter:true, goals:0, matches:0},
+    {name:"Thalente Mbatha", pos:"MIL", club:"Orlando Pirates FC", starter:true, goals:0, matches:0},
+    {name:"Aubrey Modiba", pos:"DEF", club:"Mamelodi Sundowns FC", starter:true, goals:0, matches:0},
+    {name:"Oswin Appollis", pos:"ATT", club:"Orlando Pirates FC", starter:true, goals:0, matches:0},
+    {name:"Tshepang Moremi", pos:"ATT", club:"Orlando Pirates FC", starter:true, goals:0, matches:0},
+    {name:"Lyle Foster", pos:"ATT", club:"Burnley FC", starter:true, goals:8, matches:25},
+    {name:"Relebohile Mofokeng", pos:"ATT", club:"Orlando Pirates FC", starter:true, goals:0, matches:0},
+    {name:"Themba Zwane", pos:"MIL", club:"Mamelodi Sundowns FC", starter:true, goals:6, matches:22},
+    {name:"Thapelo Maseko", pos:"ATT", club:"AEL Limassol", starter:false, goals:0, matches:0},
+    {name:"Sphephelo Sithole", pos:"MIL", club:"CD Tondela", starter:false, goals:0, matches:0},
+    {name:"Mbekezeli Mbokazi", pos:"DEF", club:"Chicago Fire FC", starter:false, goals:0, matches:0},
+    {name:"Iqraam Rayners", pos:"ATT", club:"Mamelodi Sundowns FC", starter:false, goals:0, matches:0},
+    {name:"Sipho Chaine", pos:"GK", club:"Orlando Pirates FC", starter:false, goals:0, matches:0},
+    {name:"Evidence Makgopa", pos:"ATT", club:"Orlando Pirates FC", starter:false, goals:0, matches:0},
+    {name:"Samukelo Kabini", pos:"DEF", club:"Molde FK", starter:false, goals:0, matches:0},
+    {name:"Nkosinathi Sibisi", pos:"DEF", club:"Orlando Pirates FC", starter:false, goals:0, matches:0},
+    {name:"Khuliso Mudau", pos:"DEF", club:"Mamelodi Sundowns FC", starter:false, goals:0, matches:0},
+    {name:"Ime Okon", pos:"DEF", club:"Hannover 96", starter:false, goals:0, matches:0},
+    {name:"Ricardo Goss", pos:"GK", club:"Siwelele FC", starter:false, goals:0, matches:0},
+    {name:"Jayden Adams", pos:"MIL", club:"Mamelodi Sundowns FC", starter:false, goals:0, matches:0},
+    {name:"Olwethu Makhanya", pos:"DEF", club:"Philadelphia Union", starter:false, goals:0, matches:0},
+    {name:"Kamogelo Sebelebele", pos:"ATT", club:"Orlando Pirates FC", starter:false, goals:0, matches:0},
+    {name:"Bradley Cross", pos:"DEF", club:"Kaizer Chiefs FC", starter:false, goals:0, matches:0},
+  ]},
+  SCO: { name:"Écosse", flag:"🏴󠁧󠁢󠁳󠁣󠁴󠁿", host:false, players:[
+    {name:"Angus Gunn", pos:"GK", club:"Nottingham Forest FC", starter:true, goals:0, matches:0},
+    {name:"Aaron Hickey", pos:"DEF", club:"Brentford FC", starter:true, goals:0, matches:0},
+    {name:"Andy Robertson", pos:"DEF", club:"Liverpool FC", starter:true, goals:2, matches:38},
+    {name:"McTOMINAY Scott ", pos:"MIL", club:"SSC Napoli", starter:true, goals:0, matches:0},
+    {name:"Grant Hanley", pos:"DEF", club:"Hibernian FC", starter:true, goals:0, matches:0},
+    {name:"Kieran Tierney", pos:"DEF", club:"Celtic FC", starter:true, goals:1, matches:20},
+    {name:"McGINN John ", pos:"MIL", club:"Aston Villa FC", starter:true, goals:0, matches:0},
+    {name:"Tyler Fletcher", pos:"MIL", club:"Manchester United FC", starter:true, goals:0, matches:0},
+    {name:"Lyndon Dykes", pos:"ATT", club:"Charlton Athletic FC", starter:true, goals:0, matches:0},
+    {name:"Che Adams", pos:"ATT", club:"Torino FC", starter:true, goals:0, matches:0},
+    {name:"Ryan Christie", pos:"MIL", club:"AFC Bournemouth", starter:true, goals:0, matches:0},
+    {name:"Liam Kelly", pos:"GK", club:"Rangers FC", starter:false, goals:0, matches:0},
+    {name:"Jack Hendry", pos:"DEF", club:"Al Ettifaq FC", starter:false, goals:0, matches:0},
+    {name:"Ross Stewart", pos:"ATT", club:"Southampton FC", starter:false, goals:0, matches:0},
+    {name:"John Souttar", pos:"DEF", club:"Rangers FC", starter:false, goals:0, matches:0},
+    {name:"Dominic Hyam", pos:"DEF", club:"Wrexham AFC", starter:false, goals:0, matches:0},
+    {name:"Ben Gannon-Doak", pos:"ATT", club:"AFC Bournemouth", starter:false, goals:0, matches:0},
+    {name:"George Hirst", pos:"ATT", club:"Ipswich Town FC", starter:false, goals:0, matches:0},
+    {name:"Lewis Ferguson", pos:"MIL", club:"Bologna FC", starter:false, goals:0, matches:0},
+    {name:"Lawrence Shankland", pos:"ATT", club:"Heart Of Midlothian FC", starter:false, goals:0, matches:0},
+    {name:"Craig Gordon", pos:"GK", club:"Heart Of Midlothian FC", starter:false, goals:0, matches:0},
+    {name:"Nathan Patterson", pos:"DEF", club:"Everton FC", starter:false, goals:0, matches:0},
+    {name:"McLEAN Kenny ", pos:"MIL", club:"Norwich City FC", starter:false, goals:0, matches:0},
+    {name:"Anthony Ralston", pos:"DEF", club:"Celtic FC", starter:false, goals:0, matches:0},
+    {name:"Findlay Curtis", pos:"ATT", club:"Kilmarnock FC", starter:false, goals:0, matches:0},
+    {name:"McKENNA Scott ", pos:"DEF", club:"GNK Dinamo Zagreb", starter:false, goals:0, matches:0},
+  ]},
+  SEN: { name:"Sénégal", flag:"__SEN__", host:false, players:[
+    {name:"Yehvann Diouf", pos:"GK", club:"OGC Nice", starter:true, goals:0, matches:0},
+    {name:"Mamadou Sarr", pos:"DEF", club:"Chelsea FC", starter:true, goals:0, matches:0},
+    {name:"Kalidou Koulibaly", pos:"DEF", club:"Al Hilal SC", starter:true, goals:2, matches:30},
+    {name:"Abdoulaye Seck", pos:"DEF", club:"Maccabi Haifa FC", starter:true, goals:0, matches:0},
+    {name:"Idrissa Gana Gueye", pos:"MIL", club:"Everton FC", starter:true, goals:0, matches:0},
+    {name:"Pathe Ciss", pos:"MIL", club:"Rayo Vallecano", starter:true, goals:0, matches:0},
+    {name:"Assane Diao", pos:"ATT", club:"Como", starter:true, goals:0, matches:0},
+    {name:"Lamine Camara", pos:"MIL", club:"AS Monaco", starter:true, goals:0, matches:0},
+    {name:"Bamba Dieng", pos:"ATT", club:"FC Lorient", starter:true, goals:0, matches:0},
+    {name:"Sadio Mane", pos:"ATT", club:"Al Nassr FC", starter:true, goals:10, matches:29},
+    {name:"Nicolas Jackson", pos:"ATT", club:"FC Bayern München", starter:true, goals:12, matches:35},
+    {name:"Cherif Ndiaye", pos:"ATT", club:"Samsunspor", starter:false, goals:0, matches:0},
+    {name:"Iliman Ndiaye", pos:"ATT", club:"Everton FC", starter:false, goals:0, matches:0},
+    {name:"Ismail Jakobs", pos:"DEF", club:"Galatasaray SK", starter:false, goals:0, matches:0},
+    {name:"Krepin Diatta", pos:"DEF", club:"AS Monaco", starter:false, goals:0, matches:0},
+    {name:"Edouard Mendy", pos:"GK", club:"Al Ahli FC", starter:false, goals:0, matches:0},
+    {name:"Pape Matar Sarr", pos:"MIL", club:"Tottenham Hotspur FC", starter:false, goals:0, matches:0},
+    {name:"Ismaila Sarr", pos:"ATT", club:"Crystal Palace FC", starter:false, goals:7, matches:30},
+    {name:"Moussa Niakhate", pos:"DEF", club:"Olympique Lyonnais", starter:false, goals:0, matches:0},
+    {name:"Ibrahim Mbaye", pos:"ATT", club:"Paris Saint-Germain", starter:false, goals:0, matches:0},
+    {name:"Habib Diarra", pos:"MIL", club:"Sunderland AFC", starter:false, goals:0, matches:0},
+    {name:"Bara Sapoko Ndiaye", pos:"MIL", club:"FC Bayern München", starter:false, goals:0, matches:0},
+    {name:"Mory Diaw", pos:"GK", club:"Le Havre AC", starter:false, goals:0, matches:0},
+    {name:"Antoine Mendy", pos:"DEF", club:"OGC Nice", starter:false, goals:0, matches:0},
+    {name:"El Hadji Malick Diouf", pos:"DEF", club:"West Ham United FC", starter:false, goals:0, matches:0},
+    {name:"Pape Gueye", pos:"MIL", club:"Villarreal CF", starter:false, goals:0, matches:0},
+  ]},
+  SUI: { name:"Suisse", flag:"__SUI__", host:false, players:[
+    {name:"Gregor Kobel", pos:"GK", club:"Borussia Dortmund", starter:true, goals:0, matches:0},
+    {name:"Miro Muheim", pos:"DEF", club:"Hamburger SV", starter:true, goals:0, matches:0},
+    {name:"Silvan Widmer", pos:"DEF", club:"1. FSV Mainz 05", starter:true, goals:0, matches:0},
+    {name:"Nico Elvedi", pos:"DEF", club:"Borussia Mönchengladbach", starter:true, goals:0, matches:0},
+    {name:"Manuel Akanji", pos:"DEF", club:"FC Internazionale Milano", starter:true, goals:2, matches:32},
+    {name:"Denis Zakaria", pos:"MIL", club:"AS Monaco", starter:true, goals:0, matches:0},
+    {name:"Breel Embolo", pos:"ATT", club:"Stade Rennais FC", starter:true, goals:8, matches:28},
+    {name:"Remo Freuler", pos:"MIL", club:"Bologna FC", starter:true, goals:0, matches:0},
+    {name:"Johan Manzambi", pos:"MIL", club:"SC Freiburg", starter:true, goals:0, matches:0},
+    {name:"Granit Xhaka", pos:"MIL", club:"Sunderland AFC", starter:true, goals:4, matches:30},
+    {name:"Dan Ndoye", pos:"ATT", club:"Nottingham Forest FC", starter:true, goals:0, matches:0},
+    {name:"Yvon Mvogo", pos:"GK", club:"FC Lorient", starter:false, goals:0, matches:0},
+    {name:"Ricardo Rodriguez", pos:"DEF", club:"Real Betis", starter:false, goals:0, matches:0},
+    {name:"Ardon Jashari", pos:"MIL", club:"AC Milan", starter:false, goals:0, matches:0},
+    {name:"Djibril Sow", pos:"MIL", club:"Sevilla FC", starter:false, goals:0, matches:0},
+    {name:"Christian Fassnacht", pos:"ATT", club:"BSC Young Boys", starter:false, goals:0, matches:0},
+    {name:"Ruben Vargas", pos:"ATT", club:"Sevilla FC", starter:false, goals:6, matches:30},
+    {name:"Eray Coemert", pos:"DEF", club:"Valencia CF", starter:false, goals:0, matches:0},
+    {name:"Noah Okafor", pos:"ATT", club:"Leeds United FC", starter:false, goals:0, matches:0},
+    {name:"Michel Aebischer", pos:"MIL", club:"Pisa SC", starter:false, goals:0, matches:0},
+    {name:"Marvin Keller", pos:"GK", club:"BSC Young Boys", starter:false, goals:0, matches:0},
+    {name:"Fabian Rieder", pos:"MIL", club:"FC Augsburg", starter:false, goals:0, matches:0},
+    {name:"Zeki Amdouni", pos:"ATT", club:"Burnley FC", starter:false, goals:0, matches:0},
+    {name:"Aurele Amenda", pos:"DEF", club:"Eintracht Frankfurt", starter:false, goals:0, matches:0},
+    {name:"Luca Jaquez", pos:"DEF", club:"VfB Stuttgart", starter:false, goals:0, matches:0},
+    {name:"Cedric Itten", pos:"ATT", club:"Fortuna Düsseldorf", starter:false, goals:0, matches:0},
+  ]},
+  SWE: { name:"Suède", flag:"__SWE__", host:false, players:[
+    {name:"Jacob Widell Zetterstrom", pos:"GK", club:"Derby County FC", starter:true, goals:0, matches:0},
+    {name:"Gustaf Lagerbielke", pos:"DEF", club:"SC Braga", starter:true, goals:0, matches:0},
+    {name:"Victor Lindelof", pos:"DEF", club:"Aston Villa FC", starter:true, goals:2, matches:28},
+    {name:"Isak Hien", pos:"DEF", club:"Atalanta Bergamo", starter:true, goals:0, matches:0},
+    {name:"Gabriel Gudmundsson", pos:"DEF", club:"Leeds United FC", starter:true, goals:0, matches:0},
+    {name:"Herman Johansson", pos:"DEF", club:"FC Dallas", starter:true, goals:0, matches:0},
+    {name:"Lucas Bergvall", pos:"MIL", club:"Tottenham Hotspur FC", starter:true, goals:0, matches:0},
+    {name:"Daniel Svensson", pos:"DEF", club:"Borussia Dortmund", starter:true, goals:0, matches:0},
+    {name:"Alexander Isak", pos:"ATT", club:"Liverpool FC", starter:true, goals:23, matches:32},
+    {name:"Benjamin Nygren", pos:"MIL", club:"Celtic FC", starter:true, goals:0, matches:0},
+    {name:"Anthony Elanga", pos:"ATT", club:"Newcastle United FC", starter:true, goals:0, matches:0},
+    {name:"Viktor Johansson", pos:"GK", club:"Stoke City FC", starter:false, goals:0, matches:0},
+    {name:"Ken Sema", pos:"MIL", club:"Pafos FC", starter:false, goals:0, matches:0},
+    {name:"Hjalmar Ekdal", pos:"DEF", club:"Burnley FC", starter:false, goals:0, matches:0},
+    {name:"Carl Starfelt", pos:"DEF", club:"RC Celta Vigo", starter:false, goals:0, matches:0},
+    {name:"Jesper Karlstrom", pos:"MIL", club:"Udinese", starter:false, goals:0, matches:0},
+    {name:"Viktor Gyokeres", pos:"ATT", club:"Arsenal FC", starter:false, goals:39, matches:38},
+    {name:"Yasin Ayari", pos:"MIL", club:"Brighton & Hove Albion FC", starter:false, goals:0, matches:0},
+    {name:"Mattias Svanberg", pos:"MIL", club:"VfL Wolfsburg", starter:false, goals:0, matches:0},
+    {name:"Eric Smith", pos:"DEF", club:"FC St. Pauli", starter:false, goals:0, matches:0},
+    {name:"Alexander Bernhardsson", pos:"DEF", club:"Holstein Kiel", starter:false, goals:0, matches:0},
+    {name:"Besfort Zeneli", pos:"MIL", club:"Royale Union Saint-Gilloise", starter:false, goals:0, matches:0},
+    {name:"Kristoffer Nordfeldt", pos:"GK", club:"AIK Stockholm", starter:false, goals:0, matches:0},
+    {name:"Elliot Stroud", pos:"DEF", club:"Mjällby AIF", starter:false, goals:0, matches:0},
+    {name:"Gustaf Nilsson", pos:"ATT", club:"Club Brugge", starter:false, goals:0, matches:0},
+    {name:"Taha Ali", pos:"ATT", club:"Malmö FF", starter:false, goals:0, matches:0},
+  ]},
+  TUN: { name:"Tunisie", flag:"__TUN__", host:false, players:[
+    {name:"Mouhib Chamakh", pos:"GK", club:"Club Africain", starter:true, goals:0, matches:0},
+    {name:"Ali Abdi", pos:"DEF", club:"OGC Nice", starter:true, goals:0, matches:0},
+    {name:"Montassar Talbi", pos:"DEF", club:"FC Lorient", starter:true, goals:2, matches:25},
+    {name:"Omar Rekik", pos:"DEF", club:"NK Maribor", starter:true, goals:0, matches:0},
+    {name:"Adam Arous", pos:"DEF", club:"Kasımpaşa SK", starter:true, goals:0, matches:0},
+    {name:"Dylan Bronn", pos:"DEF", club:"Servette FC", starter:true, goals:0, matches:0},
+    {name:"Elias Achouri", pos:"ATT", club:"FC København", starter:true, goals:0, matches:0},
+    {name:"Elias Saad", pos:"ATT", club:"Hannover 96", starter:true, goals:0, matches:0},
+    {name:"Hazem Mastouri", pos:"ATT", club:"FC Dynamo Makhachkala", starter:true, goals:0, matches:0},
+    {name:"Hannibal Mejbri", pos:"MIL", club:"Burnley FC", starter:true, goals:0, matches:0},
+    {name:"Ismael Gharbi", pos:"MIL", club:"FC Augsburg", starter:true, goals:0, matches:0},
+    {name:"Mortadha Ben Ouanes", pos:"DEF", club:"Kasımpaşa SK", starter:false, goals:0, matches:0},
+    {name:"Rani Khedira", pos:"MIL", club:"1. FC Union Berlin", starter:false, goals:0, matches:0},
+    {name:"Khalil Ayari", pos:"MIL", club:"Paris Saint-Germain", starter:false, goals:0, matches:0},
+    {name:"Mohamed Hadj Mahmoud", pos:"MIL", club:"FC Lugano", starter:false, goals:0, matches:0},
+    {name:"Aymen Dahmen", pos:"GK", club:"CS Sfaxien", starter:false, goals:0, matches:0},
+    {name:"Ellyes Skhiri", pos:"MIL", club:"Eintracht Frankfurt", starter:false, goals:4, matches:28},
+    {name:"Rayan Elloumi", pos:"ATT", club:"Vancouver Whitecaps FC", starter:false, goals:0, matches:0},
+    {name:"Firas Chaouat", pos:"ATT", club:"Club Africain", starter:false, goals:0, matches:0},
+    {name:"Yan Valery", pos:"DEF", club:"BSC Young Boys", starter:false, goals:0, matches:0},
+    {name:"Mohamed Amine Ben Hmida", pos:"DEF", club:"Espérance De Tunisie", starter:false, goals:0, matches:0},
+    {name:"Sabri Ben Hessen", pos:"GK", club:"Étoile Du Sahel", starter:false, goals:0, matches:0},
+    {name:"Moutaz Neffati", pos:"DEF", club:"IFK Norrköping FK", starter:false, goals:0, matches:0},
+    {name:"Raed Chikhaoui", pos:"DEF", club:"US Monastir", starter:false, goals:0, matches:0},
+    {name:"Anis Slimane", pos:"MIL", club:"Norwich City FC", starter:false, goals:0, matches:0},
+    {name:"Sebastian Tounekti", pos:"MIL", club:"Celtic FC", starter:false, goals:0, matches:0},
+  ]},
+  TUR: { name:"Turquie", flag:"__TUR__", host:false, players:[
+    {name:"Mert Gunok", pos:"GK", club:"Fenerbahçe SK", starter:true, goals:0, matches:0},
+    {name:"Zeki Celik", pos:"DEF", club:"AS Roma", starter:true, goals:2, matches:30},
+    {name:"Merih Demiral", pos:"DEF", club:"Al Ahli FC", starter:true, goals:3, matches:30},
+    {name:"Caglar Soyuncu", pos:"DEF", club:"Fenerbahçe SK", starter:true, goals:0, matches:0},
+    {name:"Salih Ozcan", pos:"MIL", club:"Borussia Dortmund", starter:true, goals:0, matches:0},
+    {name:"Orkun Kokcu", pos:"MIL", club:"Beşiktaş JK", starter:true, goals:0, matches:0},
+    {name:"Kerem Akturkoglu", pos:"ATT", club:"Fenerbahçe SK", starter:true, goals:0, matches:0},
+    {name:"Arda Guler", pos:"ATT", club:"Real Madrid C. F.", starter:true, goals:10, matches:28},
+    {name:"Deniz Gul", pos:"ATT", club:"FC Porto", starter:true, goals:0, matches:0},
+    {name:"Hakan Calhanoglu", pos:"MIL", club:"FC Internazionale Milano", starter:true, goals:8, matches:32},
+    {name:"Kenan Yildiz", pos:"ATT", club:"Juventus FC", starter:true, goals:8, matches:28},
+    {name:"Altay Bayindir", pos:"GK", club:"Manchester United FC", starter:false, goals:0, matches:0},
+    {name:"Eren Elmali", pos:"DEF", club:"Galatasaray SK", starter:false, goals:0, matches:0},
+    {name:"Abdulkerim Bardakci", pos:"DEF", club:"Galatasaray SK", starter:false, goals:0, matches:0},
+    {name:"Ozan Kabak", pos:"DEF", club:"TSG Hoffenheim", starter:false, goals:0, matches:0},
+    {name:"Ismail Yuksek", pos:"MIL", club:"Fenerbahçe SK", starter:false, goals:0, matches:0},
+    {name:"Irfan Can Kahveci", pos:"ATT", club:"Kasımpaşa SK", starter:false, goals:0, matches:0},
+    {name:"Mert Muldur", pos:"DEF", club:"Fenerbahçe SK", starter:false, goals:0, matches:0},
+    {name:"Yunus Akgun", pos:"ATT", club:"Galatasaray SK", starter:false, goals:0, matches:0},
+    {name:"Ferdi Kadioglu", pos:"DEF", club:"Brighton & Hove Albion FC", starter:false, goals:0, matches:0},
+    {name:"Baris Alper Yilmaz", pos:"ATT", club:"Galatasaray SK", starter:false, goals:0, matches:0},
+    {name:"Kaan Ayhan", pos:"MIL", club:"Galatasaray SK", starter:false, goals:0, matches:0},
+    {name:"Ugurcan Cakir", pos:"GK", club:"Galatasaray SK", starter:false, goals:0, matches:0},
+    {name:"Oguz Aydin", pos:"ATT", club:"Fenerbahçe SK", starter:false, goals:0, matches:0},
+    {name:"Samet Akaydin", pos:"DEF", club:"Çaykur Rizespor", starter:false, goals:0, matches:0},
+    {name:"Can Uzun", pos:"ATT", club:"Eintracht Frankfurt", starter:false, goals:0, matches:0},
+  ]},
+  URU: { name:"Uruguay", flag:"__URU__", host:false, players:[
+    {name:"Sergio Rochet", pos:"GK", club:"SC Internacional", starter:true, goals:0, matches:0},
+    {name:"Jose Maria Gimenez", pos:"DEF", club:"Atlético De Madrid", starter:true, goals:0, matches:0},
+    {name:"Sebastian Caceres", pos:"DEF", club:"Club América", starter:true, goals:0, matches:0},
+    {name:"Ronald Araujo", pos:"DEF", club:"FC Barcelona", starter:true, goals:2, matches:25},
+    {name:"Manuel Ugarte", pos:"MIL", club:"Manchester United FC", starter:true, goals:0, matches:0},
+    {name:"Rodrigo Bentancur", pos:"MIL", club:"Tottenham Hotspur FC", starter:true, goals:3, matches:28},
+    {name:"Nicolas De La Cruz", pos:"MIL", club:"CR Flamengo", starter:true, goals:0, matches:0},
+    {name:"Federico Valverde", pos:"MIL", club:"Real Madrid C. F.", starter:true, goals:8, matches:40},
+    {name:"Darwin Nunez", pos:"ATT", club:"Al Hilal SC", starter:true, goals:2, matches:10},
+    {name:"Giorgian De Arrascaeta", pos:"MIL", club:"CR Flamengo", starter:true, goals:0, matches:0},
+    {name:"Facundo Pellistri", pos:"ATT", club:"Panathinaikos FC", starter:true, goals:5, matches:25},
+    {name:"Santiago Mele", pos:"GK", club:"CF Monterrey", starter:false, goals:0, matches:0},
+    {name:"Guillermo Varela", pos:"DEF", club:"CR Flamengo", starter:false, goals:0, matches:0},
+    {name:"Agustin Canobbio", pos:"MIL", club:"Fluminense FC", starter:false, goals:0, matches:0},
+    {name:"Emiliano Martinez", pos:"MIL", club:"SE Palmeiras", starter:false, goals:0, matches:0},
+    {name:"Mathias Olivera", pos:"DEF", club:"SSC Napoli", starter:false, goals:0, matches:0},
+    {name:"Matias Vina", pos:"DEF", club:"CA River Plate", starter:false, goals:0, matches:0},
+    {name:"Brian Rodriguez", pos:"ATT", club:"Club América", starter:false, goals:0, matches:0},
+    {name:"Rodrigo Aguirre", pos:"ATT", club:"Tigres UANL", starter:false, goals:0, matches:0},
+    {name:"Maxi Araujo", pos:"MIL", club:"Sporting CP", starter:false, goals:0, matches:0},
+    {name:"Federico Vinas", pos:"ATT", club:"Real Oviedo", starter:false, goals:0, matches:0},
+    {name:"Joaquin Piquerez", pos:"MIL", club:"SE Palmeiras", starter:false, goals:0, matches:0},
+    {name:"Fernando Muslera", pos:"GK", club:"Estudiantes LP", starter:false, goals:0, matches:0},
+    {name:"Santiago Bueno", pos:"DEF", club:"Wolverhampton Wanderers FC", starter:false, goals:0, matches:0},
+    {name:"Juan Manuel Sanabria", pos:"MIL", club:"Real Salt Lake", starter:false, goals:0, matches:0},
+    {name:"Rodrigo Zalazar", pos:"MIL", club:"SC Braga", starter:false, goals:0, matches:0},
+  ]},
+  USA: { name:"États-Unis", flag:"__USA__", host:true, players:[
+    {name:"Matt Turner", pos:"GK", club:"New England Revolution", starter:true, goals:0, matches:0},
+    {name:"Sergino Dest", pos:"DEF", club:"PSV Eindhoven", starter:true, goals:0, matches:0},
+    {name:"Chris Richards", pos:"DEF", club:"Crystal Palace FC", starter:true, goals:0, matches:0},
+    {name:"Tyler Adams", pos:"MIL", club:"AFC Bournemouth", starter:true, goals:1, matches:22},
+    {name:"Antonee Robinson", pos:"DEF", club:"Fulham FC", starter:true, goals:0, matches:0},
+    {name:"Auston Trusty", pos:"DEF", club:"Celtic FC", starter:true, goals:0, matches:0},
+    {name:"Giovanni Reyna", pos:"MIL", club:"Borussia Mönchengladbach", starter:true, goals:0, matches:0},
+    {name:"McKENNIE Weston ", pos:"MIL", club:"Juventus FC", starter:true, goals:0, matches:0},
+    {name:"Ricardo Pepi", pos:"ATT", club:"PSV Eindhoven", starter:true, goals:12, matches:28},
+    {name:"Christian Pulisic", pos:"ATT", club:"AC Milan", starter:true, goals:8, matches:30},
+    {name:"Brenden Aaronson", pos:"ATT", club:"Leeds United FC", starter:true, goals:0, matches:0},
+    {name:"Miles Robinson", pos:"DEF", club:"FC Cincinnatti", starter:false, goals:0, matches:0},
+    {name:"Tim Ream", pos:"DEF", club:"Charlotte FC", starter:false, goals:0, matches:0},
+    {name:"Sebastian Berhalter", pos:"MIL", club:"Vancouver Whitecaps FC", starter:false, goals:0, matches:0},
+    {name:"Cristian Roldan", pos:"MIL", club:"Seattle Sounders FC", starter:false, goals:0, matches:0},
+    {name:"Alex Freeman", pos:"DEF", club:"Villarreal CF", starter:false, goals:0, matches:0},
+    {name:"Malik Tillman", pos:"MIL", club:"Bayer Leverkusen", starter:false, goals:0, matches:0},
+    {name:"Max Arfsten", pos:"DEF", club:"Columbus Crew", starter:false, goals:0, matches:0},
+    {name:"Haji Wright", pos:"ATT", club:"Coventry City FC", starter:false, goals:0, matches:0},
+    {name:"Folarin Balogun", pos:"ATT", club:"AS Monaco", starter:false, goals:0, matches:0},
+    {name:"Timothy Weah", pos:"ATT", club:"Olympique Marseille", starter:false, goals:0, matches:0},
+    {name:"McKENZIE Mark ", pos:"DEF", club:"Toulouse FC", starter:false, goals:0, matches:0},
+    {name:"Joe Scally", pos:"DEF", club:"Borussia Mönchengladbach", starter:false, goals:0, matches:0},
+    {name:"Matt Freese", pos:"GK", club:"New York City FC", starter:false, goals:0, matches:0},
+    {name:"Chris Brady", pos:"GK", club:"Chicago Fire FC", starter:false, goals:0, matches:0},
+    {name:"Alex Zendejas", pos:"ATT", club:"Club América", starter:false, goals:0, matches:0},
+  ]},
+  UZB: { name:"Ouzbékistan", flag:"__UZB__", host:false, players:[
+    {name:"Utkir Yusupov", pos:"GK", club:"PFC Navbahor Namangan", starter:true, goals:0, matches:0},
+    {name:"Abdukodir Khusanov", pos:"DEF", club:"Manchester City FC", starter:true, goals:0, matches:0},
+    {name:"Khojiakbar Alijonov", pos:"DEF", club:"Pakhtakor Tashkent FK", starter:true, goals:0, matches:0},
+    {name:"Farrukh Sayfiev", pos:"DEF", club:"FK Neftchi Farg'ona", starter:true, goals:0, matches:0},
+    {name:"Rustam Ashurmatov", pos:"DEF", club:"Esteghlal Tehran FC", starter:true, goals:0, matches:0},
+    {name:"Akmal Mozgovoy", pos:"MIL", club:"Pakhtakor Tashkent FK", starter:true, goals:0, matches:0},
+    {name:"Otabek Shukurov", pos:"MIL", club:"Baniyas Club", starter:true, goals:3, matches:22},
+    {name:"Jamshid Iskanderov", pos:"MIL", club:"FK Neftchi Farg'ona", starter:true, goals:0, matches:0},
+    {name:"Odiljon Xamrobekov", pos:"MIL", club:"Tractor Sazi Tabriz FC", starter:true, goals:0, matches:0},
+    {name:"Jaloliddin Masharipov", pos:"MIL", club:"Esteghlal Tehran FC", starter:true, goals:0, matches:0},
+    {name:"Oston Urunov", pos:"MIL", club:"Persepolis FC", starter:true, goals:0, matches:0},
+    {name:"Abduvohid Nematov", pos:"GK", club:"Nasaf Qarshi FC", starter:false, goals:0, matches:0},
+    {name:"Sherzod Nasrullaev", pos:"DEF", club:"Pakhtakor Tashkent FK", starter:false, goals:0, matches:0},
+    {name:"Eldor Shomurodov", pos:"ATT", club:"Başakşehir FK", starter:false, goals:8, matches:25},
+    {name:"Umar Eshmurodov", pos:"DEF", club:"Nasaf Qarshi FC", starter:false, goals:0, matches:0},
+    {name:"Botirali Ergashev", pos:"GK", club:"FK Neftchi Farg'ona", starter:false, goals:0, matches:0},
+    {name:"Dostonbek Khamdamov", pos:"MIL", club:"Pakhtakor Tashkent FK", starter:false, goals:0, matches:0},
+    {name:"Abdulla Abdullaev", pos:"DEF", club:"Dibba FC", starter:false, goals:0, matches:0},
+    {name:"Azizjon Ganiev", pos:"MIL", club:"Al Bataeh Club", starter:false, goals:0, matches:0},
+    {name:"Azizbek Amonov", pos:"ATT", club:"FK Dinamo Samarkand", starter:false, goals:0, matches:0},
+    {name:"Igor Sergeev", pos:"ATT", club:"Persepolis FC", starter:false, goals:0, matches:0},
+    {name:"Abbosbek Fayzullaev", pos:"MIL", club:"Başakşehir FK", starter:false, goals:0, matches:0},
+    {name:"Sherzod Esanov", pos:"MIL", club:"FK Buxoro", starter:false, goals:0, matches:0},
+    {name:"Behruzjon Karimov", pos:"DEF", club:"Surkhon FK", starter:false, goals:0, matches:0},
+    {name:"Avazbek Ulmasaliyev", pos:"DEF", club:"OKMK FK", starter:false, goals:0, matches:0},
+    {name:"Jakhongir Urozov", pos:"DEF", club:"FK Dinamo Samarkand", starter:false, goals:0, matches:0},
+  ]},
+};
+
+// ════════════════════════════════════════════════════════
+//  G R O U P E S  — Tirage officiel du 5 déc. 2025, Washington D.C.
+// ════════════════════════════════════════════════════════
+const GROUPS = [
+  { id:"A", teams:["MEX","RSA","KOR","CZE"],  venue:"Mexico City / Guadalajara" },
+  { id:"B", teams:["CAN","SUI","QAT","BIH"],  venue:"Toronto / Vancouver" },
+  { id:"C", teams:["BRA","MAR","SCO","HAI"],  venue:"Los Angeles / San Francisco" },
+  { id:"D", teams:["USA","PAR","AUS","TUR"],  venue:"New York / Boston" },
+  { id:"E", teams:["GER","CUW","CIV","ECU"],  venue:"Dallas / Houston" },
+  { id:"F", teams:["NED","JPN","TUN","SWE"],  venue:"Seattle / Los Angeles" },
+  { id:"G", teams:["BEL","EGY","IRN","NZL"],  venue:"Miami / Atlanta" },
+  { id:"H", teams:["ESP","CPV","KSA","URU"],  venue:"Kansas City / Philadelphia" },
+  { id:"I", teams:["FRA","SEN","NOR","IRQ"],  venue:"New York / Boston" },
+  { id:"J", teams:["ARG","ALG","AUT","JOR"],  venue:"Miami / Los Angeles" },
+  { id:"K", teams:["POR","COL","UZB","COD"],  venue:"Seattle / San Francisco" },
+  { id:"L", teams:["ENG","CRO","GHA","PAN"],  venue:"New York / Dallas" },
+];
+const PLACEHOLDER_GROUPS = [];
+
+// Matchs par groupe (round-robin)
+function getGroupMatches(teams) {
+  const m = [];
+  for (let i = 0; i < teams.length; i++) {
+    for (let j = i + 1; j < teams.length; j++) {
+      m.push([teams[i], teams[j]]);
+    }
+  }
+  return m;
+}
+
+function flagHtml(f) {
+  function img(c) {
+    return "<img src='https://flagcdn.com/24x18/"+c+".png' style='height:1.4em;vertical-align:middle;border-radius:2px' alt='"+c+"'>";
+  }
+  if(f==="__ALG__") return img("dz");
+  if(f==="__ARG__") return img("ar");
+  if(f==="__AUS__") return img("au");
+  if(f==="__AUT__") return img("at");
+  if(f==="__BEL__") return img("be");
+  if(f==="__BIH__") return img("ba");
+  if(f==="__BRA__") return img("br");
+  if(f==="__CPV__") return img("cv");
+  if(f==="__CAN__") return img("ca");
+  if(f==="__CIV__") return img("ci");
+  if(f==="__COD__") return img("cd");
+  if(f==="__COL__") return img("co");
+  if(f==="__CRO__") return img("hr");
+  if(f==="__CUW__") return img("cw");
+  if(f==="__CZE__") return img("cz");
+  if(f==="__ECU__") return img("ec");
+  if(f==="__EGY__") return img("eg");
+  if(f==="__ENG__") return img("gb-eng");
+  if(f==="__ESP__") return img("es");
+  if(f==="__FRA__") return img("fr");
+  if(f==="__GER__") return img("de");
+  if(f==="__GHA__") return img("gh");
+  if(f==="__HAI__") return img("ht");
+  if(f==="__IRN__") return img("ir");
+  if(f==="__IRQ__") return img("iq");
+  if(f==="__JOR__") return img("jo");
+  if(f==="__JPN__") return img("jp");
+  if(f==="__KOR__") return img("kr");
+  if(f==="__KSA__") return img("sa");
+  if(f==="__MAR__") return img("ma");
+  if(f==="__MEX__") return img("mx");
+  if(f==="__NED__") return img("nl");
+  if(f==="__NOR__") return img("no");
+  if(f==="__NZL__") return img("nz");
+  if(f==="__PAN__") return img("pa");
+  if(f==="__PAR__") return img("py");
+  if(f==="__POR__") return img("pt");
+  if(f==="__QAT__") return img("qa");
+  if(f==="__RSA__") return img("za");
+  if(f==="__SCO__") return img("gb-sct");
+  if(f==="__SEN__") return img("sn");
+  if(f==="__SUI__") return img("ch");
+  if(f==="__SWE__") return img("se");
+  if(f==="__TUN__") return img("tn");
+  if(f==="__TUR__") return img("tr");
+  if(f==="__URU__") return img("uy");
+  if(f==="__USA__") return img("us");
+  if(f==="__UZB__") return img("uz");
+  return f;
+}
+function teamData(code) {
+  return TEAMS[code] || { name: code, flag: "🏳️", host: false, players: [] };
+}
+
+// ════════════════════════════════════════════════════════
+//  R E N D E R  JOUEUR
+// ════════════════════════════════════════════════════════
+function renderPlayer(p, goalOrMatch = 'both') {
+  const posClass = `pos-${p.pos}`;
+  const starterClass = p.starter ? 'starter' : 'sub';
+  const starterLabel = p.starter ? 'Titulaire' : 'Remplaçant';
+  return `
+  <div class="player-item">
+    <span class="player-pos ${posClass}">${p.pos}</span>
+    <span class="player-name">${p.name}</span>
+    <span class="starter-dot ${starterClass}"></span>
+    <div class="tooltip">
+      <div class="tt-name">${p.name}</div>
+      <div class="tt-club">🏟️ ${p.club}</div>
+      <div>
+        <span class="tt-status ${starterClass}">
+          <span class="starter-dot ${starterClass}" style="display:inline-block"></span>
+          ${starterLabel}
+        </span>
+      </div>
+      <div class="tt-row">
+        <div class="tt-stat"><strong>${p.matches}</strong><span>Matchs</span></div>
+        <div class="tt-stat"><strong>${p.goals}</strong><span>${p.pos === 'GK' || p.pos === 'DEF' ? 'Buts' : p.pos === 'MIL' ? 'Buts' : 'Buts'}</span></div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════════
+//  R E N D E R  MATCH  avec effectif
+// ════════════════════════════════════════════════════════
+let matchIdCounter = 0;
+function renderMatchCard(home, away, label = '', venue = '') {
+  const h = teamData(home);
+  const a = teamData(away);
+  const mid = `m${++matchIdCounter}`;
+
+  const homePlayers = h.players.map(p => renderPlayer(p)).join('');
+  const awayPlayers = a.players.map(p => renderPlayer(p)).join('');
+
+  const hostBadge = (t) => t.host ? `<span class="badge-host">HÔTE</span>` : '';
+
+  return `
+  <div class="match-card">
+    <div class="match-header">
+      <span>${label}</span>
+      <span>${venue}</span>
+    </div>
+    <div class="match-teams">
+      <div class="team-side">
+        <span class="flag">${flagHtml(h.flag)}</span>
+        <div>
+          <div class="team-name">${h.name} ${hostBadge(h)}</div>
+          <div class="team-code">${home}</div>
+        </div>
+      </div>
+      <div class="vs">VS</div>
+      <div class="team-side right">
+        <span class="flag">${flagHtml(a.flag)}</span>
+        <div>
+          <div class="team-name">${a.name} ${hostBadge(a)}</div>
+          <div class="team-code">${away}</div>
+        </div>
+      </div>
+    </div>
+    <div class="score-input">
+      <input type="number" min="0" max="20" placeholder="–" title="${h.name}" id="${mid}-h">
+      <span class="score-sep">:</span>
+      <input type="number" min="0" max="20" placeholder="–" title="${a.name}" id="${mid}-a">
+    </div>
+    ${h.players.length || a.players.length ? `
+    <button class="toggle-squad" onclick="toggleSquad('${mid}')">
+      <span id="${mid}-icon">▼</span> Voir les effectifs
+    </button>
+    <div class="squad-panel" id="${mid}-squad">
+      <div class="squad-cols">
+        <div>
+          <div class="squad-team-title">${flagHtml(h.flag)} ${h.name}</div>
+          <div class="player-list">${homePlayers || '<span style="color:var(--muted);font-size:0.8rem">Effectif à venir</span>'}</div>
+        </div>
+        <div>
+          <div class="squad-team-title">${flagHtml(a.flag)} ${a.name}</div>
+          <div class="player-list">${awayPlayers || '<span style="color:var(--muted);font-size:0.8rem">Effectif à venir</span>'}</div>
+        </div>
+      </div>
+    </div>` : ''}
+  </div>`;
+}
+
+function toggleSquad(mid) {
+  const panel = document.getElementById(`${mid}-squad`);
+  const icon = document.getElementById(`${mid}-icon`);
+  if (!panel) return;
+  const open = panel.classList.toggle('open');
+  icon.textContent = open ? '▲' : '▼';
+}
+
+// ════════════════════════════════════════════════════════
+//  B U I L D  GROUPES
+// ════════════════════════════════════════════════════════
+function buildGroups() {
+  const container = document.getElementById('groups-container');
+  let html = '';
+
+  [...GROUPS, ...PLACEHOLDER_GROUPS].forEach(g => {
+    const matches = getGroupMatches(g.teams);
+    let matchesHtml = matches.map((m, i) =>
+      renderMatchCard(m[0], m[1], `Journée ${Math.ceil((i+1)/2)}`, g.venue)
+    ).join('');
+
+    const teamBadges = g.teams.map(code => {
+      const t = teamData(code);
+      return `<span title="${t.name}">${flagHtml(t.flag)} ${t.name}</span>`;
+    }).join(' · ');
+
+    html += `
+    <div class="group-card">
+      <div class="group-header">
+        <span>GROUPE ${g.id}</span>
+        <span style="font-size:0.75rem;font-weight:400;opacity:0.8">${teamBadges}</span>
+      </div>
+      <div class="group-matches">${matchesHtml}</div>
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+// ════════════════════════════════════════════════════════
+//  B U I L D  PHASES  (placeholder — à remplir au fil du tournoi)
+// ════════════════════════════════════════════════════════
+function buildPhase(containerId, rounds) {
+  const container = document.getElementById(containerId);
+  if (!rounds || rounds.length === 0 || rounds.every(r => !r.matches || r.matches.length === 0)) {
+    container.innerHTML = "<div style=\"text-align:center;padding:60px 20px;color:var(--muted)\">  <div style=\"font-size:3rem;margin-bottom:16px\">⏳</div>  <div style=\"font-size:1.2rem;font-weight:700;color:var(--text);margin-bottom:8px\">Pas encore commencé</div>  <div style=\"font-size:0.9rem\">Cette phase sera disponible à l'issue de la phase de groupes.<br>  Le tournoi démarre le <strong style=\"color:var(--accent)\">11 juin 2026</strong>.</div></div>";
+    return;
+  }
+  let html = '';
+  rounds.forEach(round => {
+    let matchesHtml = round.matches.map(m =>
+      `<div class="match-ko">${renderMatchCard(m[0], m[1], round.label, m[2] || '')}</div>`
+    ).join('');
+    html += `
+    <div class="bracket-round">
+      <div class="round-title">${round.label}</div>
+      <div class="matches-row">${matchesHtml}</div>
+    </div>`;
+  });
+  container.innerHTML = html;
+}
+
+const H8_MATCHES = [];
+
+const QF_MATCHES = [];
+
+const SEMI_MATCHES = [];
+
+const FINAL_MATCHES = [];
+
+// ════════════════════════════════════════════════════════
+//  S T A T S  joueurs
+// ════════════════════════════════════════════════════════
+function buildStats() {
+  const sel = document.getElementById('country-select');
+  const groups = [
+    {label:'Groupe A', codes:['MEX','RSA','KOR','CZE']},
+    {label:'Groupe B', codes:['CAN','SUI','QAT','BIH']},
+    {label:'Groupe C', codes:['BRA','MAR','SCO','HAI']},
+    {label:'Groupe D', codes:['USA','PAR','AUS','TUR']},
+    {label:'Groupe E', codes:['GER','CUW','CIV','ECU']},
+    {label:'Groupe F', codes:['NED','JPN','TUN','SWE']},
+    {label:'Groupe G', codes:['BEL','EGY','IRN','NZL']},
+    {label:'Groupe H', codes:['ESP','CPV','KSA','URU']},
+    {label:'Groupe I', codes:['FRA','SEN','NOR','IRQ']},
+    {label:'Groupe J', codes:['ARG','ALG','AUT','JOR']},
+    {label:'Groupe K', codes:['POR','COL','UZB','COD']},
+    {label:'Groupe L', codes:['ENG','CRO','GHA','PAN']},
+  ];
+  groups.forEach(g => {
+    const og = document.createElement('optgroup');
+    og.label = g.label;
+    g.codes.forEach(code => {
+      const t = teamData(code);
+      const opt = document.createElement('option');
+      opt.value = code;
+      opt.textContent = t.name;
+      og.appendChild(opt);
+    });
+    sel.appendChild(og);
+  });
+}
+
+function showCountrySquad(code) {
+  const container = document.getElementById('squad-display');
+  document.getElementById('player-search').value = '';
+  if (!code) {
+    container.innerHTML = '<div style="text-align:center;padding:60px;color:var(--muted);font-size:0.95rem;">Sélectionne une équipe ci-dessus pour voir son effectif</div>';
+    return;
+  }
+  const t = teamData(code);
+  const byPos = {'GK':[],'DEF':[],'MIL':[],'ATT':[]};
+  t.players.forEach(p => { if(byPos[p.pos]) byPos[p.pos].push(p); });
+  const posLabels = {'GK':'🧤 Gardiens','DEF':'🛡️ Défenseurs','MIL':'⚙️ Milieux','ATT':'⚡ Attaquants'};
+  const hostBadge = t.host ? '<span style="background:var(--accent);color:#000;padding:1px 8px;border-radius:10px;font-size:0.72rem;font-weight:700;margin-left:8px;">PAYS HÔTE</span>' : '';
+
+  let rows = '';
+  ['GK','DEF','MIL','ATT'].forEach(pos => {
+    if (!byPos[pos].length) return;
+    let playerRows = '';
+    byPos[pos].forEach(p => {
+      const num = t.players.indexOf(p) + 1;
+      playerRows += `<div class="player-searchable" data-name="${p.name.toLowerCase()}" data-club="${p.club.toLowerCase()}"
+        style="display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:6px;font-size:0.82rem;cursor:default;border-bottom:1px solid var(--border);"
+        onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background=''">
+        <span style="width:22px;text-align:center;color:var(--muted);font-size:0.72rem;font-weight:700;">${num}</span>
+        <span class="player-pos pos-${p.pos}" style="font-size:0.62rem;width:28px;text-align:center;padding:2px 0;">${p.pos}</span>
+        <span style="flex:1;font-weight:${p.starter?'600':'400'};">${p.name}</span>
+        <span style="font-size:0.75rem;color:var(--muted);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${p.club}">${p.club}</span>
+        ${p.goals>0?'<span style="font-size:0.72rem;background:var(--accent);color:#000;border-radius:10px;padding:1px 6px;font-weight:700;white-space:nowrap;" title="Buts 2025-26">⚽ '+p.goals+'</span>':''}
+        ${p.matches>0?'<span style="font-size:0.7rem;color:var(--muted);white-space:nowrap;" title="Matchs 2025-26">'+p.matches+' matchs</span>':''}
+        <span class="starter-dot ${p.starter?'starter':'sub'}" title="${p.starter?'Titulaire':'Remplaçant'}" style="flex-shrink:0;"></span>
+      </div>`;
+    });
+    rows += `<div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+      <div style="padding:10px 14px;font-weight:700;font-size:0.82rem;background:var(--surface2);border-bottom:1px solid var(--border);color:var(--accent2);">${posLabels[pos]} <span style="color:var(--muted);font-weight:400;">(${byPos[pos].length})</span></div>
+      ${playerRows}
+    </div>`;
+  });
+
+  container.innerHTML = `
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;padding:16px 20px;background:var(--surface);border:1px solid var(--border);border-radius:12px;">
+      <span style="font-size:2.2rem;">${flagHtml(t.flag)}</span>
+      <div>
+        <div style="font-size:1.3rem;font-weight:800;">${t.name}${hostBadge}</div>
+        <div style="font-size:0.82rem;color:var(--muted);margin-top:2px;">${t.players.length} joueurs · <span style="color:var(--green);">●</span> Titulaires numéros 1-11</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;">${rows}</div>`;
+}
+
+function filterSquad(query) {
+  const q = query.toLowerCase().trim();
+  const code = document.getElementById('country-select').value;
+  if (!code && q) return;
+  document.querySelectorAll('.player-searchable').forEach(el => {
+    const match = !q || el.dataset.name.includes(q) || el.dataset.club.includes(q);
+    el.style.display = match ? '' : 'none';
+  });
+});
+}
+
+// ════════════════════════════════════════════════════════
+//  N A V I G A T I O N
+// ════════════════════════════════════════════════════════
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ════════════════════════════════════════════════════════
+//  I N I T
+// ════════════════════════════════════════════════════════
+buildGroups();
+buildPhase('huitiemes-container', H8_MATCHES);
+buildPhase('quarts-container', QF_MATCHES);
+buildPhase('demis-container', SEMI_MATCHES);
+buildPhase('finale-container', FINAL_MATCHES);
+buildStats();
