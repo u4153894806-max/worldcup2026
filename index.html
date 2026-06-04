@@ -1724,8 +1724,10 @@ function renderPlayer(p, goalOrMatch = 'both') {
         </span>
       </div>
       <div class="tt-row">
-        <div class="tt-stat"><strong>${p.matches}</strong><span>Matchs</span></div>
-        <div class="tt-stat"><strong>${p.goals}</strong><span>${p.pos === 'GK' || p.pos === 'DEF' ? 'Buts' : p.pos === 'MIL' ? 'Buts' : 'Buts'}</span></div>
+        <div class="tt-stat"><strong>${p.matches||0}</strong><span>Matchs</span></div>
+        <div class="tt-stat"><strong>${p.goals||0}</strong><span>Buts</span></div>
+        <div class="tt-stat"><strong>${p.assists||0}</strong><span>PD</span></div>
+        ${(p.rating||0)>0?`<div class="tt-stat"><strong style="color:var(--accent2)">★ ${(p.rating).toFixed(2)}</strong><span>Note</span></div>`:''}
       </div>
     </div>
   </div>`;
@@ -1896,8 +1898,10 @@ function buildStats() {
   showTopScorers();
 }
 
-function showTopScorers() {
-  // Collect all players with goals > 0 from all 48 teams
+let _statsSort = 'goals';
+function showTopScorers(sortBy) {
+  if (sortBy) _statsSort = sortBy;
+  // Collect all players with goals > 0 OR assists > 0 OR rating > 0
   const allCodes = ['MEX','RSA','KOR','CZE','CAN','SUI','QAT','BIH','BRA','MAR','SCO','HAI',
     'USA','PAR','AUS','TUR','GER','CUW','CIV','ECU','NED','JPN','TUN','SWE',
     'BEL','EGY','IRN','NZL','ESP','CPV','KSA','URU','FRA','SEN','NOR','IRQ',
@@ -1906,18 +1910,26 @@ function showTopScorers() {
   allCodes.forEach(code => {
     const t = teamData(code);
     t.players.forEach(p => {
-      if (p.goals > 0) {
-        scorers.push({name: p.name, club: p.club, pos: p.pos, goals: p.goals, matches: p.matches, assists: p.assists||0, rating: p.rating||0, team: t, code: code});
+      const g = p.goals||0, a = p.assists||0, r = p.rating||0, m = p.matches||0;
+      if (_statsSort === 'rating' ? r > 0 && m >= 5 : _statsSort === 'assists' ? a > 0 : g > 0) {
+        scorers.push({name: p.name, club: p.club, pos: p.pos, goals: g, matches: m, assists: a, rating: r, team: t, code: code});
       }
     });
   });
-  scorers.sort((a, b) => b.goals - a.goals || b.matches - a.matches);
+  const sorts = {
+    goals:   (a, b) => b.goals - a.goals || b.assists - a.assists || b.rating - a.rating,
+    assists: (a, b) => b.assists - a.assists || b.goals - a.goals || b.rating - a.rating,
+    matches: (a, b) => b.matches - a.matches || b.goals - a.goals,
+    rating:  (a, b) => b.rating - a.rating || b.goals - a.goals,
+  };
+  scorers.sort(sorts[_statsSort] || sorts.goals);
   const top50 = scorers.slice(0, 50);
+  const maxGoals = top50[0] ? top50[0].goals : 1;
 
   let rows = '';
   top50.forEach((p, i) => {
     const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1);
-    const pctGoals = top50[0].goals > 0 ? Math.round((p.goals / top50[0].goals) * 100) : 0;
+    const pctGoals = maxGoals > 0 ? Math.round((p.goals / maxGoals) * 100) : 0;
     rows += '<tr style="border-bottom:1px solid var(--border);transition:background 0.15s;" onmouseover="this.style.background=\'var(--surface2)\'" onmouseout="this.style.background=\'\'">'
       + '<td style="padding:8px 12px;text-align:center;font-weight:700;font-size:0.85rem;color:var(--muted);width:36px;">' + medal + '</td>'
       + '<td style="padding:8px 6px;width:32px;">' + flagHtml(p.team.flag) + '</td>'
@@ -1926,33 +1938,38 @@ function showTopScorers() {
       + '<td style="padding:8px 6px;font-size:0.78rem;color:var(--muted);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="' + p.club + '">' + p.club + '</td>'
       + '<td style="padding:8px 12px;text-align:center;width:60px;">'
       +   '<div style="display:flex;flex-direction:column;align-items:center;gap:2px;">'
-      +   '<span style="background:var(--accent);color:#000;border-radius:8px;padding:2px 10px;font-weight:800;font-size:0.9rem;">' + p.goals + '</span>'
+      +   '<span style="background:' + (_statsSort==='goals'?'var(--accent)':'var(--border)') + ';color:' + (_statsSort==='goals'?'#000':'var(--text)') + ';border-radius:8px;padding:2px 10px;font-weight:800;font-size:0.9rem;">' + p.goals + '</span>'
       +   '<div style="width:50px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;"><div style="height:100%;width:' + pctGoals + '%;background:var(--accent);border-radius:2px;"></div></div>'
       +   '</div>'
       + '</td>'
-      + '<td style="padding:8px 12px;text-align:center;font-size:0.82rem;color:var(--muted);width:60px;">' + (p.assists > 0 ? '<span style="background:#3b82f6;color:#fff;border-radius:8px;padding:2px 8px;font-weight:700;font-size:0.82rem;">' + p.assists + '</span>' : '—') + '</td>'
+      + '<td style="padding:8px 12px;text-align:center;font-size:0.82rem;width:60px;">' + (p.assists > 0 ? '<span style="background:' + (_statsSort==='assists'?'#3b82f6':'var(--border)') + ';color:' + (_statsSort==='assists'?'#fff':'var(--text)') + ';border-radius:8px;padding:2px 8px;font-weight:700;font-size:0.82rem;">' + p.assists + '</span>' : '—') + '</td>'
       + '<td style="padding:8px 12px;text-align:center;font-size:0.82rem;color:var(--muted);width:60px;">' + (p.matches > 0 ? p.matches + ' j.' : '—') + '</td>'
-      + '<td style="padding:8px 12px;text-align:center;font-size:0.82rem;width:60px;">' + (p.rating > 0 ? '<span style="color:var(--accent2);font-weight:700;">★ ' + p.rating.toFixed(2) + '</span>' : '—') + '</td>'
+      + '<td style="padding:8px 12px;text-align:center;font-size:0.82rem;width:60px;">' + (p.rating > 0 ? '<span style="color:' + (_statsSort==='rating'?'var(--accent2)':'var(--muted)') + ';font-weight:' + (_statsSort==='rating'?'800':'400') + ';">★ ' + p.rating.toFixed(2) + '</span>' : '—') + '</td>'
       + '</tr>';
   });
 
+  function thSort(key, label) {
+    const active = _statsSort === key;
+    return '<th onclick="showTopScorers(\'' + key + '\')" style="padding:8px 12px;cursor:pointer;user-select:none;white-space:nowrap;color:' + (active ? 'var(--accent2)' : 'var(--muted)') + ';font-weight:' + (active ? '800' : '600') + ';">' + label + (active ? ' ▼' : '') + '</th>';
+  }
+
   document.getElementById('squad-display').innerHTML = '<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;">'
     + '<div style="padding:12px 16px;font-weight:800;font-size:0.95rem;background:var(--surface2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;">'
-    +   '⚽ Top 50 buteurs — Saison 2025-26'
-    +   '<span style="font-size:0.75rem;font-weight:400;color:var(--muted);margin-left:4px;">parmi les 48 sélections qualifiées</span>'
+    +   '⚽ Stats joueurs — Saison 2025-26'
+    +   '<span style="font-size:0.75rem;font-weight:400;color:var(--muted);margin-left:4px;">48 sélections qualifiées · cliquer une colonne pour trier</span>'
     + '</div>'
     + '<div style="overflow-x:auto;">'
     + '<table style="width:100%;border-collapse:collapse;">'
-    + '<thead><tr style="font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em;border-bottom:2px solid var(--border);">'
-    +   '<th style="padding:8px 12px;">#</th>'
+    + '<thead><tr style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;border-bottom:2px solid var(--border);">'
+    +   '<th style="padding:8px 12px;color:var(--muted);">#</th>'
     +   '<th style="padding:8px 6px;"></th>'
-    +   '<th style="padding:8px 6px;text-align:left;">Joueur</th>'
-    +   '<th style="padding:8px 6px;text-align:left;">Sélection</th>'
-    +   '<th style="padding:8px 6px;text-align:left;">Club</th>'
-    +   '<th style="padding:8px 12px;">Buts</th>'
-    +   '<th style="padding:8px 12px;">PD</th>'
-    +   '<th style="padding:8px 12px;">Matchs</th>'
-    +   '<th style="padding:8px 12px;">Note</th>'
+    +   '<th style="padding:8px 6px;text-align:left;color:var(--muted);">Joueur</th>'
+    +   '<th style="padding:8px 6px;text-align:left;color:var(--muted);">Sélection</th>'
+    +   '<th style="padding:8px 6px;text-align:left;color:var(--muted);">Club</th>'
+    +   thSort('goals',   'Buts')
+    +   thSort('assists', 'PD')
+    +   thSort('matches', 'Matchs')
+    +   thSort('rating',  'Note ★')
     + '</tr></thead>'
     + '<tbody>' + rows + '</tbody>'
     + '</table></div></div>';
