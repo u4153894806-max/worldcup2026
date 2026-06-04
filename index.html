@@ -263,6 +263,62 @@
   <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
     <button onclick="showTopScorers()" id="btn-scorers" style="background:var(--accent);color:#000;border:none;border-radius:8px;padding:8px 16px;font-weight:700;font-size:0.82rem;cursor:pointer;">⚽ Stats joueurs</button>
     <button onclick="showTeamRatings()" id="btn-ratings" style="background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:8px 16px;font-weight:700;font-size:0.82rem;cursor:pointer;">★ Notes par sélection</button>
+    <span style="position:relative;display:inline-flex;align-items:center;" id="score-info-wrap">
+      <button onclick="toggleScoreInfo()" style="width:22px;height:22px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);color:var(--muted);font-size:0.75rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;" title="Explication du score">ⓘ</button>
+      <div id="score-info-popup" style="display:none;position:absolute;left:30px;top:-8px;z-index:100;width:340px;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.4);padding:16px;font-size:0.8rem;line-height:1.6;">
+        <div style="font-weight:800;font-size:0.9rem;margin-bottom:10px;color:var(--accent2);">🎯 Comment est calculé le score /10 ?</div>
+        <p style="color:var(--muted);margin:0 0 10px;">Le score est <strong style="color:var(--text)">pondéré par poste</strong> pour refléter la réalité du football — un gardien et un attaquant n'ont pas les mêmes attentes.</p>
+        <table style="width:100%;border-collapse:collapse;font-size:0.75rem;">
+          <thead><tr style="color:var(--muted);border-bottom:1px solid var(--border);">
+            <th style="padding:4px 6px;text-align:left;">Poste</th>
+            <th style="padding:4px 6px;text-align:center;">Note Sofascore</th>
+            <th style="padding:4px 6px;text-align:center;">Buts/match</th>
+            <th style="padding:4px 6px;text-align:center;">PD/match</th>
+            <th style="padding:4px 6px;text-align:center;">Dispo</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border);">
+              <td style="padding:5px 6px;font-weight:700;color:#94a3b8;">GK</td>
+              <td style="padding:5px 6px;text-align:center;font-weight:700;">80%</td>
+              <td style="padding:5px 6px;text-align:center;color:var(--muted);">—</td>
+              <td style="padding:5px 6px;text-align:center;color:var(--muted);">—</td>
+              <td style="padding:5px 6px;text-align:center;font-weight:700;">20%</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border);">
+              <td style="padding:5px 6px;font-weight:700;color:#60a5fa;">DEF</td>
+              <td style="padding:5px 6px;text-align:center;font-weight:700;">65%</td>
+              <td style="padding:5px 6px;text-align:center;font-weight:700;">10%</td>
+              <td style="padding:5px 6px;text-align:center;font-weight:700;">25%</td>
+              <td style="padding:5px 6px;text-align:center;color:var(--muted);">—</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border);">
+              <td style="padding:5px 6px;font-weight:700;color:#a78bfa;">MIL</td>
+              <td style="padding:5px 6px;text-align:center;font-weight:700;">50%</td>
+              <td style="padding:5px 6px;text-align:center;font-weight:700;">28%</td>
+              <td style="padding:5px 6px;text-align:center;font-weight:700;">22%</td>
+              <td style="padding:5px 6px;text-align:center;color:var(--muted);">—</td>
+            </tr>
+            <tr>
+              <td style="padding:5px 6px;font-weight:700;color:#f59e0b;">ATT</td>
+              <td style="padding:5px 6px;text-align:center;font-weight:700;">35%</td>
+              <td style="padding:5px 6px;text-align:center;font-weight:700;">45%</td>
+              <td style="padding:5px 6px;text-align:center;font-weight:700;">20%</td>
+              <td style="padding:5px 6px;text-align:center;color:var(--muted);">—</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);color:var(--muted);font-size:0.72rem;">
+          <div style="margin-bottom:4px;"><strong style="color:var(--text)">Référentiels :</strong> buts normalisés (DEF 0.08/j · MIL 0.25/j · ATT 0.50/j) · passes (DEF 0.10/j · MIL 0.20/j · ATT 0.25/j)</div>
+          <div style="margin-bottom:4px;"><strong style="color:var(--text)">Note Sofascore</strong> normalisée : 6.0 → 0 pt / 8.5 → 10 pts</div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:6px;">
+            <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:50%;background:#22c55e;display:inline-block;"></span> ≥ 7.5 Excellent</span>
+            <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:50%;background:#eab308;display:inline-block;"></span> ≥ 6.0 Bon</span>
+            <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:50%;background:#f97316;display:inline-block;"></span> ≥ 4.5 Moyen</span>
+            <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:50%;background:#ef4444;display:inline-block;"></span> &lt; 4.5 Faible</span>
+          </div>
+        </div>
+      </div>
+    </span>
   </div>
   <div id="squad-display" style="min-height:200px;"></div>
 </div>
@@ -1797,6 +1853,16 @@ function renderMatchCard(home, away, label = '', venue = '') {
     </div>` : ''}
   </div>`;
 }
+
+function toggleScoreInfo() {
+  const popup = document.getElementById('score-info-popup');
+  popup.style.display = popup.style.display === 'none' ? 'block' : 'none';
+}
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('score-info-wrap');
+  const popup = document.getElementById('score-info-popup');
+  if (wrap && popup && !wrap.contains(e.target)) popup.style.display = 'none';
+});
 
 function toggleSquad(mid) {
   const panel = document.getElementById(`${mid}-squad`);
