@@ -252,13 +252,17 @@
 
 <div id="stats" class="page">
   <h2 style="font-size:1.2rem;font-weight:800;margin-bottom:16px;">Effectifs officiels par sélection</h2>
-  <div style="display:flex;gap:12px;align-items:center;margin-bottom:24px;flex-wrap:wrap;">
+  <div style="display:flex;gap:12px;align-items:center;margin-bottom:16px;flex-wrap:wrap;">
     <select id="country-select" onchange="showCountrySquad(this.value)" style="background:var(--surface);border:2px solid var(--border);color:var(--text);padding:10px 16px;border-radius:8px;font-size:0.95rem;font-weight:600;cursor:pointer;outline:none;min-width:240px;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent2)'" onblur="this.style.borderColor='var(--border)'">
       <option value="">— Choisir une sélection —</option>
     </select>
     <input id="player-search" type="text" placeholder="🔍 Rechercher un joueur ou un club..."
       oninput="filterSquad(this.value)"
       style="background:var(--surface);border:2px solid var(--border);color:var(--text);padding:10px 14px;border-radius:8px;font-size:0.9rem;outline:none;min-width:260px;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent2)'" onblur="this.style.borderColor='var(--border)'">
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
+    <button onclick="showTopScorers()" id="btn-scorers" style="background:var(--accent);color:#000;border:none;border-radius:8px;padding:8px 16px;font-weight:700;font-size:0.82rem;cursor:pointer;">⚽ Stats joueurs</button>
+    <button onclick="showTeamRatings()" id="btn-ratings" style="background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:8px 16px;font-weight:700;font-size:0.82rem;cursor:pointer;">★ Notes par sélection</button>
   </div>
   <div id="squad-display" style="min-height:200px;"></div>
 </div>
@@ -1953,6 +1957,11 @@ function showTopScorers(sortBy) {
     return '<th onclick="showTopScorers(\'' + key + '\')" style="padding:8px 12px;cursor:pointer;user-select:none;white-space:nowrap;color:' + (active ? 'var(--accent2)' : 'var(--muted)') + ';font-weight:' + (active ? '800' : '600') + ';">' + label + (active ? ' ▼' : '') + '</th>';
   }
 
+  const btnS = document.getElementById('btn-scorers');
+  const btnR = document.getElementById('btn-ratings');
+  if (btnS) { btnS.style.background='var(--accent)'; btnS.style.color='#000'; btnS.style.border='none'; }
+  if (btnR) { btnR.style.background='var(--surface2)'; btnR.style.color='var(--text)'; btnR.style.border='1px solid var(--border)'; }
+
   document.getElementById('squad-display').innerHTML = '<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;">'
     + '<div style="padding:12px 16px;font-weight:800;font-size:0.95rem;background:var(--surface2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;">'
     +   '⚽ Stats joueurs — Saison 2025-26'
@@ -1970,6 +1979,87 @@ function showTopScorers(sortBy) {
     +   thSort('assists', 'PD')
     +   thSort('matches', 'Matchs')
     +   thSort('rating',  'Note ★')
+    + '</tr></thead>'
+    + '<tbody>' + rows + '</tbody>'
+    + '</table></div></div>';
+}
+
+function showTeamRatings() {
+  document.getElementById('btn-ratings').style.background = 'var(--accent2)';
+  document.getElementById('btn-ratings').style.color = '#000';
+  document.getElementById('btn-scorers').style.background = 'var(--surface2)';
+  document.getElementById('btn-scorers').style.color = 'var(--text)';
+  document.getElementById('btn-scorers').style.border = '1px solid var(--border)';
+  document.getElementById('btn-ratings').style.border = 'none';
+  document.getElementById('country-select').value = '';
+
+  const allCodes = ['MEX','RSA','KOR','CZE','CAN','SUI','QAT','BIH','BRA','MAR','SCO','HAI',
+    'USA','PAR','AUS','TUR','GER','CUW','CIV','ECU','NED','JPN','TUN','SWE',
+    'BEL','EGY','IRN','NZL','ESP','CPV','KSA','URU','FRA','SEN','NOR','IRQ',
+    'ARG','ALG','AUT','JOR','POR','COL','UZB','COD','ENG','CRO','GHA','PAN'];
+
+  const teams = allCodes.map(code => {
+    const t = teamData(code);
+    const starters = t.players.filter(p => p.starter && (p.rating||0) > 0);
+    const avgRating = starters.length > 0
+      ? starters.reduce((s, p) => s + (p.rating||0), 0) / starters.length
+      : 0;
+    const totalGoals = t.players.filter(p => p.starter).reduce((s, p) => s + (p.goals||0), 0);
+    const totalAssists = t.players.filter(p => p.starter).reduce((s, p) => s + (p.assists||0), 0);
+    const avgMatches = starters.length > 0
+      ? Math.round(starters.reduce((s, p) => s + (p.matches||0), 0) / starters.length)
+      : 0;
+    return {code, t, avgRating, totalGoals, totalAssists, avgMatches, starters: starters.length};
+  });
+
+  teams.sort((a, b) => b.avgRating - a.avgRating);
+
+  const maxRating = teams[0].avgRating;
+  let rows = '';
+  teams.forEach((item, i) => {
+    const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i+1);
+    const pct = maxRating > 0 ? Math.round((item.avgRating / maxRating) * 100) : 0;
+    // color: green > 7.0, yellow 6.8-7.0, orange < 6.8
+    const rColor = item.avgRating >= 7.0 ? '#22c55e' : item.avgRating >= 6.8 ? 'var(--accent)' : 'var(--muted)';
+    rows += '<tr style="border-bottom:1px solid var(--border);transition:background 0.15s;" onmouseover="this.style.background=\'var(--surface2)\'" onmouseout="this.style.background=\'\'">'
+      + '<td style="padding:8px 12px;text-align:center;font-weight:700;font-size:0.85rem;color:var(--muted);width:36px;">' + medal + '</td>'
+      + '<td style="padding:8px 6px;width:32px;">' + flagHtml(item.t.flag) + '</td>'
+      + '<td style="padding:8px 6px;font-weight:700;font-size:0.88rem;">' + item.t.name + '</td>'
+      + '<td style="padding:8px 12px;width:130px;">'
+      +   '<div style="display:flex;flex-direction:column;gap:3px;">'
+      +   '<div style="display:flex;align-items:center;gap:6px;">'
+      +   '<span style="color:' + rColor + ';font-weight:800;font-size:0.95rem;">★ ' + item.avgRating.toFixed(2) + '</span>'
+      +   '</div>'
+      +   '<div style="width:100px;height:5px;background:var(--border);border-radius:3px;overflow:hidden;"><div style="height:100%;width:' + pct + '%;background:' + rColor + ';border-radius:3px;transition:width 0.3s;"></div></div>'
+      +   '</div>'
+      + '</td>'
+      + '<td style="padding:8px 12px;text-align:center;font-size:0.82rem;color:var(--muted);">' + item.avgMatches + ' j. moy.</td>'
+      + '<td style="padding:8px 12px;text-align:center;">'
+      +   (item.totalGoals > 0 ? '<span style="background:var(--accent);color:#000;border-radius:8px;padding:1px 8px;font-weight:700;font-size:0.82rem;">⚽ ' + item.totalGoals + '</span>' : '<span style="color:var(--muted);">—</span>')
+      + '</td>'
+      + '<td style="padding:8px 12px;text-align:center;">'
+      +   (item.totalAssists > 0 ? '<span style="background:#3b82f6;color:#fff;border-radius:8px;padding:1px 8px;font-weight:700;font-size:0.82rem;">🎯 ' + item.totalAssists + '</span>' : '<span style="color:var(--muted);">—</span>')
+      + '</td>'
+      + '<td style="padding:8px 12px;text-align:center;font-size:0.75rem;color:var(--muted);">' + item.starters + ' tit.</td>'
+      + '</tr>';
+  });
+
+  document.getElementById('squad-display').innerHTML = '<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;">'
+    + '<div style="padding:12px 16px;font-weight:800;font-size:0.95rem;background:var(--surface2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;">'
+    +   '★ Note moyenne par sélection — Saison 2025-26'
+    +   '<span style="font-size:0.75rem;font-weight:400;color:var(--muted);margin-left:4px;">titulaires uniquement · source Sofascore</span>'
+    + '</div>'
+    + '<div style="overflow-x:auto;">'
+    + '<table style="width:100%;border-collapse:collapse;">'
+    + '<thead><tr style="font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em;border-bottom:2px solid var(--border);">'
+    +   '<th style="padding:8px 12px;">#</th>'
+    +   '<th style="padding:8px 6px;"></th>'
+    +   '<th style="padding:8px 6px;text-align:left;">Sélection</th>'
+    +   '<th style="padding:8px 12px;text-align:left;">Note moy. ★</th>'
+    +   '<th style="padding:8px 12px;">Matchs moy.</th>'
+    +   '<th style="padding:8px 12px;">Buts cumulés</th>'
+    +   '<th style="padding:8px 12px;">PD cumulées</th>'
+    +   '<th style="padding:8px 12px;">Titulaires</th>'
     + '</tr></thead>'
     + '<tbody>' + rows + '</tbody>'
     + '</table></div></div>';
