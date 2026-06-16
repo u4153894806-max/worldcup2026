@@ -1969,9 +1969,12 @@ function buildStats() {
 }
 
 let _statsSort = 'goals';
-function showTopScorers(sortBy) {
+let _statsFilter = 'all';
+
+function showTopScorers(sortBy, filterBy) {
   if (sortBy) _statsSort = sortBy;
-  // Collect all players with goals > 0 OR assists > 0 OR rating > 0
+  if (filterBy !== undefined) _statsFilter = filterBy;
+  // Collect all players with stats
   const allCodes = ['MEX','RSA','KOR','CZE','CAN','SUI','QAT','BIH','BRA','MAR','SCO','HAI',
     'USA','PAR','AUS','TUR','GER','CUW','CIV','ECU','NED','JPN','TUN','SWE',
     'BEL','EGY','IRN','NZL','ESP','CPV','KSA','URU','FRA','SEN','NOR','IRQ',
@@ -1980,9 +1983,12 @@ function showTopScorers(sortBy) {
   allCodes.forEach(code => {
     const t = teamData(code);
     t.players.forEach(p => {
+      if (_statsFilter === 'starters' && !p.starter) return;
+      if (_statsFilter === 'subs' && p.starter) return;
       const g = p.goals||0, a = p.assists||0, r = p.rating||0, m = p.matches||0;
-      if (_statsSort === 'rating' ? r > 0 && m >= 5 : _statsSort === 'assists' ? a > 0 : g > 0) {
-        scorers.push({name: p.name, club: p.club, pos: p.pos, goals: g, matches: m, assists: a, rating: r, team: t, code: code});
+      const sc = computeScore(p);
+      if (_statsSort === 'score' ? sc !== null : _statsSort === 'rating' ? r > 0 && m >= 5 : _statsSort === 'assists' ? a > 0 : g > 0) {
+        scorers.push({name: p.name, club: p.club, pos: p.pos, goals: g, matches: m, assists: a, rating: r, score: sc, starter: p.starter, team: t, code: code});
       }
     });
   });
@@ -1991,6 +1997,7 @@ function showTopScorers(sortBy) {
     assists: (a, b) => b.assists - a.assists || b.goals - a.goals || b.rating - a.rating,
     matches: (a, b) => b.matches - a.matches || b.goals - a.goals,
     rating:  (a, b) => b.rating - a.rating || b.goals - a.goals,
+    score:   (a, b) => (b.score||0) - (a.score||0) || b.goals - a.goals,
   };
   scorers.sort(sorts[_statsSort] || sorts.goals);
   const top50 = scorers.slice(0, 50);
@@ -2015,9 +2022,9 @@ function showTopScorers(sortBy) {
       + '<td style="padding:8px 12px;text-align:center;font-size:0.82rem;width:60px;">' + (p.assists > 0 ? '<span style="background:' + (_statsSort==='assists'?'#3b82f6':'var(--border)') + ';color:' + (_statsSort==='assists'?'#fff':'var(--text)') + ';border-radius:8px;padding:2px 8px;font-weight:700;font-size:0.82rem;">' + p.assists + '</span>' : '—') + '</td>'
       + '<td style="padding:8px 12px;text-align:center;font-size:0.82rem;color:var(--muted);width:60px;">' + (p.matches > 0 ? p.matches + ' j.' : '—') + '</td>'
       + (function(){
-          const sc = computeScore(p);
+          const sc = p.score;
           const col = scoreColor(sc);
-          const active = _statsSort==='rating';
+          const active = _statsSort==='score';
           return '<td style="padding:8px 12px;text-align:center;font-size:0.82rem;width:70px;">'
             + (sc !== null ? '<div style="display:flex;flex-direction:column;align-items:center;gap:1px;">'
               + '<span style="color:' + col + ';font-weight:' + (active?'800':'600') + ';font-size:0.88rem;">' + sc.toFixed(1) + '/10</span>'
@@ -2038,10 +2045,19 @@ function showTopScorers(sortBy) {
   if (btnS) { btnS.style.background='var(--accent)'; btnS.style.color='#000'; btnS.style.border='none'; }
   if (btnR) { btnR.style.background='var(--surface2)'; btnR.style.color='var(--text)'; btnR.style.border='1px solid var(--border)'; }
 
+  function filterBtn(val, label) {
+    const active = _statsFilter === val;
+    return '<button onclick="showTopScorers(undefined,\'' + val + '\')" style="font-size:0.72rem;padding:3px 10px;border-radius:6px;border:1px solid var(--border);cursor:pointer;font-weight:600;background:' + (active?'var(--accent2)':'var(--surface)') + ';color:' + (active?'#000':'var(--muted)') + ';">' + label + '</button>';
+  }
   document.getElementById('squad-display').innerHTML = '<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;">'
-    + '<div style="padding:12px 16px;font-weight:800;font-size:0.95rem;background:var(--surface2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;">'
-    +   '⚽ Stats joueurs — Saison 2025-26'
-    +   '<span style="font-size:0.75rem;font-weight:400;color:var(--muted);margin-left:4px;">48 sélections qualifiées · cliquer une colonne pour trier</span>'
+    + '<div style="padding:12px 16px;font-weight:800;font-size:0.95rem;background:var(--surface2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;flex-wrap:wrap;">'
+    +   '<span>⚽ Stats joueurs — Saison 2025-26</span>'
+    +   '<span style="font-size:0.75rem;font-weight:400;color:var(--muted);">cliquer une colonne pour trier</span>'
+    +   '<div style="margin-left:auto;display:flex;gap:6px;">'
+    +   filterBtn('all',      'Tous')
+    +   filterBtn('starters', 'Titulaires')
+    +   filterBtn('subs',     'Remplaçants')
+    +   '</div>'
     + '</div>'
     + '<div style="overflow-x:auto;">'
     + '<table style="width:100%;border-collapse:collapse;">'
@@ -2049,12 +2065,12 @@ function showTopScorers(sortBy) {
     +   '<th style="padding:8px 12px;color:var(--muted);">#</th>'
     +   '<th style="padding:8px 6px;"></th>'
     +   '<th style="padding:8px 6px;text-align:left;color:var(--muted);">Joueur</th>'
-    +   '<th style="padding:8px 6px;text-align:left;color:var(--muted);">Sélection</th>'
+    +   '<th style="padding:8px 6px;text-align:left;color:var(--muted);">Sél.</th>'
     +   '<th style="padding:8px 6px;text-align:left;color:var(--muted);">Club</th>'
     +   thSort('goals',   'Buts')
     +   thSort('assists', 'PD')
     +   thSort('matches', 'Matchs')
-    +   thSort('rating',  'Note ★')
+    +   thSort('score',   'Score ★')
     + '</tr></thead>'
     + '<tbody>' + rows + '</tbody>'
     + '</table></div></div>';
