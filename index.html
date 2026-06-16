@@ -1693,6 +1693,35 @@ const GROUPS = [
 ];
 const PLACEHOLDER_GROUPS = [];
 
+// ── Résultats réels (Mondial 2026, mis à jour au 16 juin 2026) ──
+// Clé: "HOME-AWAY" selon l'ordre getGroupMatches, valeur: [buts_dom, buts_ext]
+const PLAYED = {
+  // Groupe A – 11 juin
+  'MEX-RSA': [2, 0],
+  'KOR-CZE': [2, 1],
+  // Groupe B – 12 juin
+  'CAN-BIH': [1, 1],
+  'SUI-QAT': [1, 1],
+  // Groupe C – 13 juin
+  'BRA-MAR': [1, 1],
+  'SCO-HAI': [1, 0],
+  // Groupe D – 13 juin
+  'USA-PAR': [4, 1],
+  'AUS-TUR': [2, 0],
+  // Groupe E – 14 juin
+  'GER-CUW': [7, 1],
+  'CIV-ECU': [1, 0],
+  // Groupe F – 14 juin
+  'NED-JPN': [2, 2],
+  'TUN-SWE': [1, 5],
+  // Groupe G – 15 juin
+  'BEL-EGY': [1, 1],
+  'IRN-NZL': [2, 2],
+  // Groupe H – 15 juin
+  'ESP-CPV': [0, 0],
+  'KSA-URU': [1, 1],
+};
+
 // Matchs par groupe (round-robin)
 function getGroupMatches(teams) {
   const m = [];
@@ -1804,6 +1833,7 @@ function renderMatchCard(home, away, label = '', venue = '') {
 
   const homePlayers = h.players.map(p => renderPlayer(p)).join('');
   const awayPlayers = a.players.map(p => renderPlayer(p)).join('');
+  const played = PLAYED[`${home}-${away}`] || null;
 
   const hostBadge = (t) => t.host ? `<span class="badge-host">HÔTE</span>` : '';
 
@@ -1830,11 +1860,12 @@ function renderMatchCard(home, away, label = '', venue = '') {
         </div>
       </div>
     </div>
-    <div class="score-input">
-      <input type="number" min="0" max="20" placeholder="–" title="${h.name}" id="${mid}-h">
-      <span class="score-sep">:</span>
-      <input type="number" min="0" max="20" placeholder="–" title="${a.name}" id="${mid}-a">
+    <div class="score-input" style="${played ? 'background:rgba(34,197,94,0.07);border-radius:8px;padding:2px 6px;' : ''}">
+      <input type="number" min="0" max="20" placeholder="–" title="${h.name}" id="${mid}-h"${played ? ` value="${played[0]}" style="border-color:var(--green);font-weight:800;color:var(--green);"` : ''}>
+      <span class="score-sep">${played ? '<span style="color:var(--green);font-size:0.7rem;font-weight:700;">✓</span>' : ':'}</span>
+      <input type="number" min="0" max="20" placeholder="–" title="${a.name}" id="${mid}-a"${played ? ` value="${played[1]}" style="border-color:var(--green);font-weight:800;color:var(--green);"` : ''}>
     </div>
+    ${played ? `<div style="text-align:center;font-size:0.65rem;color:var(--green);font-weight:600;margin-top:2px;letter-spacing:0.05em;">RÉSULTAT OFFICIEL</div>` : ''}
     ${h.players.length || a.players.length ? `
     <button class="toggle-squad" onclick="toggleSquad('${mid}')">
       <span id="${mid}-icon">▼</span> Voir les effectifs
